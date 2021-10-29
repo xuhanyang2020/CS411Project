@@ -6,9 +6,9 @@ public class User {
 
         private String firstName;
 
-        private String lstName;
+        private String lastName;
 
-        private String sex;
+        private String gender;
 
         private double age;
 
@@ -40,20 +40,20 @@ public class User {
                 this.firstName = firstName;
         }
 
-        public String getLstName() {
-                return lstName;
+        public String getLastName() {
+                return lastName;
         }
 
-        public void setLstName(String lstName) {
-                this.lstName = lstName;
+        public void setLastName(String lastName) {
+                this.lastName = lastName;
         }
 
-        public String getSex() {
-                return sex;
+        public String getGender() {
+                return gender;
         }
 
-        public void setSex(String sex) {
-                this.sex = sex;
+        public void setGender(String gender) {
+                this.gender = gender;
         }
 
         public double getAge() {
