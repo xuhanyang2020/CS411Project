@@ -37,15 +37,15 @@ public class MatchViewController {
     // age = similar / nolimit
     // major = same / diff
     // gender = same / diff
-    @RequestMapping(method= RequestMethod.GET, value="/intermates")
-    public Set<String> findIntersectMates(@RequestParam Map<String, String> customQuery) {
-        System.out.println("findMates is called");
-        String age = customQuery.get("age")!=null?customQuery.get("age"):"";
-        String gender = customQuery.get("gender")!=null?customQuery.get("gender"):"";
-        String major = customQuery.get("major")!=null?customQuery.get("major"):"";
-
-        return matchService.queryIntersectMates(customQuery.get("id"), age, gender, major);
-    }
+//    @RequestMapping(method= RequestMethod.GET, value="/intermates")
+//    public Set<String> findIntersectMates(@RequestParam Map<String, String> customQuery) {
+//        System.out.println("findMates is called");
+//        String age = customQuery.get("age")!=null?customQuery.get("age"):"";
+//        String gender = customQuery.get("gender")!=null?customQuery.get("gender"):"";
+//        String major = customQuery.get("major")!=null?customQuery.get("major"):"";
+//
+//        return matchService.queryIntersectMates(customQuery.get("id"), age, gender, major);
+//    }
 
     // params:
     // age = similar / nolimit

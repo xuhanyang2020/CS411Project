@@ -26,12 +26,6 @@ public class OverViewController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping(path = "/users")
-    public List<User> overview(){
-        System.out.println("overview is now called");
-        return overViewService.queryAll();
-    }
-
     @GetMapping(path = "/{id}")
     public List<Reservation> findReservationById(@PathVariable("id") String UserId){
         System.out.println("findReservationById is called");

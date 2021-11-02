@@ -15,9 +15,4 @@ public class OverViewService {
     public OverViewService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
-    public List<User> queryAll(){
-        List<User> list = userRepository.findAll();
-        return list;
-    }
 }
