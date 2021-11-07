@@ -4,6 +4,8 @@ import com.example.sportgather.domain.User;
 import com.example.sportgather.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -24,16 +26,18 @@ public class ProfileController {
         return profileService.queryAll();
     }
 
-    @GetMapping(path = "/{id}")
-    public List<User> findUserById(@PathVariable("id") String id) {
+    @GetMapping()
+    public List<User> findUserById(HttpSession session) {
+        String id = (String) session.getAttribute("userid");
+        System.out.println(id);
         System.out.println("findUserById is called");
         return ProfileService.queryUserById(id);
     }
 
     @PutMapping(path="/updateInfo/{lastName}/{gender}/{age}/{phone}/{location}/{type}/{id}")
     public String updateInfo(@PathVariable("lastName") String lastName,
-                             @PathVariable("gender") String gender,
-                             @PathVariable("age") Integer age,
+                           @PathVariable("gender") String gender,
+                           @PathVariable("age") Integer age,
                              @PathVariable("phone") String phone,
                              @PathVariable("location") String location,
                              @PathVariable("type") String type,
@@ -41,5 +45,7 @@ public class ProfileController {
         System.out.println("updateInfo is called");
         return ProfileService.modifyInfo(lastName, gender, age, phone, location, type, id);
     }
+
+
 
 }
