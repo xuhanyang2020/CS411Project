@@ -1,14 +1,14 @@
 import { Component } from 'react';
 import Card from '@material-tailwind/react/Card';
 import CardImage from "@material-tailwind/react/CardImage";
-import CardHeader from '@material-tailwind/react/CardHeader';
 import CardBody from '@material-tailwind/react/CardBody';
-import CardFooter from '@material-tailwind/react/CardFooter';
 import Paragraph from '@material-tailwind/react/Paragraph';
 import H6 from "@material-tailwind/react/Heading6";
+import GatherSportNav from 'components/GatherSportNav';
 import fakeProfile from 'assets/img/profile_default.jpeg';
 import Page from 'components/login/Page';
 import axios from 'axios';
+import './styles.match.css';
 
 const baseURL = 'http://localhost:8080/match/mates';
 const infoURL = 'http://localhost:8080/profile';
@@ -22,15 +22,12 @@ async function getMates(count=15) {
             id: id,
         }
     });
-    // console.log(mate_ids.data);
     const mates_info = [];
     
     for (const mate_id of mate_ids.data) {
-        // console.log(mate_id);
         var result = await axios.get(infoURL+'/'+mate_id);
         mates_info.push(result.data[0]);
     }
-    // console.log(mates_info);
 
     return mates_info;
 }
@@ -45,13 +42,10 @@ class Match extends Component {
 
     async componentDidMount() {
         const mates = await getMates();
-        // console.log(mates);
-        // console.log(mates[0].firstName);
         
         this.setState({
             mates: mates,
         });
-        // console.log(this.mates);
     }
     render() {
         console.log(this.state.mates);
@@ -61,21 +55,22 @@ class Match extends Component {
 
         return (
             <Page> 
-                 <div className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                 {this.state.mates.map(mate => (
-                     <Card key={mate.email}>
-                        <CardImage alt="Card Image" src={fakeProfile} />
-                        <CardBody>
-                            <H6 color="gray">{mate.firstName} {mate.lastName}</H6>
-                            <Paragraph color="blueGray">
-                            {mate.gender}
-                            </Paragraph>
-                        </CardBody>
-                 </Card>
-                 ))} 
-                                    
-                        
-                    </div>
+                <GatherSportNav />
+                 <div className='mateSection'>
+                    {/* className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4" */}
+                    {this.state.mates.map(mate => (
+                        <Card key={mate.email} className="mateCard">
+                            <CardImage className="mateImage" alt="Card Image" src={fakeProfile} />
+                            <CardBody>
+                                <H6 color="gray">{mate.firstName} {mate.lastName}</H6>
+                                <Paragraph color="blueGray">
+                                {mate.gender==='M'?'Male':'Female'}
+                                </Paragraph>
+                            </CardBody>
+                    </Card>
+                    ))} 
+
+                </div>
             
             </Page>
         );
