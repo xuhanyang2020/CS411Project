@@ -11,7 +11,10 @@ import SimpleFooter from 'components/SimpleFooter';
 import Page from 'components/login/Page';
 import Container from 'components/login/Container';
 
+
+
 export default function Login() {
+    
     return (
         <Page>
             <DefaultNavbar />
@@ -40,6 +43,8 @@ export default function Login() {
                                 iconName="lock"
                             />
                         </div>
+
+
                         <div className="mb-4 px-4">
                             <Checkbox
                                 color="lightBlue"

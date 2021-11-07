@@ -1,6 +1,9 @@
 package com.example.sportgather.service;
 
+import com.example.sportgather.domain.Hobby;
+import com.example.sportgather.domain.Sport;
 import com.example.sportgather.domain.User;
+import com.example.sportgather.repository.HobbyRepository;
 import com.example.sportgather.util.MapUtil;
 import com.example.sportgather.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +16,22 @@ import java.util.*;
 public class MatchService {
     @Autowired
     private UserRepository userRepository;
+    private HobbyRepository hobbyRepository;
 
-    public MatchService(UserRepository userRepository) {
+    public MatchService(UserRepository userRepository, HobbyRepository hobbyRepository) {
         this.userRepository = userRepository;
+        this.hobbyRepository = hobbyRepository;
     }
 
     public List<User> queryMatesByHobby(String id){
         List<User> list = userRepository.findMatesByHobby(id);
+        return list;
+    }
+
+    public List<Sport> queryHobbies(String id) {
+        List<Sport> list = hobbyRepository.fetchHobbies(id);
+        // TODO:
+        System.out.println(list);
         return list;
     }
 

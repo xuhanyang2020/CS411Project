@@ -1,5 +1,6 @@
 package com.example.sportgather.controller;
 
+import com.example.sportgather.domain.Sport;
 import com.example.sportgather.domain.User;
 import com.example.sportgather.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,18 @@ public class MatchViewController {
     }
 
     @GetMapping(path = "/hobby/{id}")
+    public List<Sport> fetchHobbies(@PathVariable("id") String UserId){
+        System.out.println("fetchHobbies is called");
+        return matchService.queryHobbies(UserId);
+    }
+
+    @GetMapping(path = "/hobby/mates/{id}")
     public List<User> findMatesByHobby(@PathVariable("id") String UserId){
         System.out.println("findMatesByHobby is called");
         return matchService.queryMatesByHobby(UserId);
     }
 
-    @GetMapping(path="/samegender/{id}")
+    @GetMapping(path="/samegender/mates/{id}")
     public List<User> findMatesWithSameGender(@PathVariable("id") String UserId) {
         System.out.println("findMatesWithSameGender is called");
         return matchService.queryMatesWithSameGender(UserId);

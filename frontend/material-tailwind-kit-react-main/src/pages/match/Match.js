@@ -1,12 +1,15 @@
 import { Component } from 'react';
+import React from "react";
 import Card from '@material-tailwind/react/Card';
 import CardImage from "@material-tailwind/react/CardImage";
 import CardBody from '@material-tailwind/react/CardBody';
 import Paragraph from '@material-tailwind/react/Paragraph';
 import H6 from "@material-tailwind/react/Heading6";
+import Checkbox from "@material-tailwind/react/Checkbox"
 import GatherSportNav from 'components/GatherSportNav';
 import fakeProfile from 'assets/img/profile_default.jpeg';
 import Page from 'components/login/Page';
+
 import axios from 'axios';
 import './styles.match.css';
 
@@ -56,6 +59,26 @@ class Match extends Component {
         return (
             <Page> 
                 <GatherSportNav />
+                <div className='filters'>
+                    <Checkbox
+                        color="lightBlue"
+                        text="Similar Age"
+                        id="checkbox"
+                        background-color='red'
+                    />
+
+                    {/* <Checkbox
+                    color="lightBlue"
+                    text="Same Gender"
+                    id="checkbox"
+                    /> */}
+                    {/* same gender diff gender no limit */}
+
+                    {/* same major different major no limit */}
+                </div>
+
+                
+
                  <div className='mateSection'>
                     {/* className="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4" */}
                     {this.state.mates.map(mate => (
