@@ -3,7 +3,8 @@ package com.example.sportgather.service;
 import com.example.sportgather.domain.Reservation;
 import com.example.sportgather.domain.User;
 import com.example.sportgather.repository.ReservationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.sportgather.repository.UserRepository;
+import com.example.sportgather.util.MapUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -12,9 +13,11 @@ import java.util.*;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
+    private final UserRepository userRepository;
 
-    public ReservationService(ReservationRepository reservationRepository) {
+    public ReservationService(ReservationRepository reservationRepository, UserRepository userRepository) {
         this.reservationRepository = reservationRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Reservation> queryReservationByUserId(String id) {
@@ -22,7 +25,7 @@ public class ReservationService {
         return list;
     }
 
-    public List<Map.Entry<String, Integer>> querySportStar(){
+    public Map<String, Integer> querySportStar(){
         int top = 15;
         Map<String, Integer> map = new HashMap<>();
         List<Reservation> list = reservationRepository.findByAll();
@@ -44,10 +47,13 @@ public class ReservationService {
         }
 
         /* res to store the final result*/
-        List<Map.Entry<String,Integer>> res = new ArrayList<>();
+        Map<String, Integer> tmp = new HashMap<>();
         while (!pq.isEmpty()){
-            res.add(0, pq.poll());
+            Map.Entry<String, Integer> entry = pq.poll();
+            User user = userRepository.findUserByPk(entry.getKey());
+            tmp.put(user.getFirstName() + " " + user.getLastName(), entry.getValue());
         }
-        return res;
+        Map<String, Integer> result = MapUtil.sortByValue(tmp, 1);
+        return result;
     }
 }

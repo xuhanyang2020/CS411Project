@@ -1,46 +1,34 @@
 package com.example.sportgather.controller;
 
 import com.example.sportgather.domain.Reservation;
-import com.example.sportgather.domain.User;
-import com.example.sportgather.service.OverViewService;
 import com.example.sportgather.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping(path = "overview")
 public class OverViewController {
 
-    private final OverViewService overViewService;
     private final ReservationService reservationService;
 
     @Autowired
-    public OverViewController(OverViewService overViewService, ReservationService reservationService) {
-        this.overViewService = overViewService;
+    public OverViewController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
-    @GetMapping(path = "/users")
-    public List<User> overview(){
-        System.out.println("overview is now called");
-        return overViewService.queryAll();
-    }
-
     @GetMapping(path = "/{id}")
-    public List<Reservation> findReservationById(@PathVariable("id") String UserId){
-        System.out.println("findReservationById is called");
-        return reservationService.queryReservationByUserId(UserId);
-    }
-
-    @GetMapping(path = "/sportstar")
-    public List<Map.Entry<String, Integer>> findSportStar(){
-        System.out.println("findSportStar is called");
-        return reservationService.querySportStar();
+    public String overviewPage(@PathVariable("id") String userId, Model model){
+        Map<String, Integer> star = reservationService.querySportStar();
+        List<Reservation> reservations = reservationService.queryReservationByUserId(userId);
+        model.addAttribute("star", star);
+        model.addAttribute("reservations", reservations);
+        return "overview";
     }
 }
