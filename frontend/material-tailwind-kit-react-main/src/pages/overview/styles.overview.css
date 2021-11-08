@@ -1,0 +1,10 @@
+.reservationCard {
+    display: inline-block;
+    width:20% !important;
+    margin: 20px;
+}
+
+.overviewSection {
+    text-align: center;
+    width:99%;
+}

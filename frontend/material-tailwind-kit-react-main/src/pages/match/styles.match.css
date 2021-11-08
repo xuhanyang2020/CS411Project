@@ -1,0 +1,10 @@
+.mateCard {
+    display: inline-block;
+    width:20% !important;
+    margin: 20px;
+}
+
+.mateSection {
+    text-align: center;
+    width:99%;
+}
