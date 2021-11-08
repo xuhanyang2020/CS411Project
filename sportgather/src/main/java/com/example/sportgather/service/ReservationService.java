@@ -10,6 +10,7 @@ import com.example.sportgather.util.MapUtil;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -76,6 +77,17 @@ public class ReservationService {
             ans.add(courtReservation);
         }
         return ans;
+    }
+
+    public List<Reservation> findAllReservationByUserId(String userId){
+        List<Reservation> reservations = reservationRepository.findByPk(userId);
+        for (Reservation reservation : reservations){
+            // set reservation Location
+            String courtId = reservation.getCourtId();
+            String courtLocation = courtRepository.findLocationByPk(courtId);
+            reservation.setCourtId(courtLocation);
+        }
+        return reservations;
     }
 
     public List<String> findAvailableTime(String courtName){

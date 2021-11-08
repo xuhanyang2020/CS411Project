@@ -1,34 +1,41 @@
 package com.example.sportgather.controller;
 
+import com.example.sportgather.domain.CourtReservation;
 import com.example.sportgather.domain.Reservation;
 import com.example.sportgather.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping(path = "overview")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OverViewController {
+
 
     private final ReservationService reservationService;
 
     @Autowired
-    public OverViewController(ReservationService reservationService) {
+    public OverViewController( ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
-    @GetMapping(path = "/{id}")
-    public String overviewPage(@PathVariable("id") String userId, Model model){
-        Map<String, Integer> star = reservationService.querySportStar();
-        List<Reservation> reservations = reservationService.queryReservationByUserId(userId);
-        model.addAttribute("star", star);
-        model.addAttribute("reservations", reservations);
-        return "overview";
+
+    @GetMapping()
+    public List<Reservation> findReservationById(){
+        System.out.println("findReservationById is called");
+//        List<Reservation> list = reservationService.queryReservationByUserId("10");
+//        System.out.println(list.size());
+        List<Reservation> list = reservationService.findAllReservationByUserId("284");
+        return list;
+    }
+
+    @GetMapping(path = "/sportstar")
+    public Map<String, Integer> findSportStar(){
+        System.out.println("findSportStar is called");
+        return reservationService.querySportStar();
     }
 }

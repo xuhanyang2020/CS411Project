@@ -1,9 +1,7 @@
 package com.example.sportgather.repository;
 
 import com.example.sportgather.domain.Reservation;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
