@@ -2,11 +2,13 @@ package com.example.sportgather.controller;
 
 import com.example.sportgather.domain.CourtReservation;
 import com.example.sportgather.domain.Reservation;
+import com.example.sportgather.domain.SportStar;
 import com.example.sportgather.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +16,6 @@ import java.util.Map;
 @RequestMapping(path = "overview")
 @CrossOrigin(origins = "http://localhost:3000")
 public class OverViewController {
-
 
     private final ReservationService reservationService;
 
@@ -27,15 +28,20 @@ public class OverViewController {
     @GetMapping()
     public List<Reservation> findReservationById(){
         System.out.println("findReservationById is called");
-//        List<Reservation> list = reservationService.queryReservationByUserId("10");
-//        System.out.println(list.size());
-        List<Reservation> list = reservationService.findAllReservationByUserId("284");
+        List<Reservation> list = reservationService.findAllReservationByUserId("24");
         return list;
     }
 
     @GetMapping(path = "/sportstar")
-    public Map<String, Integer> findSportStar(){
+    public List<SportStar> findSportStar(){
         System.out.println("findSportStar is called");
         return reservationService.querySportStar();
     }
+
+    @PostMapping(path = "/cancel")
+    public void cancelReservation(){
+        String reservationId = "24";
+        reservationService.deleteReservation(reservationId);
+    }
+
 }

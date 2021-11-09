@@ -17,4 +17,8 @@ public interface ReservationRepository {
     @Select("SELECT BeginTime FROM Reservation NATURAL JOIN Court WHERE Court.Name = #{courtName} AND BeginTime LIKE #{date} ")
     List<String> findTodayReservation(@Param("date") String date, @Param("courtName") String courtName);
 
+    @Delete("DELETE FROM Reservation WHERE ReservationId = #{ReservationId}")
+    void deleteReservationByPk(@Param("ReservationId") String id);
+
+
 }

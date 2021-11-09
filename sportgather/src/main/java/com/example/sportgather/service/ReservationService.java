@@ -2,6 +2,7 @@ package com.example.sportgather.service;
 
 import com.example.sportgather.domain.CourtReservation;
 import com.example.sportgather.domain.Reservation;
+import com.example.sportgather.domain.SportStar;
 import com.example.sportgather.domain.User;
 import com.example.sportgather.repository.CourtRepository;
 import com.example.sportgather.repository.ReservationRepository;
@@ -10,7 +11,6 @@ import com.example.sportgather.util.MapUtil;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -32,8 +32,8 @@ public class ReservationService {
         return list;
     }
 
-    public Map<String, Integer> querySportStar(){
-        int top = 15;
+    public List<SportStar> querySportStar(){
+        int top = 14;
         Map<String, Integer> map = new HashMap<>();
         List<Reservation> list = reservationRepository.findByAll();
 
@@ -54,14 +54,16 @@ public class ReservationService {
         }
 
         /* res to store the final result*/
-        Map<String, Integer> tmp = new HashMap<>();
+        List<SportStar> res = new ArrayList<>();
         while (!pq.isEmpty()){
             Map.Entry<String, Integer> entry = pq.poll();
             User user = userRepository.findUserByPk(entry.getKey());
-            tmp.put(user.getFirstName() + " " + user.getLastName(), entry.getValue());
+            SportStar star = new SportStar();
+            star.setName(user.getFirstName() + " " + user.getLastName());
+            star.setReservationTimes(entry.getValue());
+            res.add(0, star);
         }
-        Map<String, Integer> result = MapUtil.sortByValue(tmp, 1);
-        return result;
+        return res;
     }
 
     public List<CourtReservation> findAvailableTimeBySport(String sportName){
@@ -101,11 +103,12 @@ public class ReservationService {
         // remove reserved time
         Set<String> availableSet = new HashSet<>();
         for (int i = 8; i <= 22; i++){
-            String sb = strDate;
+            String sb = new String(strDate);
             if (i < 10){
                 sb += " 0" + i + ":00:00";
             } else {
-                sb += strDate + " " + i + ":00:00";
+                sb += " " + i + ":00:00";
+                System.out.println(sb);
             }
             availableSet.add(sb);
         }
@@ -115,5 +118,9 @@ public class ReservationService {
         List<String> availableTime = new ArrayList<>(availableSet);
         availableTime.sort((String::compareTo));
         return availableTime;
+    }
+
+    public void deleteReservation(String id){
+        reservationRepository.deleteReservationByPk(id);
     }
 }
