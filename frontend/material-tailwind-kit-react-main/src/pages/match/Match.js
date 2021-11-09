@@ -214,8 +214,9 @@ class Match extends Component {
                             <CardBody>
                                 <H6 color="gray">{mate.firstName} {mate.lastName}</H6>
                                 <Paragraph color="blueGray">
-                                {mate.gender==='M'?'Male':'Female'}
-                                {mate.major}
+                                {mate.gender==='M'?'Male':'Female'} &nbsp;&nbsp;
+
+                                {mate.age}
                                 </Paragraph>
                             </CardBody>
                     </Card>

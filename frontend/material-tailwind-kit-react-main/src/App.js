@@ -2,7 +2,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Profile from 'pages/Profile';
 import Login from 'pages/Login';
 import Register from 'pages/Register';
-import Match from 'pages/Match';
+import Match from 'pages/match/Match';
 
 // Font Awesome Style Sheet
 import '@fortawesome/fontawesome-free/css/all.min.css';
