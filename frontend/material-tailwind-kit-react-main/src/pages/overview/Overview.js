@@ -23,6 +23,7 @@ import H1 from "@material-tailwind/react/Heading1";
 
 const overviewURL = 'http://localhost:8080/overview';
 
+
 async function getOverview_Res(){
     const id = '24';
     const reservations_back = await axios.get(overviewURL,
@@ -36,6 +37,7 @@ async function getOverview_Res(){
      
     return reservations_back;
 }
+
 
 async function getSportStar(){
     const sportStarList = await axios.get(overviewURL + "/sportstar")
@@ -52,14 +54,30 @@ class Overview extends Component {
         })
     }
 
-    async componentDidMount(){
-        const reservations = await getOverview_Res();
+    async deleteReservation(reservationid_delete){
+        
+        await axios.get(overviewURL + "/cancel",
+            {
+                params:{
+                    reservationid: reservationid_delete
+                }
+        });
+        var pos = 0
+        for (var i = 0; i < this.state.reservations.data.length; i++) {
+            if (this.state.reservations.data[i].reservationId === reservationid_delete){
+                pos = i
+            }       
+        }
+        this.state.reservations.data.splice(pos,1)
+        this.setState({       
+        });
+    }
 
-        const sportStarList = await getSportStar();
+    async componentDidMount(){
 
         this.setState({
-            reservations: reservations,
-            sportStarList: sportStarList
+            reservations: await getOverview_Res(),
+            sportStarList: await getSportStar()
         });
     }
 
@@ -71,6 +89,9 @@ class Overview extends Component {
         return (
             <Page>
             <GatherSportNav/>
+            <div className="spiltLine">
+                <H1 color="lightGreen">My Reservation</H1>
+            </div>
             <div className="overviewSection">
                 {this.state.reservations.data.map(reservation => (
                     <Card key={reservation.CourtId} className="reservationCard">
@@ -82,15 +103,19 @@ class Overview extends Component {
                         {reservation.courtId}
                         </Paragraph>
                     </CardBody>
-                <Button color="lightBlue" size="lg" ripple="light">
+                <Button color="lightBlue" size="lg" ripple="light" onClick={async()=> {
+                        await this.deleteReservation(reservation.reservationId)
+                      }}>
                     Cancel Now
                 </Button>
                 </Card>
                 ))}
             </div>
+
             <div className="spiltLine">
                 <H1 color="lightGreen">Who is the most active star?</H1>
             </div>
+
             <div className="overviewSection">
                 {this.state.sportStarList.data.map(star => (
                     <Card className="sportStarCard">

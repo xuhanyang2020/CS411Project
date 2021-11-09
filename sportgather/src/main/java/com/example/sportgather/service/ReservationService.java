@@ -120,7 +120,18 @@ public class ReservationService {
         return availableTime;
     }
 
-    public void deleteReservation(String id){
-        reservationRepository.deleteReservationByPk(id);
+    public void deleteReservation(String reservationId){
+        if (queryReservationByReservationId(reservationId)){
+            reservationRepository.deleteReservationByPk(reservationId);
+        }
+        else {
+            System.out.println("the reservation with ID = " + reservationId + "has been canceled," +
+                    "please try again");
+        }
+    }
+
+    public boolean queryReservationByReservationId(String reservationId){
+        Reservation reservation= reservationRepository.findReservationByReservationId(reservationId);
+        return reservation != null;
     }
 }

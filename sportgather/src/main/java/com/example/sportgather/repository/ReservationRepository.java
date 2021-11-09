@@ -11,6 +11,9 @@ public interface ReservationRepository {
     @Select("SELECT * FROM Reservation")
     List<Reservation> findByAll();
 
+    @Select("SELECT * FROM Reservation WHERE ReservationId = #{ReservationId}")
+    Reservation findReservationByReservationId(@Param("ReservationId") String reservationId);
+
     @Select("SELECT * FROM Reservation WHERE UserId = #{UserId}")
     List<Reservation> findByPk(@Param("UserId") String id);
 
@@ -19,6 +22,4 @@ public interface ReservationRepository {
 
     @Delete("DELETE FROM Reservation WHERE ReservationId = #{ReservationId}")
     void deleteReservationByPk(@Param("ReservationId") String id);
-
-
 }

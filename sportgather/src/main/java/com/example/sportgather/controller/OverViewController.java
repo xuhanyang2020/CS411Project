@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -38,10 +37,12 @@ public class OverViewController {
         return reservationService.querySportStar();
     }
 
-    @PostMapping(path = "/cancel")
-    public void cancelReservation(){
+    @GetMapping(path = "/cancel")
+    public void cancelReservation(@RequestParam("reservationid")String id){
+        System.out.println(id);
         String reservationId = "24";
-        reservationService.deleteReservation(reservationId);
+        System.out.println("cancel request");
+//        reservationService.deleteReservation(reservationId);
     }
 
 }
