@@ -87,6 +87,7 @@ public class ReservationService {
             // set reservation Location
             String courtId = reservation.getCourtId();
             String courtLocation = courtRepository.findLocationByPk(courtId);
+            reservation.setUserId(courtRepository.findSportByCourtId(courtId));
             reservation.setCourtId(courtLocation);
         }
         return reservations;
@@ -133,7 +134,6 @@ public class ReservationService {
 
     public boolean queryReservationByReservationId(String reservationId){
         Reservation reservation= reservationRepository.findReservationByReservationId(reservationId);
-        System.out.println(reservation);
         return reservation != null;
     }
 }

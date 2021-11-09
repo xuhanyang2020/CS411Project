@@ -13,14 +13,12 @@ import axios from 'axios';
 import Page from 'components/login/Page';
 import Moment from 'moment'
 import Image from "@material-tailwind/react/Image";
-import SportImage from "assets/img/soccer.jpeg"
 import Button from "@material-tailwind/react/Button";
 import H1 from "@material-tailwind/react/Heading1";
 
 
 
 const overviewURL = 'http://localhost:8080/overview';
-
 // send request to back-end for getting reservation of specific userid
 async function getOverview_Res(userid){
     const reservations_back = await axios.get(overviewURL,
@@ -52,12 +50,7 @@ class Overview extends Component {
     }
     // send deleting request to back-end for canceling specific reservation
     async deleteReservation(reservationid_delete){
-        await axios.get(overviewURL + "/cancel",
-            {
-                params:{
-                    reservationid: reservationid_delete
-                }
-        });
+        await axios.post(overviewURL + "/cancel" + '/' + reservationid_delete)
 
         // update front-page when some reservation is canceled
         var pos = 0
@@ -80,7 +73,7 @@ class Overview extends Component {
         // call two functions and render the page
         this.setState({
             reservations: await getOverview_Res(id),
-            sportStarList: await getSportStar()
+            sportStarList: await getSportStar(),
         });
     }
 
@@ -98,7 +91,7 @@ class Overview extends Component {
             <div className="overviewSection">
                 {this.state.reservations.data.map(reservation => (
                     <Card key={reservation.CourtId} className="reservationCard">
-                    <CardImage className="mateImage" src={SportImage} alt="Card Image"/>
+                    <CardImage className="mateImage" src={require('assets/img/'+reservation.userId+'.jpg').default} alt="Card Image"/>
         
                     <CardBody>
                         <H6 color="gray">{Moment(reservation.beginTime).format("DD MMM, YYYY")}</H6>

@@ -38,9 +38,10 @@ public class OverViewController {
         return reservationService.querySportStar();
     }
 
-    @GetMapping(path = "/cancel")
-    public void cancelReservation(@RequestParam("reservationid")String reservationId){
-        System.out.println("Receiving request for deleting" + reservationId);
+    @CrossOrigin
+    @PostMapping(path = "/cancel/{reservationid_delete}")
+    public void cancelReservation(@PathVariable("reservationid_delete") String reservationId){
+        System.out.println("Receiving request for deleting " + reservationId);
         reservationService.deleteReservation(reservationId);
     }
 
