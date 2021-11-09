@@ -5,23 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginService {
+public class RegisterService {
 
     @Autowired
     private static UserRepository userRepository;
 
-    public LoginService(UserRepository userRepository) {
+    public RegisterService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public static String showId(String email){
-        String id = userRepository.displayId(email);
-        return id;
-    }
-
-    public static String showPassword(String email){
-        String password = userRepository.displayPassword(email);
-        return password;
+    public static String addUser(String firstName, String email, String password) {
+        userRepository.saveUser(firstName, email, password);
+        return "add user done";
     }
 
 }
