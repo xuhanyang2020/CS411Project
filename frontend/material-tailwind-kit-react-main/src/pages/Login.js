@@ -96,6 +96,7 @@ class Login extends Component {
                                         await this.getId(this.state.email, this.state.password);
                                     }}
                                 >
+                                    {this.renderRedirect()}
                                     Get Started
                             </Button>
                             </div>

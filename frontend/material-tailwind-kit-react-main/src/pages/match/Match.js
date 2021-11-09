@@ -215,6 +215,7 @@ class Match extends Component {
                                 <H6 color="gray">{mate.firstName} {mate.lastName}</H6>
                                 <Paragraph color="blueGray">
                                 {mate.gender==='M'?'Male':'Female'}
+                                {mate.major}
                                 </Paragraph>
                             </CardBody>
                     </Card>

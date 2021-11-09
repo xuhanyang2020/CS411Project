@@ -11,7 +11,6 @@ import Page from 'components/login/Page';
 import Container from 'components/login/Container';
 import axios from "axios";
 import {Component} from "react";
-import {Link} from "react-router-dom";
 
 const infoUrl = 'http://localhost:8080/register/saveUser';
 
@@ -19,6 +18,7 @@ async function getRegisInfo(fstName, eml, pwd) {
     const firstName = fstName;
     const email = eml;
     const password = pwd;
+    console.log(`${firstName} ${email} ${password}`);
     const regis_info = await axios.post(infoUrl +'/' + firstName + '/' + email + '/' + password);
     return regis_info.data;
 }
