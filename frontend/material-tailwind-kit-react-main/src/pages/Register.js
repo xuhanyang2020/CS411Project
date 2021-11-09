@@ -11,6 +11,8 @@ import Page from 'components/login/Page';
 import Container from 'components/login/Container';
 import axios from "axios";
 import {Component} from "react";
+import {Link} from "react-router-dom";
+import Login from "./Login";
 
 const infoUrl = 'http://localhost:8080/register/saveUser';
 
@@ -43,18 +45,16 @@ class Register extends Component {
     render() {
         return (
             <Page>
-                <DefaultNavbar/>
                 <Container>
-                    <div className="mb-8 px-4" style={{fontSize: 20, textAlign: "center"}}>
-                        {this.state.info !== "user with such email already exists"?'Welcome to GATHERSPORTS':'User With This Email Already Exists'}
-                    </div>
                     <Card>
                         <CardHeader color="lightBlue">
                             <H5 color="white" style={{marginBottom: 0}}>
                                 Register
                             </H5>
                         </CardHeader>
-
+                        <div className="mb-8 px-4" style={{fontSize: 20, textAlign: "center"}}>
+                            {this.state.info !== "user with such email already exists"?'':'User With This Email Already Exists'}
+                        </div>
                         <CardBody>
                             <div className="mb-10 px-4">
                                 <InputIcon
@@ -97,6 +97,15 @@ class Register extends Component {
                                 >
                                     Register
                                 </Button>
+
+                                <Link to="/login"><Button
+                                    color="lightBlue"
+                                    buttonType="link"
+                                    size="lg"
+                                    ripple="dark"
+                                    >
+                                    Login
+                                </Button></Link>
                             </div>
                         </CardFooter>
                     </Card>

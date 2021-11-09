@@ -2,7 +2,7 @@ import Button from '@material-tailwind/react/Button';
 import Image from '@material-tailwind/react/Image';
 import H3 from '@material-tailwind/react/Heading3';
 import Icon from '@material-tailwind/react/Icon';
-import ProfilePicture from 'assets/img/profile.jfif';
+import ProfilePicture from 'assets/img/UIUC.jpg';
 import {Component} from "react";
 import axios from "axios";
 import InputIcon from "@material-tailwind/react/InputIcon";
@@ -101,7 +101,7 @@ class Content extends Component {
                             <div className="flex flex-wrap justify-center">
                                 <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                                     <div className="relative">
-                                        <div className="w-55 -mt-55">
+                                        <div className="w-60 -mt-60">
                                             <Image
                                                 src={ProfilePicture}
                                                 alt="Profile picture"
