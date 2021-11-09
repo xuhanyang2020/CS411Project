@@ -1,16 +1,15 @@
 package com.example.sportgather.service;
 
-import com.example.sportgather.domain.Hobby;
 import com.example.sportgather.domain.Sport;
 import com.example.sportgather.domain.User;
 import com.example.sportgather.repository.HobbyRepository;
-import com.example.sportgather.util.MapUtil;
 import com.example.sportgather.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class MatchService {
@@ -70,7 +69,7 @@ public class MatchService {
     // age = similar / nolimit
     // major = same / diff
     // gender = same / diff
-    public Set<String> queryIntersectMates(String id, String age, String gender, String major) {
+    public Set<String> queryIntersectMates(String id, String age, String gender, String major, String search) {
         List<User> mateByHobby = queryAllMatesByHobby(id); // id, count(common hobby) pair
         Set<String> UserIds = new HashSet<>();
 
@@ -133,7 +132,17 @@ public class MatchService {
             UserIds.retainAll(majorSet);
         }
 
-        return UserIds;
+
+        Set<String> UserIdAfterSearch = new HashSet<>();
+        for (String uid: UserIds) {
+            List<User> users = userRepository.findUserById(uid);
+            String username = users.get(0).getFirstName() + " " + users.get(0).getLastName();
+            if (username.toLowerCase().contains(search.toLowerCase())) {
+                UserIdAfterSearch.add(uid);
+            }
+        }
+
+        return UserIdAfterSearch;
     }
 //
 //    public Set<String> queryScoreMates(String id, String age, String gender, String major) {

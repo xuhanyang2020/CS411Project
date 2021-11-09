@@ -65,6 +65,8 @@ public class MatchViewController {
         String gender = customQuery.get("gender")!=null?customQuery.get("gender"):"";
         String major = customQuery.get("major")!=null?customQuery.get("major"):"";
 
-        return matchService.queryIntersectMates(customQuery.get("id"), age, gender, major);
+        String search = customQuery.get("search")!=null?customQuery.get("search"):"";
+
+        return matchService.queryIntersectMates(customQuery.get("id"), age, gender, major, search);
     }
 }
