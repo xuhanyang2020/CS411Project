@@ -38,11 +38,9 @@ public class OverViewController {
     }
 
     @GetMapping(path = "/cancel")
-    public void cancelReservation(@RequestParam("reservationid")String id){
-        System.out.println(id);
-        String reservationId = "24";
-        System.out.println("cancel request");
-//        reservationService.deleteReservation(reservationId);
+    public void cancelReservation(@RequestParam("reservationid")String reservationId){
+        System.out.println("Receiving request for deleting" + reservationId);
+        reservationService.deleteReservation(reservationId);
     }
 
 }

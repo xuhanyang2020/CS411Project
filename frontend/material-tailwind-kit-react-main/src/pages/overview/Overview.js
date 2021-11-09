@@ -89,8 +89,8 @@ class Overview extends Component {
         return (
             <Page>
             <GatherSportNav/>
-            <div className="spiltLine">
-                <H1 color="lightGreen">My Reservation</H1>
+            <div className="splitLine">
+                <H1 color="indigo">Your Reservation</H1>
             </div>
             <div className="overviewSection">
                 {this.state.reservations.data.map(reservation => (
@@ -112,8 +112,8 @@ class Overview extends Component {
                 ))}
             </div>
 
-            <div className="spiltLine">
-                <H1 color="lightGreen">Who is the most active star?</H1>
+            <div className="splitLine">
+                <H1 color="teal">Who is the most active star?</H1>
             </div>
 
             <div className="overviewSection">

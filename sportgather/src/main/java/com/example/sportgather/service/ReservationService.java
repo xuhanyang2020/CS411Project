@@ -123,15 +123,17 @@ public class ReservationService {
     public void deleteReservation(String reservationId){
         if (queryReservationByReservationId(reservationId)){
             reservationRepository.deleteReservationByPk(reservationId);
+            System.out.println(reservationId + " has been canceled");
         }
         else {
             System.out.println("the reservation with ID = " + reservationId + "has been canceled," +
-                    "please try again");
+                    " please try again");
         }
     }
 
     public boolean queryReservationByReservationId(String reservationId){
         Reservation reservation= reservationRepository.findReservationByReservationId(reservationId);
+        System.out.println(reservation);
         return reservation != null;
     }
 }
