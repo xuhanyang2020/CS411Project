@@ -6,12 +6,12 @@ import H5 from '@material-tailwind/react/Heading5';
 import InputIcon from '@material-tailwind/react/InputIcon';
 import Checkbox from '@material-tailwind/react/Checkbox';
 import Button from '@material-tailwind/react/Button';
-import DefaultNavbar from 'components/DefaultNavbar';
 import SimpleFooter from 'components/SimpleFooter';
 import Page from 'components/login/Page';
 import Container from 'components/login/Container';
 import axios from "axios";
 import {Component} from "react";
+import {Link} from "react-router-dom";
 
 const infoUrl = 'http://localhost:8080/login';
 
@@ -43,12 +43,14 @@ class Login extends Component {
     }
 
     render() {
+        const ConditionalLink = ({ children, to, condition }) => (!condition && to)
+            ? <Link to={'/profile'}>{children}</Link>
+            : <>{children}</>;
         return (
             <Page>
-                <DefaultNavbar/>
                 <Container>
                     <div className="mb-8 px-4" style={{fontSize: 20, textAlign: "center"}}>
-                            {this.state.info !== "email or password is wrong"?'Welcome Back':'Email or Password is wrong'}
+                            {this.state.info !== "email or password is wrong"?'':'Email or Password is wrong'}
                     </div>
                     <Card>
                         <CardHeader color="lightBlue">
@@ -87,7 +89,7 @@ class Login extends Component {
 
                         <CardFooter>
                             <div className="flex justify-center bg-bb">
-                                <Button
+                            <ConditionalLink to="/profile" condition={this.state.info !== "email or password is wrong"}><Button
                                     color="lightBlue"
                                     buttonType="link"
                                     size="lg"
@@ -97,7 +99,7 @@ class Login extends Component {
                                     }}
                                 >
                                     Get Started
-                            </Button>
+                                </Button></ConditionalLink>
                             </div>
                         </CardFooter>
 
