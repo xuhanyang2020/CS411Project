@@ -2,7 +2,7 @@ package com.example.sportgather.domain;
 
 import javax.persistence.criteria.CriteriaBuilder;
 
-public class SportStar {
+public class ReservationStar {
     private String name;
 
     private Integer reservationTimes;

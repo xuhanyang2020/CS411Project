@@ -34,10 +34,10 @@ async function getOverview_Res(userid){
 }
 
 // send request to back-end for getting sportstar for all reservations
-async function getSportStar(){
-    const sportStarList = await axios.get(overviewURL + "/sportstar")
+async function getReservationStar(){
+    const reservationStarList = await axios.get(overviewURL + "/reservationstar")
 
-    return sportStarList;
+    return reservationStarList;
 }
 
 class Overview extends Component {
@@ -45,7 +45,7 @@ class Overview extends Component {
         super(props);
         this.state = ({
             reservations: [],
-            sportStarList: [],
+            reservationStarList: [],
         })
     }
     // send deleting request to back-end for canceling specific reservation
@@ -73,7 +73,7 @@ class Overview extends Component {
         // call two functions and render the page
         this.setState({
             reservations: await getOverview_Res(id),
-            sportStarList: await getSportStar(),
+            reservationStarList: await getReservationStar(),
         });
     }
 
@@ -113,7 +113,7 @@ class Overview extends Component {
             </div>
 
             <div className="overviewSection">
-                {this.state.sportStarList.data.map(star => (
+                {this.state.reservationStarList.data.map(star => (
                     <Card className="sportStarCard">
                     <Image className="mateImage" src={Profile} rounded={true}
             raised={false}

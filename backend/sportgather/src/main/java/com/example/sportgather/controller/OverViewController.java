@@ -2,6 +2,7 @@ package com.example.sportgather.controller;
 
 import com.example.sportgather.domain.CourtReservation;
 import com.example.sportgather.domain.Reservation;
+import com.example.sportgather.domain.ReservationStar;
 import com.example.sportgather.domain.SportStar;
 import com.example.sportgather.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +33,10 @@ public class OverViewController {
         return list;
     }
 
-    @GetMapping(path = "/sportstar")
-    public List<SportStar> findSportStar(){
+    @GetMapping(path = "/reservationstar")
+    public List<ReservationStar> findSportStar(){
         System.out.println("findSportStar is called");
-        return reservationService.querySportStar();
+        return reservationService.queryReservationStar();
     }
 
     @CrossOrigin

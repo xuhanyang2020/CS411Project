@@ -1,13 +1,12 @@
 package com.example.sportgather.service;
 
-import com.example.sportgather.domain.CourtReservation;
-import com.example.sportgather.domain.Reservation;
-import com.example.sportgather.domain.SportStar;
-import com.example.sportgather.domain.User;
+import com.example.sportgather.domain.*;
 import com.example.sportgather.repository.CourtRepository;
 import com.example.sportgather.repository.ReservationRepository;
+import com.example.sportgather.repository.SportRepository;
+
+
 import com.example.sportgather.repository.UserRepository;
-import com.example.sportgather.util.MapUtil;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -19,11 +18,12 @@ public class ReservationService {
 
     private final CourtRepository courtRepository;
     private final ReservationRepository reservationRepository;
+    private final SportRepository sportRepository;
     private final UserRepository userRepository;
-
-    public ReservationService(CourtRepository courtRepository, ReservationRepository reservationRepository, UserRepository userRepository) {
-        this.courtRepository = courtRepository;
+    public ReservationService(ReservationRepository reservationRepository, CourtRepository courtRepository, SportRepository sportRepository, UserRepository userRepository) {
         this.reservationRepository = reservationRepository;
+        this.courtRepository = courtRepository;
+        this.sportRepository = sportRepository;
         this.userRepository = userRepository;
     }
 
@@ -32,7 +32,7 @@ public class ReservationService {
         return list;
     }
 
-    public List<SportStar> querySportStar(){
+    public List<ReservationStar> queryReservationStar(){
         int top = 14;
         Map<String, Integer> map = new HashMap<>();
         List<Reservation> list = reservationRepository.findByAll();
@@ -54,11 +54,11 @@ public class ReservationService {
         }
 
         /* res to store the final result*/
-        List<SportStar> res = new ArrayList<>();
+        List<ReservationStar> res = new ArrayList<>();
         while (!pq.isEmpty()){
             Map.Entry<String, Integer> entry = pq.poll();
             User user = userRepository.findUserByPk(entry.getKey());
-            SportStar star = new SportStar();
+            ReservationStar star = new ReservationStar();
             star.setName(user.getFirstName() + " " + user.getLastName());
             star.setReservationTimes(entry.getValue());
             res.add(0, star);
@@ -72,13 +72,41 @@ public class ReservationService {
 
         // all courts name of the selected sportname
         List<String> courtNames = courtRepository.findCourtsBySportName(sportName);
-        for (String courtName : courtNames){
+        List<String> courtId = courtRepository.findCourtsIdBySportName(sportName);
+        for (int i =0; i<courtNames.size();i++){
             CourtReservation courtReservation = new CourtReservation();
-            courtReservation.setCourtName(courtName);
-            courtReservation.setAvailableTime(findAvailableTime(courtName));
+            courtReservation.setCourtName(courtNames.get(i));
+            //System.out.println(courtId.get(i));
+            courtReservation.setCourtId(courtId.get(i));
+            courtReservation.setAvailableTime(findAvailableTime(courtNames.get(i)));
             ans.add(courtReservation);
         }
         return ans;
+    }
+
+    public void insertNewReservation(String CourtId,  String UserId, String BeginTime) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(BeginTime.substring(0,11));
+        sb.append(Integer.parseInt(BeginTime.substring(11, 13)) + 1);
+        sb.append(BeginTime.substring(13, BeginTime.length()));
+        String EndTime = sb.toString();
+        Integer Reservation_Id = reservationRepository.findMaxReservationId();
+        Reservation_Id = Reservation_Id+1;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        try {
+            Date BeginTime_date = dateFormat.parse(BeginTime);
+            Date EndTime_date = dateFormat.parse(EndTime);
+            Reservation reservation = new Reservation();
+            reservation.setBeginTime(BeginTime_date);
+            reservation.setEndTime(EndTime_date);
+            reservation.setUserId("24");
+            reservation.setCourtId(CourtId.substring(CourtId.length()-1,CourtId.length()));
+            // conflict hong & hanyang
+            reservation.setReservationId(String.valueOf(Reservation_Id));
+            reservationRepository.insertNewReservation(reservation);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Reservation> findAllReservationByUserId(String userId){
@@ -93,23 +121,48 @@ public class ReservationService {
         return reservations;
     }
 
+    public List<SportStar> getSportStar(String topN) {
+        List<SportStar> list = reservationRepository.getSportStar(topN);
+        return list;
+    }
+    public List<Court> findLocationByAll() {
+        List<Court> list = courtRepository.findLocationByAll();
+        return list;
+    }
+    public List<String> findCourtNameByLocation(String location) {
+        List<String> list = courtRepository.findCourtNameByLocation(location);
+        return list;
+    }
+    public List<String> findCourtNameByAll( ) {
+        List<String> list = courtRepository.findCourtNameByAll();
+        return list;
+    }
+
+    public List<String> findSportNameThathasCourtbyAll( ) {
+        List<String> list = sportRepository.findSportNameThathasCourtbyAll();
+        return list;
+    }
+    public List<Court> findCourtNameBySportName(String SportName ) {
+        List<Court> list = courtRepository.findCourtNameBySportName(SportName);
+        return list;
+    }
+
     public List<String> findAvailableTime(String courtName){
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String strDate = dateFormat.format(date).substring(0,10);
 
         // return all reserved time
-        Set<String> reservedSet = new HashSet<>(reservationRepository.findTodayReservation(strDate + "%", courtName));
+        Set<String> reservedSet = new HashSet<>(reservationRepository.findTodayReservation(strDate + "%",courtName));
 
         // remove reserved time
         Set<String> availableSet = new HashSet<>();
         for (int i = 8; i <= 22; i++){
-            String sb = new String(strDate);
+            String sb = strDate;
             if (i < 10){
                 sb += " 0" + i + ":00:00";
             } else {
                 sb += " " + i + ":00:00";
-                System.out.println(sb);
             }
             availableSet.add(sb);
         }

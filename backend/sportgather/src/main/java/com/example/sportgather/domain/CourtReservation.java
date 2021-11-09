@@ -6,7 +6,7 @@ public class CourtReservation {
 
     private String CourtName;
 
-    private String id;
+    private String CourtId;
 
     private List<String> AvailableTime;
 
@@ -18,12 +18,12 @@ public class CourtReservation {
         CourtName = courtName;
     }
 
-    public String getId() {
-        return id;
+    public String getCourtId() {
+        return CourtId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCourtId(String CourtId) {
+        this.CourtId = CourtId;
     }
 
     public List<String> getAvailableTime() {
