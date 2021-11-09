@@ -27,6 +27,7 @@ class Match extends Component {
             age: '', 
             gender: '', 
             major: '',
+            username: '',
         }
 
         this.onAgeChange = this.onAgeChange.bind(this);
@@ -34,13 +35,17 @@ class Match extends Component {
         this.onMajorChange = this.onMajorChange.bind(this);
         this.searchByName = this.searchByName.bind(this);
     }
+    async getUser(id) {
+        var result = await axios.get(infoURL+'/'+id);
+        console.log(result.data[0].firstName + ' ' + result.data[0].lastName)
+        this.setState({
+            username: result.data[0].firstName + ' ' + result.data[0].lastName
+        })
+    }
 
     async getMates(search) {
         // TODO: change id to props later
         const id = '24';
-        // console.log(this.state.major);
-        // console.log(this.state.gender);
-        // console.log(this.state.age);
         const mate_ids = await axios.get(baseURL, 
             {
             params: {
@@ -57,12 +62,13 @@ class Match extends Component {
             var result = await axios.get(infoURL+'/'+mate_id);
             mates_info.push(result.data[0]);
         }
-        console.log(mates_info.length);
+        // console.log(mates_info.length);
         return mates_info;
     }
 
     async componentDidMount() {
         const mates = await this.getMates();
+        await this.getUser("24");
         
         this.setState({
             mates: mates,
@@ -115,7 +121,6 @@ class Match extends Component {
 
     async searchByName(event) {
         const text = event.target.value;
-        console.log(text);
 
         const mates = await this.getMates(text);
         this.setState({
@@ -127,7 +132,7 @@ class Match extends Component {
 
         return (
             <Page> 
-                <GatherSportNav />
+                <GatherSportNav username={this.state.username}/>
                 <div className='filters'>
 
                 <Dropdown

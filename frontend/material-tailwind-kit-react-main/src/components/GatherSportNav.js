@@ -8,8 +8,9 @@ import NavbarCollapse from '@material-tailwind/react/NavbarCollapse';
 import Nav from '@material-tailwind/react/Nav';
 import NavLink from '@material-tailwind/react/NavLink';
 import Icon from '@material-tailwind/react/Icon';
+// import "./styles.css";
 
-export default function GatherSportNav() {
+export default function GatherSportNav({username}) {
     const [openNavbar, setOpenNavbar] = useState(false);
 
     return (
@@ -43,7 +44,8 @@ export default function GatherSportNav() {
                                 &nbsp;People
                             </NavLink>
 
-                            {/* TODO: if a user log in, show his/her firstname  */}
+                            {/* if a user log in, show his/her firstname  */}
+                            <NavLink className="username">{username}</NavLink>
                             
                         </div>
                     </Nav>
