@@ -1,10 +1,5 @@
 import DefaultNavbar from 'components/DefaultNavbar';
-import DefaultFooter from 'components/DefaultFooter';
-import Header from 'components/landing/Header';
-import WorkingSection from 'components/landing/WorkingSection';
-import TeamSection from 'components/landing/TeamSection';
-import ContactSection from 'components/landing/ContactSection';
-
+import Register from 'pages/Register';
 export default function Landing() {
     return (
         <>
@@ -12,12 +7,8 @@ export default function Landing() {
                 <DefaultNavbar />
             </div>
             <main>
-                <Header />
-                <WorkingSection />
-                <TeamSection />
-                <ContactSection />
+                <Register />
             </main>
-            <DefaultFooter />
         </>
     );
 }
