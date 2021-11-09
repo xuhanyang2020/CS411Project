@@ -25,9 +25,10 @@ public class OverViewController {
 
 
     @GetMapping()
-    public List<Reservation> findReservationById(){
+    public List<Reservation> findReservationById(@RequestParam("id") String userId){
+        System.out.println(userId);
         System.out.println("findReservationById is called");
-        List<Reservation> list = reservationService.findAllReservationByUserId("24");
+        List<Reservation> list = reservationService.findAllReservationByUserId(userId);
         return list;
     }
 

@@ -37,6 +37,7 @@ class Match extends Component {
         super(props);
         this.state = {
             mates: [],
+            id: ''
         }
     }
 

@@ -123,7 +123,7 @@ public class ReservationService {
     public void deleteReservation(String reservationId){
         if (queryReservationByReservationId(reservationId)){
             reservationRepository.deleteReservationByPk(reservationId);
-            System.out.println(reservationId + " has been canceled");
+            System.out.println("Reservation with ID " + reservationId + " has been canceled");
         }
         else {
             System.out.println("the reservation with ID = " + reservationId + "has been canceled," +

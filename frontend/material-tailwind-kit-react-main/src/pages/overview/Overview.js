@@ -1,4 +1,3 @@
- import DefaultNavbar from 'components/DefaultNavbar';
 import DefaultFooter from 'components/DefaultFooter';
 import { Component } from 'react';
 import React from "react";
@@ -9,7 +8,6 @@ import H6 from "@material-tailwind/react/Heading6";
 import Paragraph from "@material-tailwind/react/Paragraph";
 import Profile from 'assets/img/boy.jpeg';
 import './styles.overview.css';
-import CardFooter from "@material-tailwind/react/CardFooter";
 import GatherSportNav from 'components/GatherSportNav';
 import axios from 'axios';
 import Page from 'components/login/Page';
@@ -23,13 +21,12 @@ import H1 from "@material-tailwind/react/Heading1";
 
 const overviewURL = 'http://localhost:8080/overview';
 
-
-async function getOverview_Res(){
-    const id = '24';
+// send request to back-end for getting reservation of specific userid
+async function getOverview_Res(userid){
     const reservations_back = await axios.get(overviewURL,
         {
             params:{
-                id : id
+                id : userid
             }
 
     });
@@ -38,7 +35,7 @@ async function getOverview_Res(){
     return reservations_back;
 }
 
-
+// send request to back-end for getting sportstar for all reservations
 async function getSportStar(){
     const sportStarList = await axios.get(overviewURL + "/sportstar")
 
@@ -50,22 +47,24 @@ class Overview extends Component {
         super(props);
         this.state = ({
             reservations: [],
-            sportStarList: []
+            sportStarList: [],
         })
     }
-
+    // send deleting request to back-end for canceling specific reservation
     async deleteReservation(reservationid_delete){
-        
         await axios.get(overviewURL + "/cancel",
             {
                 params:{
                     reservationid: reservationid_delete
                 }
         });
+
+        // update front-page when some reservation is canceled
         var pos = 0
         for (var i = 0; i < this.state.reservations.data.length; i++) {
             if (this.state.reservations.data[i].reservationId === reservationid_delete){
                 pos = i
+                // traverse all the positions, find position of canceled reservation
             }       
         }
         this.state.reservations.data.splice(pos,1)
@@ -74,9 +73,13 @@ class Overview extends Component {
     }
 
     async componentDidMount(){
-
+        // extract params from url
+        let search = window.location.search;
+        let params = new URLSearchParams(search);
+        let id = params.get('id');
+        // call two functions and render the page
         this.setState({
-            reservations: await getOverview_Res(),
+            reservations: await getOverview_Res(id),
             sportStarList: await getSportStar()
         });
     }
