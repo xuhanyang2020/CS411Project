@@ -55,10 +55,15 @@ public class ReservationService {
 
         /* res to store the final result*/
         List<ReservationStar> res = new ArrayList<>();
+        String[] sportType = new String[]{"Basketball", "Football","Cycling","Badminton","Bowling","Meditation","Squash","Figure Skating","" +
+                "American Football","Boxing","Volleyball","Tennis","Table Tennis","Billiards"};
+        int i = 0;
         while (!pq.isEmpty()){
             Map.Entry<String, Integer> entry = pq.poll();
             User user = (userRepository.findUserById(entry.getKey())).get(0);
             ReservationStar star = new ReservationStar();
+            star.setType(sportType[i]);
+            i++;
             star.setName(user.getFirstName() + " " + user.getLastName());
             star.setReservationTimes(entry.getValue());
             res.add(0, star);
@@ -100,7 +105,7 @@ public class ReservationService {
             reservation.setBeginTime(BeginTime_date);
             reservation.setEndTime(EndTime_date);
             reservation.setUserId("24");
-            reservation.setCourtId(CourtId.substring(CourtId.length()-1,CourtId.length()));
+            reservation.setCourtId(CourtId);
             // conflict hong & hanyang
             reservation.setReservationId(String.valueOf(Reservation_Id));
             reservationRepository.insertNewReservation(reservation);

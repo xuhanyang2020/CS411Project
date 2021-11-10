@@ -195,7 +195,7 @@ class Reservation extends Component {
             
             <Page> 
                 
-                <GatherSportNav />
+                <GatherSportNav username="RUTH SABIN"/>
 
 
 

@@ -46,6 +46,7 @@ class Overview extends Component {
         this.state = ({
             reservations: [],
             reservationStarList: [],
+            sportTypeList: []
         })
     }
     // send deleting request to back-end for canceling specific reservation
@@ -84,7 +85,7 @@ class Overview extends Component {
         }
         return (
             <Page>
-            <GatherSportNav/>
+            <GatherSportNav username="RUTH SABIN"/>
             <div className="splitLine">
                 <H1 color="indigo">Your Reservation</H1>
             </div>
@@ -94,7 +95,7 @@ class Overview extends Component {
                     <CardImage className="mateImage" src={require('assets/img/'+reservation.userId+'.jpg').default} alt="Card Image"/>
         
                     <CardBody>
-                        <H6 color="gray">{Moment(reservation.beginTime).format("DD MMM, YYYY")}</H6>
+                        <H6 color="gray">{Moment(reservation.beginTime).format("DD-MMM-YYYY HH:mm:ss")}</H6>
                         <Paragraph color="gray">
                         {reservation.courtId}
                         </Paragraph>
@@ -120,14 +121,14 @@ class Overview extends Component {
             alt="Rounded Image"/>
                     <CardBody>
                         <H6 color="gray">{star.name}</H6>
-                        <Paragraph color="gray">
+                        <Paragraph color="gray">{star.type} <br/>
                         {star.reservationTimes} Times !
                         </Paragraph>
                     </CardBody>
                 </Card>
                 ))}
             </div>
-            <DefaultFooter/>
+            {/* <DefaultFooter/> */}
             </Page>
         );
     }

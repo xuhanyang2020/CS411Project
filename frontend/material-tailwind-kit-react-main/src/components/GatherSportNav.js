@@ -9,7 +9,6 @@ import NavbarCollapse from '@material-tailwind/react/NavbarCollapse';
 import Nav from '@material-tailwind/react/Nav';
 import NavLink from '@material-tailwind/react/NavLink';
 import Icon from '@material-tailwind/react/Icon';
-// import "./styles.css";
 
 export default function GatherSportNav({username}) {
     const [openNavbar, setOpenNavbar] = useState(false);
@@ -22,21 +21,25 @@ export default function GatherSportNav({username}) {
         <Navbar navbar>
             <NavbarContainer>
                 <NavbarWrapper>
+                <Link to='/overview?id=24'>
                         <NavbarBrand>gatherSports</NavbarBrand>
                     <NavbarToggler
                         onClick={() => setOpenNavbar(!openNavbar)}
                         // color="black"
                     />
+                    </Link>
                 </NavbarWrapper>
 
                 <NavbarCollapse open={openNavbar}>
                     <Nav>
                         <div className="flex flex-col z-50 lg:flex-row lg:items-center">
-                            <NavLink
-                            >
-                                <Icon name="description" size="2xl" />
-                                &nbsp;Reservation
-                            </NavLink>
+                            <Link to='/reservation'>
+                                <NavLink
+                                >
+                                    <Icon name="description" size="2xl" />
+                                    &nbsp;Reservation
+                                </NavLink>
+                            </Link>
 
                             <Link to='/match'>
                                 <NavLink>
