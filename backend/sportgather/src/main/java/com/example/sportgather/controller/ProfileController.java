@@ -36,18 +36,51 @@ public class ProfileController {
     }
 
     @CrossOrigin
-    @PutMapping(path="/updateInfo/{lastName}/{gender}/{age}/{phone}/{location}/{type}/{id}")
-    public String updateInfo(@PathVariable("lastName") String lastName,
-                           @PathVariable("gender") String gender,
-                           @PathVariable("age") Integer age,
-                             @PathVariable("phone") String phone,
-                             @PathVariable("location") String location,
-                             @PathVariable("type") String type,
+    @PutMapping(path="/updateName/{lastName}/{id}")
+    public String updateName(@PathVariable("lastName") String lastName,
                              @PathVariable("id") String id) {
-        System.out.println("updateInfo is called");
-        return ProfileService.modifyInfo(lastName, gender, age, phone, location, type, id);
+        System.out.println("updateName is called");
+        return ProfileService.modifyName(lastName, id);
     }
 
+    @CrossOrigin
+    @PutMapping(path="/updateGender/{gender}/{id}")
+    public String updateGender(@PathVariable("gender") String gender,
+                             @PathVariable("id") String id) {
+        System.out.println("updateGender is called");
+        return ProfileService.modifyGender(gender, id);
+    }
 
+    @CrossOrigin
+    @PutMapping(path="/updateAge/{age}/{id}")
+    public String updateAge(@PathVariable("age") Integer age,
+                            @PathVariable("id") String id) {
+        System.out.println("updateAge is called");
+        return ProfileService.modifyAge(age, id);
+    }
+
+    @CrossOrigin
+    @PutMapping(path="/updatePhone/{phone}/{id}")
+    public String updatePhone(@PathVariable("phone") String phone,
+                              @PathVariable("id") String id) {
+        System.out.println("updatePhone is called");
+        return ProfileService.modifyPhone(phone, id);
+    }
+
+    @CrossOrigin
+    @PutMapping(path="/updateLocation/{location}/{id}")
+    public String updateLocation(@PathVariable("location") String location,
+                                 @PathVariable("id") String id) {
+        System.out.println("updateLocation is called");
+        return ProfileService.modifyLocation(location, id);
+    }
+
+    @CrossOrigin
+    @PutMapping(path="/updateUserType/{type}/{id}")
+    public String updateUserType(@PathVariable("type") String type,
+                                 @PathVariable("id") String id) {
+        System.out.println("updateUserType is called");
+        return ProfileService.modifyUserType(type, id);
+    }
 
 }
