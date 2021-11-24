@@ -7,7 +7,6 @@ export default function Profile() {
         <>
             <GatherSportNav username="Ruth Sabin"/>
             <main>
-                <Header />
                 <Content />
             </main>
         </>
