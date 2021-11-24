@@ -4,7 +4,8 @@ import H3 from '@material-tailwind/react/Heading3';
 import H1 from "@material-tailwind/react/Heading1";
 import Page from 'components/login/Page';
 import Icon from '@material-tailwind/react/Icon';
-import ProfilePicture from 'assets/img/UIUC.jpg';
+import ProfilePicture from 'assets/img/sport.jpg';
+import Background from 'assets/img/sky.jpg';
 import {Component} from "react";
 import axios from "axios";
 import InputIcon from "@material-tailwind/react/InputIcon";
@@ -40,7 +41,7 @@ class Content extends Component {
             email: "",
             type: "",
             typ: "",
-            id: "24",
+            id: "3000",
         }
     }
 
@@ -133,157 +134,139 @@ class Content extends Component {
     render() {
         return (
             <Page>
-                <div className="container max-w-7xl px-4 mx-auto">
-                    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-2xl -mt-64">
-                        <div className="px-6">
-                            <div className="flex flex-wrap justify-center">
-                                    <div className="-align-center">
-                                        <div className="w-30 h-50 p-3 -mt-64">
-                                            <Image
-                                                src={ProfilePicture}
-                                                alt="Profile picture"
-                                                rounded
-                                            />
-                                        </div>
-                                    </div>
+                <div
+                    style={{
+                        background:`url(${Background})`,
+                    }}
+                >
+                    <div className="flex flex-wrap justify-center">
+                        <div className="text-center my-8">
+                            <Image
+                                src={ProfilePicture}
+                                alt="Profile picture"
+                                rounded
+                            />
+                            <H1 color="blue">Your Profile Info</H1>
+                            <H3 color="blue">{this.state.firstName}</H3>
+                            <H3 color="blue">{this.state.lastName}</H3>
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
+                                    color="lightBlue"
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updateName/",this.state.lstNm, this.state.id);
+                                        }}>
+                                    Update Last Name
+                                </Button>
                             </div>
-                            <div className="text-center my-8">
-                                <H1 color="blue">Your Profile Info</H1>
+                            <InputIcon
+                                iconName="face"
+                                placeholder="LastName"
+                                onChange={event => this.setState({lstNm: event.target.value})}/>
+                            <div className="mb-2 text-orange-800 font-medium flex items-center justify-center gap-2">
+                                <Icon name="location_city" size="3xl"/>
+                                {this.state.location}
                             </div>
-                            <div className="text-center my-8">
-                                <H3 color="blue">{this.state.firstName}</H3>
-                                <H3 color="blue">{this.state.lastName}</H3>
-                                <div className="mb-2 flex items-center justify-center gap-2">
-                                    <Button
-                                        color="lightBlue"
-                                        ripple="light"
-                                        onClick=
-                                            {async () => {
-                                                await this.updInfo("/updateName/",this.state.lstNm, this.state.id);
-                                            }}>
-                                        Update Last Name
-                                    </Button>
-                                </div>
-                                <InputIcon
-                                        iconName="face"
-                                        type="LastName"
-                                        color="lightBlue"
-                                        placeholder="LastName"
-                                        onChange={event => this.setState({lstNm: event.target.value})}/>
-                                <div className="mb-2 text-orange-800 font-medium flex items-center justify-center gap-2">
-                                    <Icon name="location_city" size="3xl"/>
-                                    {this.state.location}
-                                </div>
-                                <div className="mb-2 flex items-center justify-center gap-2">
-                                    <Button
-                                        color="orange"
-                                        ripple="light"
-                                        onClick=
-                                            {async () => {
-                                                await this.updInfo("/updateLocation/",this.state.loc, this.state.id);
-                                            }}>
-                                        Update Location
-                                    </Button>
-                                </div>
-                                <InputIcon
-                                    iconName="location_city"
-                                    type="location"
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
                                     color="orange"
-                                    placeholder="location"
-                                    onChange={event => this.setState({loc: event.target.value})}/>
-                                <div className="mb-2 text-indigo-800 font-medium flex items-center justify-center gap-2">
-                                    <Icon name="security" size="3xl"/>
-                                    UserId: {this.state.id}
-                                </div>
-                                <div className="mb-2 text-purple-800 font-medium flex items-center justify-center gap-2">
-                                    <Icon name="email" size="3xl"/>
-                                    {this.state.email}
-                                </div>
-                                <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
-                                    <Icon name="phone" size="3xl"/>
-                                    {this.state.phone}
-                                </div>
-                                <div className="mb-2 flex items-center justify-center gap-2">
-                                    <Button
-                                        color="green"
-                                        ripple="light"
-                                        onClick=
-                                            {async () => {
-                                                await this.updInfo("/updatePhone/",this.state.ph, this.state.id);
-                                            }}>
-                                        Update Phone
-                                    </Button>
-                                </div>
-                                <InputIcon
-                                        iconName="phone"
-                                        type="phone"
-                                        color="green"
-                                        placeholder="phone"
-                                        onChange={event => this.setState({ph: event.target.value})}/>
-                                <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
-                                    <Icon name="perm_identity" size="3xl"/>
-                                    {this.state.gender==="F"?"Female":"Male"}
-                                </div>
-                                <div className="mb-2 flex items-center justify-center gap-2">
-                                    <Button
-                                        color="green"
-                                        ripple="light"
-                                        onClick=
-                                            {async () => {
-                                                await this.updInfo("/updateGender/",this.state.gd, this.state.id);
-                                            }}>
-                                        Update Gender
-                                    </Button>
-                                </div>
-                                <InputIcon
-                                        iconName="perm_identity"
-                                        type="gender"
-                                        color="green"
-                                        placeholder="gender"
-                                        onChange={event => this.setState({gd: event.target.value})}/>
-                                <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
-                                    <Icon name="assignment_ind" size="3xl"/>
-                                    {this.state.type==="S"?"Student":"Teacher"}
-                                </div>
-                                <div className="mb-2 flex items-center justify-center gap-2">
-                                    <Button
-                                        color="green"
-                                        ripple="light"
-                                        onClick=
-                                            {async () => {
-                                                await this.updInfo("/updateUserType/",this.state.typ, this.state.id);
-                                            }}>
-                                        Update User Type
-                                    </Button>
-                                </div>
-                                <InputIcon
-                                        iconName="assignment_ind"
-                                        type="user type"
-                                        color="green"
-                                        placeholder="user type"
-                                        onChange={event => this.setState({typ: event.target.value})}/>
-                                <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
-                                    <Icon name="cake" size="3xl"/>
-                                    {this.state.age}
-                                </div>
-                                <div className="mb-2 flex items-center justify-center gap-2">
-                                    <Button
-                                        color="green"
-                                        ripple="light"
-                                        onClick=
-                                            {async () => {
-                                                await this.updInfo("/updateAge/",this.state.ag, this.state.id);
-                                            }}>
-                                        Update Age
-                                    </Button>
-                                </div>
-                                <InputIcon
-                                        iconName="cake"
-                                        type="age"
-                                        color="green"
-                                        placeholder="age"
-                                        onChange={event => this.setState({ag: event.target.value})}/>
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updateLocation/",this.state.loc, this.state.id);
+                                        }}>
+                                    Update Location
+                                </Button>
                             </div>
+                            <InputIcon
+                                iconName="location_city"
+                                placeholder="location"
+                                onChange={event => this.setState({loc: event.target.value})}/>
+                            <div className="mb-2 text-indigo-800 font-medium flex items-center justify-center gap-2">
+                                <Icon name="security" size="3xl"/>
+                                UserId: {this.state.id}
+                            </div>
+                            <div className="mb-2 text-purple-800 font-medium flex items-center justify-center gap-2">
+                                <Icon name="email" size="3xl"/>
+                                {this.state.email}
+                            </div>
+                            <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
+                                <Icon name="phone" size="3xl"/>
+                                {this.state.phone}
+                            </div>
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
+                                    color="green"
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updatePhone/",this.state.ph, this.state.id);
+                                        }}>
+                                    Update Phone
+                                </Button>
+                            </div>
+                            <InputIcon
+                                iconName="phone"
+                                placeholder="phone"
+                                onChange={event => this.setState({ph: event.target.value})}/>
+                            <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
+                                <Icon name="perm_identity" size="3xl"/>
+                                {this.state.gender==="F"?"Female":"Male"}
+                            </div>
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
+                                    color="green"
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updateGender/",this.state.gd, this.state.id);
+                                        }}>
+                                    Update Gender
+                                </Button>
+                            </div>
+                            <InputIcon
+                                iconName="perm_identity"
+                                placeholder="gender"
+                                onChange={event => this.setState({gd: event.target.value})}/>
+                            <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
+                                <Icon name="assignment_ind" size="3xl"/>
+                                {this.state.type==="S"?"Student":"Teacher"}
+                            </div>
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
+                                    color="green"
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updateUserType/",this.state.typ, this.state.id);
+                                        }}>
+                                    Update User Type
+                                </Button>
+                            </div>
+                            <InputIcon
+                                iconName="assignment_ind"
+                                placeholder="user type"
+                                onChange={event => this.setState({typ: event.target.value})}/>
+                            <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
+                                <Icon name="cake" size="3xl"/>
+                                {this.state.age}
+                            </div>
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
+                                    color="green"
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updateAge/",this.state.ag, this.state.id);
+                                        }}>
+                                    Update Age
+                                </Button>
+                            </div>
+                            <InputIcon
+                                iconName="cake"
+                                placeholder="age"
+                                onChange={event => this.setState({ag: event.target.value})}/>
                         </div>
                     </div>
                 </div>
