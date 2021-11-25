@@ -1,16 +1,14 @@
 package com.example.sportgather.controller;
 
-import com.example.sportgather.domain.CourtReservation;
-import com.example.sportgather.domain.Reservation;
-import com.example.sportgather.domain.ReservationStar;
-import com.example.sportgather.domain.SportStar;
+import com.example.sportgather.domain.*;
+import com.example.sportgather.service.EnrollmentService;
 import com.example.sportgather.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SecureRandom;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(path = "overview")
@@ -18,14 +16,16 @@ import java.util.Map;
 public class OverViewController {
 
     private final ReservationService reservationService;
+    private final EnrollmentService enrollmentService;
 
     @Autowired
-    public OverViewController( ReservationService reservationService) {
+    public OverViewController(ReservationService reservationService, EnrollmentService enrollmentService) {
         this.reservationService = reservationService;
+        this.enrollmentService = enrollmentService;
     }
 
-
-    @GetMapping()
+    // reservation operations
+    @GetMapping("/reservation")
     public List<Reservation> findReservationById(@RequestParam("id") String userId){
         System.out.println(userId);
         System.out.println("findReservationById is called");
@@ -44,10 +44,23 @@ public class OverViewController {
     }
 
     @CrossOrigin
-    @PostMapping(path = "/cancel/{reservationid_delete}")
+    @PostMapping(path = "/reservation/cancel/{reservationid_delete}")
     public void cancelReservation(@PathVariable("reservationid_delete") String reservationId){
         System.out.println("Receiving request for deleting " + reservationId);
         reservationService.deleteReservation(reservationId);
+    }
+
+    @GetMapping("/enrollment")
+    public List<Course> findEnrollmentById(@RequestParam("id") String userId){
+        System.out.println("Receiving request for deleting " + userId);
+        return enrollmentService.findEnrollmentByUser(userId);
+    }
+
+    //waiting change to post method
+    @CrossOrigin
+    @GetMapping("/enrollment/cancel/{userId}/{courseId}")
+    public void cancelEnrollment(@PathVariable("userId") String userId, @PathVariable("courseId")String courseId){
+        enrollmentService.deleteEnrollment(userId, courseId);
     }
 
 }

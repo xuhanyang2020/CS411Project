@@ -15,13 +15,20 @@ import Moment from 'moment'
 import Image from "@material-tailwind/react/Image";
 import Button from "@material-tailwind/react/Button";
 import H1 from "@material-tailwind/react/Heading1";
-
+import CardRow from "@material-tailwind/react/CardRow";
+import CardHeader from "@material-tailwind/react/CardHeader";
+import CardStatus from "@material-tailwind/react/CardStatus";
+import CardStatusFooter from "@material-tailwind/react/CardStatusFooter";
+import Icon from "@material-tailwind/react/Icon";
+import Header from 'components/landing/Header';
+import StatusCard from 'components/landing/StatusCard';
+import HeaderBackground from 'components/HeaderBackground';
 
 
 const overviewURL = 'http://localhost:8080/overview';
 // send request to back-end for getting reservation of specific userid
 async function getOverview_Res(userid){
-    const reservations_back = await axios.get(overviewURL,
+    const reservations_back = await axios.get(overviewURL + "/reservation",
         {
             params:{
                 id : userid
@@ -29,8 +36,28 @@ async function getOverview_Res(userid){
 
     });
         
-     
+    console.log(reservations_back.length);     
     return reservations_back;
+}
+
+async function getOverview_Appoint(userid){
+    const appointment_back = await axios.get(overviewURL + "/appointment", {
+        params:{
+            id: userid
+        }
+    })
+
+    return appointment_back;
+}
+
+async function getOverview_Enroll(userid){
+    const enrollment_back = await axios.get(overviewURL + "/enrollment", {
+        params:{
+            id: userid
+        }
+    })
+
+    return enrollment_back;
 }
 
 // send request to back-end for getting sportstar for all reservations
@@ -44,14 +71,16 @@ class Overview extends Component {
     constructor(props) {
         super(props);
         this.state = ({
+            id: "",
             reservations: [],
             reservationStarList: [],
-            sportTypeList: []
+            appointments: [],
+            enrollments:[]
         })
     }
     // send deleting request to back-end for canceling specific reservation
     async deleteReservation(reservationid_delete){
-        await axios.post(overviewURL + "/cancel" + '/' + reservationid_delete)
+        await axios.post(overviewURL + "/reservation/cancel" + '/' + reservationid_delete)
 
         // update front-page when some reservation is canceled
         var pos = 0
@@ -74,7 +103,9 @@ class Overview extends Component {
         // call two functions and render the page
         this.setState({
             reservations: await getOverview_Res(id),
+            enrollments: await getOverview_Enroll(id),
             reservationStarList: await getReservationStar(),
+            id: id
         });
     }
 
@@ -86,6 +117,31 @@ class Overview extends Component {
         return (
             <Page>
             <GatherSportNav username="RUTH SABIN"/>
+            <HeaderBackground/>
+            <div className="container max-w-7xl mx-auto px-4">
+                <div className="flex flex-wrap relative z-50">
+                    <StatusCard color="red" icon="stars" title="Reservation">
+                        In GatherSport application, you can make reservation of courts on campus for 
+                        time that suits you best!
+                    </StatusCard>
+                    <StatusCard
+                        color="lightBlue"
+                        icon="autorenew"
+                        title="Course"
+                    >
+                        In order to better help sportfans get started with a sport, 
+                        we provide you with diverse sports courses!
+                    </StatusCard>
+                    <StatusCard
+                        color="teal"
+                        icon="fingerprint"
+                        title="Appointment"
+                    >
+                        In-person appointments could be made with professional coaches
+                        for detailed instructions, which helps you become a sport star!
+                    </StatusCard>
+                </div>
+            </div>
             <div className="splitLine">
                 <H1 color="indigo">Your Reservation</H1>
             </div>
@@ -109,6 +165,32 @@ class Overview extends Component {
                 ))}
             </div>
 
+            
+
+            <div className="splitLine">
+                <H1 color="blue">Your Enrollment</H1>
+            </div>
+            <div className="overviewSection">
+                {this.state.enrollments.data.map(enrollment => (
+                
+                    <Card className="reservationCard">
+                        <CardRow>
+                            <CardHeader color="lightBlue" size="lg" iconOnly>
+                                <Icon name="groups" size="5xl" color="white" />
+                            </CardHeader>
+
+                            <CardStatus title={enrollment.name} amount="Tuesday 9pm" />
+                        </CardRow>
+
+                        <CardStatusFooter color="green" amount="56%" date={"  Course Until  "+Moment(enrollment.endDate).format("YYYY-MMM-DD")}>
+                        </CardStatusFooter>
+                    </Card>
+                
+                ))}
+
+            </div>
+           
+
             <div className="splitLine">
                 <H1 color="teal">Who is the most active star?</H1>
             </div>
@@ -129,7 +211,7 @@ class Overview extends Component {
                 ))}
             </div>
             {/* <DefaultFooter/> */}
-            </Page>
+        </Page>
         );
     }
 }

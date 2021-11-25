@@ -1,0 +1,39 @@
+.HobbySelection {
+    text-align: center;
+    width:10%;
+    position: absolute;
+    top: 950px;
+    left: 1420px;
+   
+}
+.MateSelection {
+    text-align: center;
+    width:10%;
+    position: absolute;
+    top: 950px;
+    left: 1280px;
+   
+}
+.TypeSelection {
+    text-align: center;
+    width:20%;
+    position: absolute;
+    top: 950px;
+    left: 380px;
+   
+}
+.Header {
+    text-align: center;
+    height: 500px;
+    position: absolute;
+    top: 80px;
+    left: 750px;
+}
+.reservationcard {
+    display: inline-block;
+    width:20% !important;
+    margin: 20px;
+    position: relative;
+    top: 150px;
+    left:0px;
+}
