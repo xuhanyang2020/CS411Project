@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("course")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CourseController {
 
     private final CourseService courseService;
@@ -22,21 +23,22 @@ public class CourseController {
         return courseService.findAllCourse();
     }
 
+
     @GetMapping("/hobby")
     public List<Course> findCourseByHobby(@RequestParam("id") String userId){
 
         List<Course> list = courseService.recommendByHobby(userId);
-        System.out.println("list size " + list.size());
-
         return list;
     }
 
-//    @GetMapping("mates/{id}")
-//    public List<Course> findCourseByMate(@PathVariable("id") String userId){
-//
-//    }
-    @GetMapping("sport/{sportId}")
-    public List<Course> findCourseBySport(@PathVariable("sportId") String sportId){
-        return courseService.recommendBySport(sportId);
+    @GetMapping("mates")
+    public List<Course> findCourseByMate(@RequestParam("id") String userId){
+        return courseService.recommendByMate(userId);
+    }
+
+    @GetMapping("sport/{sportName}")
+    public List<Course> findCourseBySport(@PathVariable("sportName") String sportName){
+        System.out.println(sportName);
+        return courseService.recommendBySport(sportName);
     }
 }

@@ -1,25 +1,19 @@
 import { Component } from 'react';
 import React from "react";
-import Card from "@material-tailwind/react/Card";
-import CardImage from "@material-tailwind/react/CardImage";
-import CardBody from "@material-tailwind/react/CardBody";
-import H6 from "@material-tailwind/react/Heading6";
-import Paragraph from "@material-tailwind/react/Paragraph";
-import CardFooter from "@material-tailwind/react/CardFooter";
-import Profile from 'assets/img/boy.jpeg';
+
 import './styles.course.css';
 import TeamSection from 'components/landing/TeamSection';
 import GatherSportNav from 'components/GatherSportNav';
 import axios from 'axios';
 import Page from 'components/login/Page';
-import Moment from 'moment'
-import Image from "@material-tailwind/react/Image";
 import Button from "@material-tailwind/react/Button";
 import H1 from "@material-tailwind/react/Heading1";
 import Dropdown from "@material-tailwind/react/Dropdown"
 import DropdownItem from "@material-tailwind/react/DropdownItem"
+import Icon from "@material-tailwind/react/Icon";
+import H6 from '@material-tailwind/react/Heading6';
+import LeadText from '@material-tailwind/react/LeadText';
 import DropdownLink from "@material-tailwind/react/DropdownLink"
-import H2 from "@material-tailwind/react/Heading2";
 
 
 
@@ -30,30 +24,15 @@ async function getSports(){
     console.log("get sport list");
     const sportList = await axios.get(sportURL);
 
-    console.log(sportList[0]);
+    console.log(sportList);
     return sportList;
 }
 
-async function recommendCourseByType(userid){
-    const courseListMates = await axios.get(courseURL + "/mate",
-        {
-            params:{
-                id : userid
-            }
 
-    });
+async function findAllCourse(){
+    const courseListAll = await axios.get(courseURL + "/all");
 
-    // this.setState({
-    //     typeBased: "false",
-    //     hobbyBased: "false",
-
-    // })
-
-}
-
-async function findAllCourse(userid){
-    const courseListAll = await axios.get(courseURL);
-
+    console.log(courseListAll);
     return courseListAll;
 }
 
@@ -66,36 +45,63 @@ class Course extends Component {
             sportList: []
         })
     }
-    // send deleting request to back-end for canceling specific reservation
+    // recommend courses by user's hobby
     async recommendCourseByHobby(userid){
-        console.log(userid);
-        const courseListHobby = await axios.get(courseURL + "/hobby",
+
+        const courseListHobby = await axios.get(courseURL + "/hobby",{
+            params:{
+                id: userid
+            }
+        });
+        this.setState({    
+            courseList: courseListHobby.data  
+        });
+    }
+    // recommend courses by user's mates' enrollments
+    async recommendCourseByMates(userid){
+
+        const courseListMates = await axios.get(courseURL + "/mates",
             {
                 params:{
                     id : userid
                 }
     
         });
-        this.setState({       
-        });
-        
-        
-        //return courseListHobby;
+    
+        this.setState({
+            courseList: courseListMates.data  
+        })
+    
     }
+    // recommend courses by sports name
+    async recommendCourseBySport(sport){
 
+        const courseListSport = await axios.get(courseURL + "/sport", {
+            params:{
+                sport: sport
+            }
+        });
+    
+        this.setState({
+            courseList: courseListSport.data  
+        })
+    
+    }
     async componentDidMount(){
         // extract params from url
         let search = window.location.search;
         let params = new URLSearchParams(search);
         let id = params.get('id');
         console.log(id);
+
         // call two functions and render the page
         // this.state.id = id;
         this.setState({
             id: id, 
-            sportList: await (await getSports()).data
+            sportList: await (await getSports()).data,
+            courseList: await (await findAllCourse()).data
         });
-        console.log(1);
+        console.log(this.state.id);
     }
 
     render() {
@@ -109,7 +115,7 @@ class Course extends Component {
                 <GatherSportNav username="RUTH SABIN"/>
 
                 <TeamSection/>
-
+                
                 {/* <div className="Header">
         <H2 color="indigo">Select Your Course</H2>
 
@@ -123,11 +129,11 @@ class Course extends Component {
                     block={false}
                     iconOnly={false}
                     ripple="light"
-                    // onClick={async()=> {
-                    //     await this.recommendCourseByHobby(this.state.id)
-                    //   }}
+                    onClick={async()=> {
+                        await this.recommendCourseByHobby(this.state.id)
+                      }}
                 >
-                    reservation
+                    hobby
                 </Button>
         </div>
 
@@ -140,6 +146,9 @@ class Course extends Component {
                         block={false}
                         iconOnly={false}
                         ripple="light"
+                        onClick={async()=> {
+                            await this.recommendCourseByMates(this.state.id)
+                          }}
                     >
                         Sport mates
                     </Button>
@@ -149,7 +158,7 @@ class Course extends Component {
                     <Dropdown
                         color="indigo"
                         placement="bottom-start"
-                        buttonText="Regular Dropdown"
+                        buttonText="Choose a sport"
                         buttonType="filled"
                         size="regular"
                         rounded={false}
@@ -157,53 +166,61 @@ class Course extends Component {
                         ripple="light"
                     >
                         {this.state.sportList.map(sport=>(
-                            <DropdownItem
+                            <DropdownLink
                             
                             color="lightBlue"
                             ripple="light"
-                            
+                            onClick={async()=> {
+                                await this.recommendCourseBySport(sport)
+                              }}
                         >
                            {sport}
-                        </DropdownItem>
+                        </DropdownLink>
                         ))}                      
                     </Dropdown>
                     
                 </div>  
                 <div height="500px">
                     <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                </div>          
+                    
+                </div>   
+
+                <div className="courseList">
+                    <div className="courseTitle">
+                            <H6>Course Title</H6>
+                    </div>
+                    <div className="courseRating">
+                            <H6>Rating</H6>
+                    </div>
+                    <div className="courseLink">
+                    <H6>Link</H6>
+                    </div>
+                </div>
+                <div>
+                    {this.state.courseList.map((course)=> (
+                        <div className="courseList">
+                        <div className="courseTitle"><LeadText color="lightBlue">{course.name}</LeadText>
+                        </div>
+                    <div className="courseRating"><LeadText color="lightBlue">{course.rating}</LeadText></div>
+                    <div className="courseLink">
+                    <Button
+                        color="red"
+                        buttonType="link"
+                        size="regular"
+                        rounded={true}
+                        block={false}
+                        iconOnly={true}
+                        ripple="dark"
+                    >
+                        <Icon name="favorite" size="sm" />
+                    </Button>
+                    </div>
+                    </div>
+                    ))}
+                </div>
                 </Page>
                 
-            // <Page>
-            // <GatherSportNav username="RUTH SABIN"/>
-            // <div className="CourseTitle"> 
-            //     <H2 color="indigo">Select Your Course</H2>
-            // </div>
-            // <div className="TypeSelection">
-            // <Dropdown
-                  
-            //             color="lightBlue"
-            //             placement="bottom-start"
-            //             buttonText="ChooseSport"
-            //             buttonType="filled"
-            //             size="regular"
-            //             rounded={false}
-            //             block={false}
-            //             ripple="light"> 
-            //          </Dropdown>
-                  
-            //     </div>
-            
-                
-            
-            // {/* <DefaultFooter/> */}
-            // </Page>
+
         );
     }
 }

@@ -63,7 +63,7 @@ async function getOverview_Enroll(userid){
 // send request to back-end for getting sportstar for all reservations
 async function getReservationStar(){
     const reservationStarList = await axios.get(overviewURL + "/reservationstar")
-
+    console.log(reservationStarList);
     return reservationStarList;
 }
 

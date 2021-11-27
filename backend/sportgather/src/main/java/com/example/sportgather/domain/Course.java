@@ -1,5 +1,6 @@
 package com.example.sportgather.domain;
 
+import javax.swing.plaf.IconUIResource;
 import java.util.Date;
 
 public class Course {
@@ -10,15 +11,19 @@ public class Course {
 
     private String location;
 
-    private Date startDate;
+    private String description;
 
-    private Date endDate;
+    private double rating;
 
-    private String courseType;
+    private String sportId;
 
-    private String SportId;
+    private String teacherId;
 
-    private String TeacherId;
+    private String date;
+
+    private String time;
+
+    private int capacity;
 
     public String getCourseId() {
         return courseId;
@@ -44,43 +49,59 @@ public class Course {
         this.location = location;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public String getDescription() {
+        return description;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public double getRating() {
+        return rating;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getCourseType() {
-        return courseType;
-    }
-
-    public void setCourseType(String courseType) {
-        this.courseType = courseType;
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
     public String getSportId() {
-        return SportId;
+        return sportId;
     }
 
     public void setSportId(String sportId) {
-        SportId = sportId;
+        this.sportId = sportId;
     }
 
     public String getTeacherId() {
-        return TeacherId;
+        return teacherId;
     }
 
     public void setTeacherId(String teacherId) {
-        TeacherId = teacherId;
+        this.teacherId = teacherId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 }

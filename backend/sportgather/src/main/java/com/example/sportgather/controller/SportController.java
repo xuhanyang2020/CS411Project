@@ -22,4 +22,5 @@ public class SportController {
         return sportService.findAllSportName();
     }
 
+
 }

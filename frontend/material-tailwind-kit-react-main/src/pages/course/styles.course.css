@@ -2,7 +2,7 @@
     text-align: center;
     width:10%;
     position: absolute;
-    top: 950px;
+    top: 900px;
     left: 1420px;
    
 }
@@ -10,7 +10,7 @@
     text-align: center;
     width:10%;
     position: absolute;
-    top: 950px;
+    top: 900px;
     left: 1280px;
    
 }
@@ -18,7 +18,7 @@
     text-align: center;
     width:20%;
     position: absolute;
-    top: 950px;
+    top: 900px;
     left: 380px;
    
 }
@@ -36,4 +36,33 @@
     position: relative;
     top: 150px;
     left:0px;
+}
+.courseList {
+    display: inline-block;
+    width: 60%;
+    height: 40px;
+    position: relative;
+    top: -40px;
+    left: 100px;
+}
+.courseTitle{
+    display: inline-block;
+    width: 30%;
+    position: relative;
+    top: 10px;
+    left: 290px;
+}
+.courseRating {
+    display: inline-block;
+    width: 5%;
+    position: relative;
+    top: 10px;
+    left: 850px;
+}
+.courseLink{
+    display: inline-block;
+    width: 5%;
+    position: relative;
+    top: 10px;
+    left: 950px;
 }

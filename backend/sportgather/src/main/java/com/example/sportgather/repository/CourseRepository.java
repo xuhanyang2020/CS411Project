@@ -16,6 +16,9 @@ public interface CourseRepository {
     @Select("SELECT * FROM Course NATURAL JOIN Hobby WHERE StudentId = #{UserId}")
     List<Course> findCourseByHobby(@Param("UserId") String UserId);
 
-    @Select("SELECT * FROM Course WHERE SportId = #{SportId}")
-    List<Course> findCourseBySport(@Param("SportId") String SportId);
+    @Select("SELECT * FROM Course NATURAL JOIN Sport WHERE SportName = #{sportName}")
+    List<Course> findCourseBySport(@Param("sportName") String sportName);
+
+    @Select("SELECT * FROM Course WHERE courseId = #{courseId}")
+    Course findCourseByPk(@Param("courseId") String courseId);
 }
