@@ -7,13 +7,14 @@ import H4 from '@material-tailwind/react/Heading4';
 import Button from "@material-tailwind/react/Button"
 import LeadText from '@material-tailwind/react/LeadText';
 import Page from 'components/login/Page';
-import Teamwork from 'assets/img/table-tennis-icon.svg';
+import Sport from 'assets/img/sport.png';
 import GatherSportNav from 'components/GatherSportNav';
 import Rating from '@mui/material/Rating';
 import axios from 'axios';
 
 
 const courseURL = 'http://localhost:8080/course/';
+const profileURL = 'http://localhost:8080/profile/';
 
 
 class CourseInfo extends Component {
@@ -37,10 +38,16 @@ class CourseInfo extends Component {
     }
 
     async componentDidMount() {
+        // TODO
+        var userid = '1502';
+        var userInfo = (await axios.get(profileURL + userid)).data;
+        var userType = userInfo[0]['type'];
+        console.log(userType);
+
         var course = await this.getCouseInfo();
+        console.log(course.teacherId);
         // make description a list of paragraphs
         var description = course.description.split(/\r\n/);
-        console.log(description);
 
         this.setState({
             name: course.name,
@@ -48,7 +55,8 @@ class CourseInfo extends Component {
             rating: course.rating,
             sportId: course.sportId,
             teacherId: course.teacherId,
-            registered: false
+            registered: false,
+            userType: userType
         })
         await this.updateRegisterState();
     }
@@ -72,7 +80,6 @@ class CourseInfo extends Component {
     }
 
     render() {
-        
         if (this.state.description.length === 0) {
             return (
                 <Page> 
@@ -81,6 +88,7 @@ class CourseInfo extends Component {
                 </Page>
             )
         }
+        // if (parseInt(userid) > )
         return (
             <Page>
                 <GatherSportNav />
@@ -93,7 +101,7 @@ class CourseInfo extends Component {
                             
                             <H4 color="gray">{this.state.name}</H4>
                             {this.state.description.map(desc => (
-                                <LeadText color="blueGray">
+                                <LeadText color="blueGray" key={desc}>
                                 {desc}
                                 </LeadText>
                             ))}
@@ -102,7 +110,7 @@ class CourseInfo extends Component {
     
                         <div className="w-full md:w-4/12 px-4 mx-auto flex justify-center mt-24 lg:mt-0">
                             <Card>
-                                <CardImage alt="Card Image" src={Teamwork} />
+                                <CardImage alt="Card Image" src={Sport} />
                                 <CardBody>
                                 
                                     <Rating name="read-only" value={this.state.rating} readOnly precision={0.1}/> {this.state.rating}

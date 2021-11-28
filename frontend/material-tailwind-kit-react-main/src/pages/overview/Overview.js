@@ -1,4 +1,3 @@
-import DefaultFooter from 'components/DefaultFooter';
 import { Component } from 'react';
 import React from "react";
 import Card from "@material-tailwind/react/Card";
@@ -51,7 +50,7 @@ class Overview extends Component {
     }
     // send deleting request to back-end for canceling specific reservation
     async deleteReservation(reservationid_delete){
-        await axios.post(overviewURL + "/cancel" + '/' + reservationid_delete)
+        await axios.post(overviewURL + "/cancel/" + reservationid_delete)
 
         // update front-page when some reservation is canceled
         var pos = 0

@@ -51,7 +51,7 @@ export default function GatherSportNav({username, userid}) {
     if (!notificationId) {
         get();
     }
-    }, []);
+    });
 
   const get = async () => {
     const ids = await getNotification(userid);
@@ -141,7 +141,7 @@ export default function GatherSportNav({username, userid}) {
                                 >
                                     {notificationName?notificationName.map(
                                         name => (
-                                            <DropdownItem color="lightBlue">
+                                            <DropdownItem color="lightBlue" key={name}>
                                             {name} &nbsp;
 
                                             <Button

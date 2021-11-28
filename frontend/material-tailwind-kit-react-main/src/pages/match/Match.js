@@ -8,7 +8,6 @@ import H6 from "@material-tailwind/react/Heading6";
 import Dropdown from "@material-tailwind/react/Dropdown"
 import DropdownItem from "@material-tailwind/react/DropdownItem"
 import Input from "@material-tailwind/react/Input";
-import Icon from '@material-tailwind/react/Icon';
 import Button from "@material-tailwind/react/Button"
 import LeadText from "@material-tailwind/react/LeadText";
 import GatherSportNav from 'components/GatherSportNav';
