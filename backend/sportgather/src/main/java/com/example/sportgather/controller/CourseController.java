@@ -36,9 +36,9 @@ public class CourseController {
         return courseService.recommendByMate(userId);
     }
 
-    @GetMapping("sport/{sportName}")
-    public List<Course> findCourseBySport(@PathVariable("sportName") String sportName){
-        System.out.println(sportName);
-        return courseService.recommendBySport(sportName);
+    @GetMapping("sport")
+    public List<Course> findCourseBySport(@RequestParam("sportId") String sportId){
+        System.out.println(sportId);
+        return courseService.recommendBySport(sportId);
     }
 }

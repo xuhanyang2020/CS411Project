@@ -1,13 +1,13 @@
 package com.example.sportgather.controller;
 
 import com.example.sportgather.domain.*;
+import com.example.sportgather.service.AppointmentService;
 import com.example.sportgather.service.EnrollmentService;
 import com.example.sportgather.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.security.SecureRandom;
 import java.util.List;
 
 @RestController
@@ -17,20 +17,19 @@ public class OverViewController {
 
     private final ReservationService reservationService;
     private final EnrollmentService enrollmentService;
+    private final AppointmentService appointmentService;
 
     @Autowired
-    public OverViewController(ReservationService reservationService, EnrollmentService enrollmentService) {
+    public OverViewController(ReservationService reservationService, EnrollmentService enrollmentService, AppointmentService appointmentService) {
         this.reservationService = reservationService;
         this.enrollmentService = enrollmentService;
+        this.appointmentService = appointmentService;
     }
 
     // reservation operations
     @GetMapping("/reservation")
     public List<Reservation> findReservationById(@RequestParam("id") String userId){
-        System.out.println(userId);
-        System.out.println("findReservationById is called");
         List<Reservation> list = reservationService.findAllReservationByUserId(userId);
-        System.out.println(list.size());
         for (Reservation reservation: list){
             System.out.println(reservation.getReservationId());
         }
@@ -63,4 +62,8 @@ public class OverViewController {
         enrollmentService.deleteEnrollment(userId, courseId);
     }
 
+    @GetMapping("/appointment/{status}")
+    public List<AppointmentInfo> findAcceptedAppointment(@PathVariable("status") String status, @RequestParam("id") String userId){
+        return appointmentService.findAcceptAppointment(userId, status);
+    }
 }

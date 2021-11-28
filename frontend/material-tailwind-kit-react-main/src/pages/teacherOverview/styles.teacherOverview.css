@@ -1,0 +1,36 @@
+.teacherOverviewSection{
+    text-align: center;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 50px;
+}
+
+.splitLine{
+    text-align: center;
+    text-align: center;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+}
+.buttonGroup{
+    display: inline-block;
+    width: 5%;
+    position: relative;
+    top: -10px;
+    left: -100px;
+}
+.acceptButton{
+    display: inline-block;
+    width: 5%;
+    position: relative;
+    top: 0px;
+    left: -10px;
+}
+.refuseButton{
+    display: inline-block;
+    width: 5%;
+    position: relative;
+    top: 0px;
+    left: 110px;
+
+}

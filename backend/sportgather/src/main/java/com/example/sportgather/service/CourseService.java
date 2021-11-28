@@ -32,8 +32,8 @@ public class CourseService {
         return courseRepository.findCourseByHobby(userId);
     }
 
-    public List<Course> recommendBySport(String sportName){
-        return courseRepository.findCourseBySport(sportName);
+    public List<Course> recommendBySport(String sportId){
+        return courseRepository.findCourseBySport(sportId);
     }
 
     public List<Course> recommendByMate(String userId){

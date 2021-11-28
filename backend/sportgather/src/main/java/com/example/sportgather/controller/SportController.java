@@ -1,6 +1,7 @@
 package com.example.sportgather.controller;
 
 
+import com.example.sportgather.domain.Sport;
 import com.example.sportgather.service.SportService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public class SportController {
     }
 
     @GetMapping("/sport")
-    public List<String> findSportName(){
+    public List<Sport> findSportName(){
         return sportService.findAllSportName();
     }
 

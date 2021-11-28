@@ -23,6 +23,7 @@ import Icon from "@material-tailwind/react/Icon";
 import Header from 'components/landing/Header';
 import StatusCard from 'components/landing/StatusCard';
 import HeaderBackground from 'components/HeaderBackground';
+import Training from 'assets/img/Training.jpg';
 
 
 const overviewURL = 'http://localhost:8080/overview';
@@ -36,18 +37,28 @@ async function getOverview_Res(userid){
 
     });
         
-    console.log(reservations_back.length);     
+    console.log(reservations_back);     
     return reservations_back;
 }
 
-async function getOverview_Appoint(userid){
-    const appointment_back = await axios.get(overviewURL + "/appointment", {
+async function getOverview_AcceptedAppoint(userid){
+    const appointments_accept = await axios.get(overviewURL + "/appointment/T", {
         params:{
             id: userid
         }
     })
 
-    return appointment_back;
+    return appointments_accept;
+}
+
+async function getOverview_IncomingAppoint(userid){
+    const appointments_incoming = await axios.get(overviewURL + "/appointment/F", {
+        params:{
+            id: userid
+        }
+    })
+
+    return appointments_incoming;
 }
 
 async function getOverview_Enroll(userid){
@@ -74,7 +85,8 @@ class Overview extends Component {
             id: "",
             reservations: [],
             reservationStarList: [],
-            appointments: [],
+            appointments_accept: [],
+            appointments_incoming: [],
             enrollments:[]
         })
     }
@@ -105,6 +117,8 @@ class Overview extends Component {
             reservations: await getOverview_Res(id),
             enrollments: await getOverview_Enroll(id),
             reservationStarList: await getReservationStar(),
+            appointments_accept: await getOverview_AcceptedAppoint(id),
+            appointments_incoming: await getOverview_IncomingAppoint(id),
             id: id
         });
     }
@@ -112,7 +126,7 @@ class Overview extends Component {
     render() {
         console.log(this.state.reservations);
         if (!this.state.reservations || this.state.reservations.length === 0) {
-            return <div> Loading...</div>
+            return <div></div>
         }
         return (
             <Page>
@@ -142,8 +156,9 @@ class Overview extends Component {
                     </StatusCard>
                 </div>
             </div>
+
             <div className="splitLine">
-                <H1 color="indigo">Your Reservation</H1>
+                <H1 color="indigo">Court Reservation</H1>
             </div>
             <div className="overviewSection">
                 {this.state.reservations.data.map(reservation => (
@@ -168,7 +183,7 @@ class Overview extends Component {
             
 
             <div className="splitLine">
-                <H1 color="blue">Your Enrollment</H1>
+                <H1 color="blue">Course Enrollment</H1>
             </div>
             <div className="overviewSection">
                 {this.state.enrollments.data.map(enrollment => (
@@ -189,6 +204,32 @@ class Overview extends Component {
                 ))}
 
             </div>
+            <div className="splitLine">
+                <H1 color="indigo">Coach Appointment</H1>
+            </div>
+            <div className="overviewSection">
+
+                <div className="incomingAppSection">
+                {this.state.appointments_accept.data.map(appointment => (
+                
+                    <Card className="reservationCard">
+                        <CardRow>
+                            <CardHeader color="lightBlue" size="lg" iconOnly>
+                                <Icon name="groups" size="5xl" color="white" />
+                            </CardHeader>
+
+                            <CardStatus color="indigo" title={appointment.location} amount={appointment.teacherName} />
+                        </CardRow>
+
+                        <CardStatusFooter color="green" amount={Moment(appointment.time).format("YYYY-MMM-DD HH:mm:ss")}>
+                        </CardStatusFooter>
+                    </Card>
+                
+                ))}
+                </div>
+            </div>
+            
+            
            
 
             <div className="splitLine">

@@ -24,7 +24,6 @@ async function getSports(){
     console.log("get sport list");
     const sportList = await axios.get(sportURL);
 
-    console.log(sportList);
     return sportList;
 }
 
@@ -74,14 +73,13 @@ class Course extends Component {
     
     }
     // recommend courses by sports name
-    async recommendCourseBySport(sport){
+    async recommendCourseBySport(sportId){
 
         const courseListSport = await axios.get(courseURL + "/sport", {
             params:{
-                sport: sport
+                sportId: sportId
             }
         });
-    
         this.setState({
             courseList: courseListSport.data  
         })
@@ -167,14 +165,14 @@ class Course extends Component {
                     >
                         {this.state.sportList.map(sport=>(
                             <DropdownLink
-                            
+                            href="#"
                             color="lightBlue"
                             ripple="light"
                             onClick={async()=> {
-                                await this.recommendCourseBySport(sport)
+                                await this.recommendCourseBySport(sport.sportId)
                               }}
                         >
-                           {sport}
+                           {sport.sportName}
                         </DropdownLink>
                         ))}                      
                     </Dropdown>
@@ -199,7 +197,7 @@ class Course extends Component {
                 <div>
                     {this.state.courseList.map((course)=> (
                         <div className="courseList">
-                        <div className="courseTitle"><LeadText color="lightBlue">{course.name}</LeadText>
+                        <div className="courseTitle"><LeadText color="blue">{course.name}</LeadText>
                         </div>
                     <div className="courseRating"><LeadText color="lightBlue">{course.rating}</LeadText></div>
                     <div className="courseLink">

@@ -15,8 +15,8 @@ public class SportService {
         this.sportRepository = sportRepository;
     }
 
-    public List<String> findAllSportName(){
-       return sportRepository.findSportNameThathasCourtbyAll();
+    public List<Sport> findAllSportName(){
+       return sportRepository.findAllSport();
     }
 
 }

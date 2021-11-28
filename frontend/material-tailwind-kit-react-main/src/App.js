@@ -7,6 +7,7 @@ import Match from 'pages/match/Match';
 import Overview from 'pages/overview/Overview';
 import Course from 'pages/course/Course';
 import Reservation from 'pages/Reservation/Reservation';
+import TeacherOverview from 'pages/teacherOverview/TeacherOverview';
 // Font Awesome Style Sheet
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -26,6 +27,7 @@ function App() {
             <Route exact path='/overview' component={Overview} />
             <Route exact path='/reservation' component={Reservation}/>
             <Route exact path='/course' component={Course}/>
+            <Route exact path='/teacheroverview' component={TeacherOverview} />
             <Redirect from="*" to="/" />
         </Switch>
     );
