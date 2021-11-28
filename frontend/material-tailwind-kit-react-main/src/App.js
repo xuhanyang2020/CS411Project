@@ -6,6 +6,7 @@ import Register from 'pages/Register';
 import Match from 'pages/match/Match';
 import Overview from 'pages/overview/Overview';
 import Reservation from 'pages/Reservation/Reservation';
+import CourseInfo from 'pages/CourseInfo';
 // Font Awesome Style Sheet
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -24,6 +25,7 @@ function App() {
             <Route exam path='/match' component={Match} />
             <Route exact path='/overview' component={Overview} />
             <Route exact path='/reservation' component={Reservation}/>
+            <Route exact path='/course/:id' component={CourseInfo}/>
             <Redirect from="*" to="/" />
         </Switch>
     );

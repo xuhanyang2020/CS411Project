@@ -46,7 +46,8 @@ class Content extends Component {
             type: "",
             typ: "",
             id: "24",
-        }
+        };
+        
     }
 
     async getCnInfo(id) {
@@ -92,6 +93,7 @@ class Content extends Component {
      }
 
     render() {
+        console.log(this.props);
         return (
             <section className="relative py-16 bg-gray-100">
                 <div className="container max-w-7xl px-4 mx-auto">

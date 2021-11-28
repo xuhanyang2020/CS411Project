@@ -8,14 +8,17 @@ import H6 from "@material-tailwind/react/Heading6";
 import Dropdown from "@material-tailwind/react/Dropdown"
 import DropdownItem from "@material-tailwind/react/DropdownItem"
 import Input from "@material-tailwind/react/Input";
+import Icon from '@material-tailwind/react/Icon';
+import Button from "@material-tailwind/react/Button"
 import LeadText from "@material-tailwind/react/LeadText";
 import GatherSportNav from 'components/GatherSportNav';
 import fakeProfile from 'assets/img/profile_default.jpeg';
 import Page from 'components/login/Page';
+
 import axios from 'axios';
 import './styles.match.css';
 
-const baseURL = 'http://localhost:8080/match/mates';
+const baseURL = 'http://localhost:8080/match';
 const infoURL = 'http://localhost:8080/profile';
 
 
@@ -46,7 +49,7 @@ class Match extends Component {
     async getMates(search) {
         // TODO: change id to props later
         const id = '24';
-        const mate_ids = await axios.get(baseURL, 
+        const mate_ids = await axios.get(baseURL+'/mates', 
             {
             params: {
                 id: id,
@@ -126,6 +129,18 @@ class Match extends Component {
         this.setState({
             mates: mates,
         })
+    }
+
+    async addFriend(receiverEmail) {
+        // TODO
+
+        await axios.post(baseURL + '/addfriend/',
+        {
+            params: {
+                receiverEmail: receiverEmail,
+                requestid: '24'
+            }
+        });
     }
 
     render() {
@@ -218,7 +233,19 @@ class Match extends Component {
 
                                 {mate.age}
                                 </Paragraph>
+                                
                             </CardBody>
+                            <Button
+                                className="add-friend"
+                                color="lightBlue"
+                                buttonType="link"
+                                size="lg"
+                                rounded={false}
+                                block={false}
+                                iconOnly={false}
+                                ripple="dark"
+                                onClick={() =>{this.addFriend(mate.email)}}
+                                >add friend</Button>
                     </Card>
                     ))
 

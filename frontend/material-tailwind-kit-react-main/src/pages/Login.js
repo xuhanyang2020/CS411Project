@@ -32,6 +32,7 @@ class Login extends Component {
             email: "",
             password: "",
         }
+        this.getId = this.getId.bind(this);
     }
 
     async getId(email, pwd) {
@@ -40,11 +41,17 @@ class Login extends Component {
         this.setState({
             info: info
         });
+        // console.log(this.state.email);
     }
 
     render() {
-        const ConditionalLink = ({ children, to, condition }) => (!condition && to)
-            ? <Link to={'/profile'}>{children}</Link>
+        const ConditionalLink = ({ children, condition }) => (!condition)
+            ? <Link to={{
+                pathname: "/profile",
+                state: {
+                    user: this.state.email
+                }
+            }}>{children}</Link>
             : <>{children}</>;
         return (
             <Page>
@@ -89,7 +96,11 @@ class Login extends Component {
 
                         <CardFooter>
                             <div className="flex justify-center bg-bb">
-                            <ConditionalLink to="/profile" condition={this.state.info !== "email or password is wrong"}><Button
+                            <ConditionalLink 
+                                condition={this.state.info !== "email or password is wrong"} 
+                                >
+
+                                <Button
                                     color="lightBlue"
                                     buttonType="link"
                                     size="lg"
@@ -99,7 +110,8 @@ class Login extends Component {
                                     }}
                                 >
                                     Get Started
-                                </Button></ConditionalLink>
+                                </Button>
+                            </ConditionalLink>
                             </div>
                         </CardFooter>
 
