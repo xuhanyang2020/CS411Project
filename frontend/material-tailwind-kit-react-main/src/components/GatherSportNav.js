@@ -33,14 +33,13 @@ async function getNotificationName(ids) {
 }
 
 
-export default function GatherSportNav(userid) {
+export default function GatherSportNav({userid}) {
     const updateURL = "http://localhost:8080/match/updateState"
     const [openNavbar, setOpenNavbar] = useState(false);
     if (!userid || userid.length===0) {
         userid = "24";
     }
 
-    
 
     const [notificationId, setNotificationId] = useState('');
     const [notificationName, setNotificationName] = useState('');
@@ -109,12 +108,22 @@ export default function GatherSportNav(userid) {
                                 </NavLink>  
                             </Link>
 
-                            <NavLink>
-                                    <Icon name="computer" size="2xl" />
-                                    {/* &nbsp;Course */}
-                            </NavLink>
+                            <Link to={{
+                                pathname:'/coursesearch',
+                                state: {
+                                    userid: userid
+                                }}}>
+                                <NavLink>
+                                        <Icon name="computer" size="2xl" />
+                                        {/* &nbsp;Course */}
+                                </NavLink>
+                            </Link>
 
-                            <Link to='/message'>
+                            <Link to={{
+                                pathname:'/message',
+                                state: {
+                                    userid: userid
+                                }}}>
                                 <NavLink>
                                     <Icon name="feed" size="2xl" />
                                     {/* &nbsp;Message  */}
@@ -185,7 +194,11 @@ export default function GatherSportNav(userid) {
                             </div>
 
                             {/* if a user log in, show his/her firstname  */}
-                            <Link to='/profile'>
+                            <Link to={{
+                                pathname:'/profile',
+                                state: {
+                                    userid: userid
+                                }}}>
                                 <NavLink className="user_profile">
                                     <Icon name="account_circle" size="3xl"/>
                                     </NavLink>

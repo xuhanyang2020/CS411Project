@@ -41,7 +41,7 @@ class Login extends Component {
                 click: 1
             });
         }
-        console.log(this.state.info)
+        // console.log(this.state.info)
     }
 
     render() {

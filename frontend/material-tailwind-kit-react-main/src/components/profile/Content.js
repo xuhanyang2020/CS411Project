@@ -46,9 +46,9 @@ class Content extends Component {
     }
 
     async getCnInfo(id) {
-        console.log(id)
+        // console.log(id)
         const info = await getContInfo(id);
-        console.log(info)
+        // console.log(info)
         this.setState({
             firstName: info[0].firstName,
             lastName: info[0].lastName,
@@ -134,7 +134,7 @@ class Content extends Component {
      }
 
     render() {
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <Page>
                 <div

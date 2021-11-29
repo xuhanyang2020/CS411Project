@@ -21,6 +21,7 @@ class Message extends Component {
             title: "",
             content: ""
         }
+        console.log(this.state.id);
     }
 
     async getAllMsg() {
@@ -34,6 +35,7 @@ class Message extends Component {
         this.setState({
             allMsg: allMsg.data
         })
+        console.log(this.state.allMsg)
     }
 
     async componentDidMount() {

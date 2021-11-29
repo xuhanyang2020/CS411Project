@@ -2,7 +2,11 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Landing from 'pages/Landing';
 import Profile from 'pages/Profile';
 import Login from 'pages/Login';
-import Match from 'pages/Match';
+import Match from 'pages/match/Match';
+import Register from 'pages/Register';
+import Overview from 'pages/overview/Overview';
+import CourseInfo from 'pages/CourseInfo';
+import Reservation from 'pages/Reservation/Reservation';
 import Message from 'pages/Message/Message';
 
 

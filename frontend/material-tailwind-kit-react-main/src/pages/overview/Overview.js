@@ -78,7 +78,7 @@ class Overview extends Component {
     }
 
     render() {
-        console.log(this.state.reservations);
+        // console.log(this.state.reservations);
         if (!this.state.reservations || this.state.reservations.length === 0) {
             return <div> Loading...</div>
         }

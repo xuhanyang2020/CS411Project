@@ -32,9 +32,10 @@ class Match extends Component {
             gender: '', 
             major: '',
             username: '',
-            userid: '24',
+            userid: this.props.location.state.user,
             friends: {}
         }
+        // console.log(this.props)
 
         this.onAgeChange = this.onAgeChange.bind(this);
         this.onGenderChange = this.onGenderChange.bind(this);
@@ -43,7 +44,7 @@ class Match extends Component {
     }
     async getUser(id) {
         var result = await axios.get(infoURL+'/'+id);
-        console.log(result.data[0].firstName + ' ' + result.data[0].lastName)
+        // console.log(result.data[0].firstName + ' ' + result.data[0].lastName)
         this.setState({
             username: result.data[0].firstName + ' ' + result.data[0].lastName
         })
@@ -52,7 +53,7 @@ class Match extends Component {
     async getMates(search) {
         // TODO
         const id = this.props.location.state.user;
-        console.log(this.props.location.state.user);
+        // console.log(this.props.location.state.user);
         const mate_ids = await axios.get(baseURL+'/mates', 
             {
             params: {
@@ -194,7 +195,7 @@ class Match extends Component {
 
         return (
             <Page> 
-                <GatherSportNav username={this.state.username}/>
+                <GatherSportNav userid={this.state.userid}/>
                 <div className='filters'>
 
                 <Dropdown

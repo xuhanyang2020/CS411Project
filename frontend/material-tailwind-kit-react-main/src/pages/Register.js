@@ -16,7 +16,7 @@ async function getRegisInfo(fstName, eml, pwd) {
     const firstName = fstName;
     const email = eml;
     const password = pwd;
-    console.log(`${firstName} ${email} ${password}`);
+    // console.log(`${firstName} ${email} ${password}`);
     const regis_info = await axios.post(infoUrl +'/' + firstName + '/' + email + '/' + password);
     return regis_info.data;
 }
