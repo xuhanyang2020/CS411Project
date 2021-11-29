@@ -26,8 +26,7 @@ public class LoginController {
             return id;
         }
         else {
-            String error = "email or password is wrong";
-            return error;
+            return "email or password is wrong";
         }
     }
 
