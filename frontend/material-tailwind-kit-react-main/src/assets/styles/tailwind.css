@@ -494,9 +494,6 @@ video {
 		max-width: 1536px;
 	}
 }
-.visible{
-	visibility: visible;
-}
 .relative{
 	position: relative;
 }
@@ -514,6 +511,9 @@ video {
 }
 .z-50{
 	z-index: 50;
+}
+.z-20{
+	z-index: 20;
 }
 .mx-auto{
 	margin-left: auto;
@@ -613,9 +613,6 @@ video {
 }
 .grid{
 	display: grid;
-}
-.hidden{
-	display: none;
 }
 .h-10{
 	height: 2.5rem;
@@ -830,8 +827,8 @@ video {
 .pb-20{
 	padding-bottom: 5rem;
 }
-.pt-16{
-	padding-top: 4rem;
+.pt-32{
+	padding-top: 8rem;
 }
 .pt-20{
 	padding-top: 5rem;

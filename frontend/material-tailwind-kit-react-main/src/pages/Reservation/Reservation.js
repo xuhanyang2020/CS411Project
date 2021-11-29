@@ -20,8 +20,6 @@ import Button from "@material-tailwind/react/Button";
 import './styles.reservation.css';
 import Checkbox from "@material-tailwind/react/Checkbox"
 import H2 from "@material-tailwind/react/Heading2";
-import emailjs from 'emailjs-com';
-import{ init } from 'emailjs-com';
 const SportNameURL = 'http://localhost:8080/reservation/findSportNameThathasCourtbyAll';
 const CourtReservationURL = 'http://localhost:8080/reservation/findAvailableTimeBySport';
 const InsertReservationURL = 'http://localhost:8080/reservation/insertreservation';
@@ -34,17 +32,6 @@ async function getSportName() {
     return SportName_info;
 }
 
-async function sendEmail(e) {
-    init("user_TcaKIkCvpvX6KiytTdPXA");
-    e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
-
-    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', e.target, 'YOUR_USER_ID')
-      .then((result) => {
-          window.location.reload()  //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior) 
-      }, (error) => {
-          console.log(error.text);
-      });
-  }
 class Reservation extends Component {
     constructor(props) {
         super(props);

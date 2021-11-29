@@ -14,8 +14,6 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 // Tailwind CSS Style Sheet
 import 'assets/styles/tailwind.css';
 
-import new_appointments from 'pages/new_appointments/new_appointments';
-
 
 
 function App() {
@@ -28,7 +26,6 @@ function App() {
             <Route exam path='/match' component={Match} />
             <Route exact path='/overview' component={Overview} />
             <Route exact path='/reservation' component={Reservation}/>
-            <Route exact path='/appointment' component={new_appointments}/>
             <Route exact path='/coursesearch' component={CourseSearch}/>
             <Route exact path='/teacheroverview' component={TeacherOverview} />
             <Redirect from="*" to="/" />

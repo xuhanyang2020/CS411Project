@@ -162,14 +162,14 @@ class Overview extends Component {
                         In order to better help sportfans get started with a sport, 
                         we provide you with diverse sports courses!
                         <div className="redirectButtom">
-                            <Link to={"/coursesearch?id="+this.state.id}>
+                            <Link to={"/course?id="+this.state.id}>
                                 <Button color="blue" 
                                     buttonType="link"
                                     size="lg"
                                     rounded={false}
                                     block={true}
                                     iconOnly={false}
-                                    ref={"/coursesearch?id="+this.state.id} 
+                                    ref={"/course?id="+this.state.id} 
                                     ripple="dark">
                                     Search for courses
                                 </Button>
