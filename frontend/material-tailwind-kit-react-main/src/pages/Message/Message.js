@@ -17,7 +17,7 @@ class Message extends Component {
         super(props);
         this.state = {
             allMsg: [],
-            id: "24",
+            id: this.props.location.state.userid,
             title: "",
             content: ""
         }
@@ -46,7 +46,7 @@ class Message extends Component {
     render() {
         return (
             <Page>
-                <GatherSportNav username="Ruth Sabin"/>
+                <GatherSportNav userid={this.props.location.state.userid}/>
                 <div
                     style={{
                         width: '100%',
