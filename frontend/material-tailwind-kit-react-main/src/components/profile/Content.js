@@ -4,8 +4,8 @@ import H3 from '@material-tailwind/react/Heading3';
 import H1 from "@material-tailwind/react/Heading1";
 import Page from 'components/login/Page';
 import Icon from '@material-tailwind/react/Icon';
-import ProfilePicture from 'assets/img/sport.jpg';
-import Background from 'assets/img/sky.jpg';
+import ProfilePicture from 'assets/img/profile.jpg';
+import Background from 'assets/img/UIUC.jpg';
 import {Component} from "react";
 import axios from "axios";
 import InputIcon from "@material-tailwind/react/InputIcon";
@@ -41,7 +41,7 @@ class Content extends Component {
             email: "",
             type: "",
             typ: "",
-            id: "3000",
+            id: "24",
         }
     }
 
@@ -136,7 +136,10 @@ class Content extends Component {
             <Page>
                 <div
                     style={{
+                        width: '100%',
+                        height: '2000%',
                         background:`url(${Background})`,
+                        backgroundSize: 'cover'
                     }}
                 >
                     <div className="flex flex-wrap justify-center">
