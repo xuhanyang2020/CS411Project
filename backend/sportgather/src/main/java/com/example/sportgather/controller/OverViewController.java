@@ -64,6 +64,7 @@ public class OverViewController {
 
     @GetMapping("/appointment/{status}")
     public List<AppointmentInfo> findAcceptedAppointment(@PathVariable("status") String status, @RequestParam("id") String userId){
+        System.out.println(status);
         return appointmentService.findAcceptAppointment(userId, status);
     }
 }
