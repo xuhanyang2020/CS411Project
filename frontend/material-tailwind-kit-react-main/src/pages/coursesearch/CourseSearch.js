@@ -1,15 +1,13 @@
 import { Component } from 'react';
 import React from "react";
-
-import './styles.course.css';
+import { Link } from 'react-router-dom';
+import './styles.courseSearch.css';
 import TeamSection from 'components/landing/TeamSection';
 import GatherSportNav from 'components/GatherSportNav';
 import axios from 'axios';
 import Page from 'components/login/Page';
 import Button from "@material-tailwind/react/Button";
-import H1 from "@material-tailwind/react/Heading1";
 import Dropdown from "@material-tailwind/react/Dropdown"
-import DropdownItem from "@material-tailwind/react/DropdownItem"
 import Icon from "@material-tailwind/react/Icon";
 import H6 from '@material-tailwind/react/Heading6';
 import LeadText from '@material-tailwind/react/LeadText';
@@ -17,7 +15,7 @@ import DropdownLink from "@material-tailwind/react/DropdownLink"
 
 
 
-const courseURL = 'http://localhost:8080/course';
+const courseURL = 'http://localhost:8080/coursesearch';
 const sportURL = "http://localhost:8080/sport"
 
 async function getSports(){
@@ -35,7 +33,7 @@ async function findAllCourse(){
     return courseListAll;
 }
 
-class Course extends Component {
+class CourseSearch extends Component {
     constructor(props) {
         super(props);
         this.state = ({
@@ -118,7 +116,8 @@ class Course extends Component {
         <H2 color="indigo">Select Your Course</H2>
 
 </div> */}
-            <div className="HobbySelection">
+            
+            <div className="MateSelection">
                 <Button
                     color="indigo"
                     buttonType="filled"
@@ -128,14 +127,12 @@ class Course extends Component {
                     iconOnly={false}
                     ripple="light"
                     onClick={async()=> {
-                        await this.recommendCourseByHobby(this.state.id)
-                      }}
+                        await this.recommendCourseByMates(this.state.id)
+                        }}
                 >
-                    hobby
+                    Sport mates
                 </Button>
-        </div>
-
-                <div className="MateSelection">
+                <div className="HobbySelection">
                     <Button
                         color="indigo"
                         buttonType="filled"
@@ -145,12 +142,14 @@ class Course extends Component {
                         iconOnly={false}
                         ripple="light"
                         onClick={async()=> {
-                            await this.recommendCourseByMates(this.state.id)
-                          }}
+                            await this.recommendCourseByHobby(this.state.id)
+                        }}
                     >
-                        Sport mates
+                        hobby
                     </Button>
-                </div> 
+                </div>
+
+            </div> 
 
                 <div className="TypeSelection">
                     <Dropdown
@@ -170,13 +169,12 @@ class Course extends Component {
                             ripple="light"
                             onClick={async()=> {
                                 await this.recommendCourseBySport(sport.sportId)
-                              }}
+                                }}
                         >
-                           {sport.sportName}
+                            {sport.sportName}
                         </DropdownLink>
                         ))}                      
-                    </Dropdown>
-                    
+                    </Dropdown>   
                 </div>  
                 <div height="500px">
                     <br></br>
@@ -201,6 +199,7 @@ class Course extends Component {
                         </div>
                     <div className="courseRating"><LeadText color="lightBlue">{course.rating}</LeadText></div>
                     <div className="courseLink">
+                    <Link to={"course/" + course.courseId}>
                     <Button
                         color="red"
                         buttonType="link"
@@ -209,9 +208,11 @@ class Course extends Component {
                         block={false}
                         iconOnly={true}
                         ripple="dark"
+                        href={"course/" + course.courseId}
                     >
                         <Icon name="favorite" size="sm" />
                     </Button>
+                    </Link>
                     </div>
                     </div>
                     ))}
@@ -222,4 +223,4 @@ class Course extends Component {
         );
     }
 }
-export default Course;
+export default CourseSearch;

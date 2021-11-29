@@ -26,7 +26,7 @@
 }
 .acceptAppSection{
     display: inline-block;
-    width: 40%;
+    width: 30%;
     position: relative;
     top: 10px;
     left: 290px;
@@ -37,4 +37,10 @@
     position: relative;
     top: 10px;
     left: 990px;
+}
+.redirectButtom{
+    text-align: center;
+    margin-left:5%;
+    margin-right:5%;
+    margin-top: 20px;
 }

@@ -6,7 +6,6 @@ import com.example.sportgather.repository.CourtRepository;
 import com.example.sportgather.repository.ReservationRepository;
 import com.example.sportgather.repository.TeacherOverviewRepository;
 import com.example.sportgather.repository.UserRepository;
-import org.springframework.scheduling.support.SimpleTriggerContext;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public class TeacherOverviewService {
 
             // populate the appointment info
             AppointmentInfo info = new AppointmentInfo();
-            info.setStudentName(student.getFirstName() + " " + student.getFirstName());
+            info.setStudentName(student.getFirstName() + " " + student.getLastName());
             info.setAppointmentId(app.getAppointmentId());
             info.setTime(reservation.getBeginTime());
             info.setLocation(courtLocation);
@@ -60,4 +59,9 @@ public class TeacherOverviewService {
     public void acceptAppointment(String appointmentId){
         teacherOverviewRepository.updateAcceptStateToTrue(appointmentId);
     }
+
+    public List<Course> findAllCourse(String teacherId){
+        return teacherOverviewRepository.findAllCourseByTeacher(teacherId);
+    }
+
 }

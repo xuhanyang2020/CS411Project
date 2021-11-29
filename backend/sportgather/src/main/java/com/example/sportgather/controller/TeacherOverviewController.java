@@ -1,10 +1,10 @@
 package com.example.sportgather.controller;
 
 
-import com.example.sportgather.domain.Appointment;
 import com.example.sportgather.domain.AppointmentInfo;
+import com.example.sportgather.domain.Course;
 import com.example.sportgather.service.TeacherOverviewService;
-import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,4 +36,10 @@ public class TeacherOverviewController {
     void acceptAppointment(@PathVariable("appointmentId") String appointmentId){
         service.acceptAppointment(appointmentId);
     }
+
+    @GetMapping("/course")
+    List<Course> findAllCourse(@RequestParam("teacherId") String teacherId){
+        return service.findAllCourse(teacherId);
+    }
+
 }

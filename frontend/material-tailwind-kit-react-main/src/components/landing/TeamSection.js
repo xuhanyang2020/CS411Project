@@ -10,9 +10,9 @@ export default function TeamSection() {
         <section className="pt-20 pb-48">
             <div className="container max-w-7xl mx-auto px-4">
                 <Title heading="Here are the most popular courses">
-                    According to the National Oceanic and Atmospheric
-                    Administration, Ted, Scambos, NSIDClead scentist, puts the
-                    potentially record maximum.
+                    Enroll in Courses on GatherSport Illinois. enjoy professional training, 
+                    improve your sports skills
+                    and become the most dazzling star on the court!
                 </Title>
                 <div className="flex flex-wrap">
                     <TeamCard

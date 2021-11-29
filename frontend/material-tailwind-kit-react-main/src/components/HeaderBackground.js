@@ -12,10 +12,10 @@ export default function HeaderBackground() {
                                 <H2 color="white">Go for exercise with friends.</H2>
                                 <div className="text-gray-200">
                                     <LeadText color="gray-200">
-                                        This is a simple example of a Landing Page you
-                                        can build using Material Tailwind. It features
-                                        multiple components based on the Tailwind CSS
-                                        and Material Design by Google.
+                                        More than 1500 students in UIUC 
+                                        gather at our platform, you could
+                                        match friendly sports mates
+                                        and explore your sports interest here!
                                     </LeadText>
                                 </div>
                             </div>

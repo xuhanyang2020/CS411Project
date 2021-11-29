@@ -1,12 +1,9 @@
 package com.example.sportgather.service;
 
 import com.example.sportgather.domain.*;
-import com.example.sportgather.repository.CourtRepository;
-import com.example.sportgather.repository.ReservationRepository;
-import com.example.sportgather.repository.SportRepository;
+import com.example.sportgather.repository.*;
 
 
-import com.example.sportgather.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -20,11 +17,14 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final SportRepository sportRepository;
     private final UserRepository userRepository;
-    public ReservationService(ReservationRepository reservationRepository, CourtRepository courtRepository, SportRepository sportRepository, UserRepository userRepository) {
+    private final AppointmentRepository appointmentRepository;
+
+    public ReservationService(ReservationRepository reservationRepository, CourtRepository courtRepository, SportRepository sportRepository, UserRepository userRepository, AppointmentRepository appointmentRepository) {
         this.reservationRepository = reservationRepository;
         this.courtRepository = courtRepository;
         this.sportRepository = sportRepository;
         this.userRepository = userRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
     public List<Reservation> queryReservationByUserId(String id) {
@@ -183,6 +183,7 @@ public class ReservationService {
     public void deleteReservation(String reservationId){
         if (queryReservationByReservationId(reservationId)){
             reservationRepository.deleteReservationByPk(reservationId);
+            appointmentRepository.deleteAppointmentByReservationId(reservationId);
             System.out.println("Reservation with ID " + reservationId + " has been canceled");
         }
         else {

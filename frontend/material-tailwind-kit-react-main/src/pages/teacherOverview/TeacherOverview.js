@@ -1,4 +1,3 @@
-import DefaultFooter from 'components/DefaultFooter';
 import { Component } from 'react';
 import React from "react";
 import Card from "@material-tailwind/react/Card";
@@ -6,25 +5,16 @@ import CardImage from "@material-tailwind/react/CardImage";
 import CardBody from "@material-tailwind/react/CardBody";
 import H6 from "@material-tailwind/react/Heading6";
 import Paragraph from "@material-tailwind/react/Paragraph";
-import Profile from 'assets/img/boy.jpeg';
 import './styles.teacherOverview.css';
-import GatherSportNav from 'components/GatherSportNav';
 import axios from 'axios';
 import Page from 'components/login/Page';
 import Moment from 'moment'
-import Image from "@material-tailwind/react/Image";
 import Button from "@material-tailwind/react/Button";
 import H1 from "@material-tailwind/react/Heading1";
-import CardRow from "@material-tailwind/react/CardRow";
-import CardHeader from "@material-tailwind/react/CardHeader";
-import CardStatus from "@material-tailwind/react/CardStatus";
-import CardStatusFooter from "@material-tailwind/react/CardStatusFooter";
-import Icon from "@material-tailwind/react/Icon";
-import Header from 'components/landing/Header';
-import StatusCard from 'components/landing/StatusCard';
-import HeaderBackground from 'components/HeaderBackground';
 import Training from 'assets/img/Training.jpg';
 import CardFooter from '@material-tailwind/react/CardFooter';
+import TrainingCourse from 'assets/img/TrainingCourse.jpg';
+import Background from "assets/img/sky.jpg";
 
 
 const teacheroverviewURL = 'http://localhost:8080/teacher';
@@ -51,6 +41,16 @@ async function getAppointment_Waiting(id){
     })
 
     return appointmentWaiting;
+}
+
+async function getCourse(id){
+    const courses = await axios.get(teacheroverviewURL + "/course" , {
+        params:{
+            teacherId: id
+        }
+    })
+    console.log(courses);
+    return courses;
 }
 
 
@@ -112,6 +112,7 @@ class TeacherOverview extends Component {
             id: id,
             appointments_waiting: await (await getAppointment_Waiting(id)).data,
             appointments_accept: await (await getAppointment_Accept(id)).data,
+            courses: await (await getCourse(id)).data
         });
 
     }
@@ -122,6 +123,15 @@ class TeacherOverview extends Component {
         }
         return (
             <Page>
+                <div className = "bg"
+                    style={{
+                        width: '100%',
+                        height: '2000px',
+                        background:`url(${Background})`,
+                        backgroundSize: 'cover',
+                    }}
+                >
+                
             <div className="splitLine">
             <H1 color="indigo">Accepted Appointment</H1>
             </div>
@@ -144,51 +154,69 @@ class TeacherOverview extends Component {
             <H1 color="indigo">Waiting Appointment</H1>
             </div>
             <div className="teacherOverviewSection">
-                {this.state.appointments_waiting.map(appointment => (
-                    <Card key={appointment.location} className="reservationCard">
-                    <CardImage className="mateImage" src={Training} alt="Card Image"/>
-        
-                    <CardBody>
-                        <H6 color="gray">{Moment(appointment.time).format("DD-MMM-YYYY HH:mm:ss")}</H6>
-                        <Paragraph color="gray">
-                        {appointment.studentName}
-                        </Paragraph>
-                    </CardBody>
-                    <CardFooter>
-                    <div className="buttonGroup">
-                        <div className="acceptButton">
+                    {this.state.appointments_waiting.map(appointment => (
+                        <Card key={appointment.location} className="reservationCard">
+                        <CardImage className="mateImage" src={Training} alt="Card Image"/>
+            
+                        <CardBody>
+                            <H6 color="gray">{Moment(appointment.time).format("DD-MMM-YYYY HH:mm:ss")}</H6>
+                            <Paragraph color="gray">
+                            {appointment.studentName}
+                            </Paragraph>
+                        </CardBody>
+                        <CardFooter>
+                        <div className="buttonGroup">
+                            <div className="acceptButton">
 
-                        <Button buttonType="filled"
-                            color="green"
-                            buttonType="filled"
-                            size="regular"
-                            rounded={true}
-                            block={false}
-                            iconOnly={false}
-                            ripple="light" 
-                            onClick={async() => {await this.acceptAppointment(appointment.appointmentId)}}>
-                            Accept
-                        </Button>
-                        </div>
-                        <div className="refuseButton">
                             <Button buttonType="filled"
-                                color="red"
+                                color="green"
                                 buttonType="filled"
                                 size="regular"
-                                rounded={false}
+                                rounded={true}
                                 block={false}
                                 iconOnly={false}
-                                onClick={async()=> {
-                                    await this.refuseAppointment(appointment.appointmentId)
-                                  }}
-                                ripple="light">
-                                Refuse
+                                ripple="light" 
+                                onClick={async() => {await this.acceptAppointment(appointment.appointmentId)}}>
+                                Accept
                             </Button>
+                            </div>
+                            <div className="refuseButton">
+                                <Button buttonType="filled"
+                                    color="red"
+                                    buttonType="filled"
+                                    size="regular"
+                                    rounded={false}
+                                    block={false}
+                                    iconOnly={false}
+                                    onClick={async()=> {
+                                        await this.refuseAppointment(appointment.appointmentId)
+                                    }}
+                                    ripple="light">
+                                    Refuse
+                                </Button>
+                            </div>
                         </div>
-                    </div>
-                    </CardFooter>
-                </Card>
-                ))}
+                        </CardFooter>
+                    </Card>
+                    ))}
+            </div>
+            <div className="splitLine">
+            <H1 color="indigo">Courses</H1>
+            </div>
+            <div className="teacherOverviewSection">
+                {this.state.courses.map(course => (
+                        <Card key={course} className="reservationCard">
+                        <CardImage className="mateImage" src={TrainingCourse} alt="Card Image"/>
+            
+                        <CardBody>
+                            <H6 color="gray">{course.name}</H6>
+                            <Paragraph color="gray">
+                            {course.date} &nbsp; {course.time}
+                            </Paragraph>
+                        </CardBody>
+                    </Card>
+                    ))}
+            </div>
             </div>
         </Page>
         );

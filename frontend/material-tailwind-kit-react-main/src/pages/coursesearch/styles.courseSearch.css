@@ -1,26 +1,23 @@
 .HobbySelection {
     text-align: center;
     width:10%;
-    position: absolute;
-    top: 900px;
-    left: 1420px;
-   
+    position: relative;
+    top: -38px;
+    left: 140px;
 }
 .MateSelection {
     text-align: center;
-    width:10%;
+    width:25%;
     position: absolute;
     top: 900px;
-    left: 1280px;
-   
+    left: 72%;
 }
 .TypeSelection {
     text-align: center;
     width:20%;
     position: absolute;
     top: 900px;
-    left: 380px;
-   
+    left: 13%;
 }
 .Header {
     text-align: center;
@@ -43,26 +40,26 @@
     height: 40px;
     position: relative;
     top: -40px;
-    left: 100px;
+    left: 10%;
 }
 .courseTitle{
     display: inline-block;
-    width: 30%;
+    width: 58%;
     position: relative;
     top: 10px;
-    left: 290px;
+    left: 5%;
 }
 .courseRating {
     display: inline-block;
     width: 5%;
     position: relative;
     top: 10px;
-    left: 850px;
+    left: 50%;
 }
 .courseLink{
     display: inline-block;
     width: 5%;
     position: relative;
     top: 10px;
-    left: 950px;
+    left: 57%;
 }

@@ -14,4 +14,7 @@ public interface AppointmentRepository {
     @Select("SELECT * FROM Appointment WHERE Accept = #{status} AND StudentId = #{userId}")
     List<Appointment> findAllAcceptAppointment(@Param("userId") String userId, @Param("status") String status);
 
+    @Delete("DELETE FROM Appointment WHERE ReservationId = #{ReservationId}")
+    void deleteAppointmentByReservationId(@Param("ReservationId") String reservationId);
+
 }

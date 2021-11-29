@@ -1,7 +1,5 @@
 package com.example.sportgather.domain;
 
-import javax.swing.plaf.IconUIResource;
-import java.util.Date;
 
 public class Course {
 

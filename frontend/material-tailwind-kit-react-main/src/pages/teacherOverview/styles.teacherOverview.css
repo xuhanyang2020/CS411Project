@@ -1,8 +1,14 @@
 .teacherOverviewSection{
     text-align: center;
+    display: inline-block;
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 50px;
+}
+.reservationCard {
+    display: inline-block;
+    width:20% !important;
+    margin: 20px;
 }
 
 .splitLine{
@@ -20,11 +26,12 @@
     left: -100px;
 }
 .acceptButton{
+    text-align: center;
     display: inline-block;
-    width: 5%;
+    width: 50%;
     position: relative;
     top: 0px;
-    left: -10px;
+    left: 0px;
 }
 .refuseButton{
     display: inline-block;
@@ -33,4 +40,9 @@
     top: 0px;
     left: 110px;
 
+}
+
+.bg{
+    text-align: center;
+    display: inline-block
 }

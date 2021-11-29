@@ -1,5 +1,5 @@
-import DefaultFooter from 'components/DefaultFooter';
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import React from "react";
 import Card from "@material-tailwind/react/Card";
 import CardImage from "@material-tailwind/react/CardImage";
@@ -20,10 +20,10 @@ import CardHeader from "@material-tailwind/react/CardHeader";
 import CardStatus from "@material-tailwind/react/CardStatus";
 import CardStatusFooter from "@material-tailwind/react/CardStatusFooter";
 import Icon from "@material-tailwind/react/Icon";
-import Header from 'components/landing/Header';
 import StatusCard from 'components/landing/StatusCard';
 import HeaderBackground from 'components/HeaderBackground';
-import Training from 'assets/img/Training.jpg';
+import { EndOfLineState } from 'typescript';
+
 
 
 const overviewURL = 'http://localhost:8080/overview';
@@ -104,6 +104,8 @@ class Overview extends Component {
         }
         this.state.reservations.data.splice(pos,1)
         this.setState({       
+            appointments_accept: await getOverview_AcceptedAppoint(this.state.id),
+            appointments_incoming: await getOverview_IncomingAppoint(this.state.id)
         });
     }
 
@@ -137,6 +139,20 @@ class Overview extends Component {
                     <StatusCard color="red" icon="stars" title="Reservation">
                         In GatherSport application, you can make reservation of courts on campus for 
                         time that suits you best!
+                        <div className="redirectButtom">
+                            <Link to='/reservation'>
+                                <Button color="pink" 
+                                    buttonType="link"
+                                    size="lg"
+                                    rounded={false}
+                                    block={true}
+                                    iconOnly={false}
+                                    ref="/reservation" 
+                                    ripple="dark">
+                                    Make a Reservation
+                                </Button>
+                            </Link>
+                        </div>
                     </StatusCard>
                     <StatusCard
                         color="lightBlue"
@@ -145,6 +161,20 @@ class Overview extends Component {
                     >
                         In order to better help sportfans get started with a sport, 
                         we provide you with diverse sports courses!
+                        <div className="redirectButtom">
+                            <Link to={"/course?id="+this.state.id}>
+                                <Button color="blue" 
+                                    buttonType="link"
+                                    size="lg"
+                                    rounded={false}
+                                    block={true}
+                                    iconOnly={false}
+                                    ref={"/course?id="+this.state.id} 
+                                    ripple="dark">
+                                    Search for courses
+                                </Button>
+                            </Link>
+                        </div>
                     </StatusCard>
                     <StatusCard
                         color="teal"
@@ -152,13 +182,28 @@ class Overview extends Component {
                         title="Appointment"
                     >
                         In-person appointments could be made with professional coaches
-                        for detailed instructions, which helps you become a sport star!
+                        for detailed instructions, helping you become a sport star!
+                        <div className="redirectButtom">
+                            <Link to={"/course?id="+this.state.id}>
+                                <Button color="teal" 
+                                    buttonType="link"
+                                    size="lg"
+                                    rounded={false}
+                                    block={true}
+                                    iconOnly={false}
+                                    ref={"/course?id="+this.state.id}
+                                    ripple="dark">
+                                    Get professional tutorials
+                                </Button>
+                            </Link>
+                        </div>
                     </StatusCard>
                 </div>
             </div>
 
+            
             <div className="splitLine">
-                <H1 color="indigo">Court Reservation</H1>
+                <H1 color="red">Court Reservation</H1>
             </div>
             <div className="overviewSection">
                 {this.state.reservations.data.map(reservation => (
@@ -171,7 +216,7 @@ class Overview extends Component {
                         {reservation.courtId}
                         </Paragraph>
                     </CardBody>
-                <Button color="lightBlue" size="lg" ripple="light" onClick={async()=> {
+                <Button color="deepOrange" size="lg" ripple="light" onClick={async()=> {
                         await this.deleteReservation(reservation.reservationId)
                       }}>
                     Cancel Now
@@ -179,42 +224,46 @@ class Overview extends Component {
                 </Card>
                 ))}
             </div>
-
             
 
+            
+            <br></br>
+            <br></br>
             <div className="splitLine">
-                <H1 color="blue">Course Enrollment</H1>
+                <H1 color="lightGreen">Course Enrollment</H1>
             </div>
             <div className="overviewSection">
                 {this.state.enrollments.data.map(enrollment => (
                 
                     <Card className="reservationCard">
                         <CardRow>
-                            <CardHeader color="lightBlue" size="lg" iconOnly>
+                            <CardHeader color="lightGreen" size="lg" iconOnly>
                                 <Icon name="groups" size="5xl" color="white" />
                             </CardHeader>
 
-                            <CardStatus title={enrollment.name} amount="Tuesday 9pm" />
+                            <CardStatus title={enrollment.time} amount={enrollment.date} />
                         </CardRow>
 
-                        <CardStatusFooter color="green" amount="56%" date={"  Course Until  "+Moment(enrollment.endDate).format("YYYY-MMM-DD")}>
+                        <CardStatusFooter color="green" date={enrollment.name}>
                         </CardStatusFooter>
                     </Card>
                 
                 ))}
-
+            <br></br>
+            <br></br>
             </div>
             <div className="splitLine">
-                <H1 color="indigo">Coach Appointment</H1>
+                <H1 color="deepPurple">Coach Appointment</H1>
             </div>
+            
             <div className="overviewSection">
 
-                <div className="incomingAppSection">
+                <div>
                 {this.state.appointments_accept.data.map(appointment => (
                 
                     <Card className="reservationCard">
                         <CardRow>
-                            <CardHeader color="lightBlue" size="lg" iconOnly>
+                            <CardHeader color="indigo" size="lg" iconOnly>
                                 <Icon name="groups" size="5xl" color="white" />
                             </CardHeader>
 
@@ -226,7 +275,7 @@ class Overview extends Component {
                     </Card>
                 
                 ))}
-                </div>
+            </div>
             </div>
             
             
