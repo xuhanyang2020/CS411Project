@@ -22,4 +22,12 @@ public class CourseService {
         return info;
     }
 
+    public void updateDesc(String desc, String cid) {
+        courseRepository.updateDesc(desc, cid);
+    }
+
+    public void updateTitle(String title, String cid) {
+        courseRepository.updateTitle(title, cid);
+    }
+
 }

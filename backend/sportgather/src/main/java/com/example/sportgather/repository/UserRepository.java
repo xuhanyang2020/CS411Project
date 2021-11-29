@@ -49,4 +49,6 @@ public interface UserRepository {
 
     @Select("SELECT u.UserId, u.FirstName, u.LastName, COUNT(*) AS MatchNum FROM Hobby h JOIN User  u on h.StudentId = u.UserId WHERE h.StudentId <> #{UserId} AND h.SportId IN (SELECT SportId FROM Hobby WHERE StudentId = #{UserId}) GROUP BY u.UserId,  u.FirstName, u.LastName ORDER BY COUNT(h.SportId) DESC")
     List<User> findAllMatesByHobby(@Param("UserId") String id);
+
+
 }

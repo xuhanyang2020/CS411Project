@@ -9,12 +9,14 @@ import LeadText from '@material-tailwind/react/LeadText';
 import Page from 'components/login/Page';
 import Sport from 'assets/img/sport.png';
 import GatherSportNav from 'components/GatherSportNav';
+import { EditText, EditTextarea } from 'react-edit-text';
+import 'react-edit-text/dist/index.css';
 import Rating from '@mui/material/Rating';
 import axios from 'axios';
 
 
 const courseURL = 'http://localhost:8080/course/';
-const profileURL = 'http://localhost:8080/profile/';
+const updateURL = 'http://localhost:8080/course/update/';
 
 
 class CourseInfo extends Component {
@@ -26,10 +28,16 @@ class CourseInfo extends Component {
             sportId: '',
             rating: '',
             teacherId:'',
-            courseId: this.props.match.params.id
+            courseId: this.props.match.params.id,
+            registered: false,
+            userid: '',
+            editing: false
         }
         this.register = this.register.bind(this);
         this.updateRegisterState = this.updateRegisterState.bind(this);
+        this.changeDesc = this.changeDesc.bind(this);
+        this.edit = this.edit.bind(this);
+        this.save = this.save.bind(this);
     }
     async getCouseInfo() {
         
@@ -40,12 +48,8 @@ class CourseInfo extends Component {
     async componentDidMount() {
         // TODO
         var userid = '1502';
-        var userInfo = (await axios.get(profileURL + userid)).data;
-        var userType = userInfo[0]['type'];
-        console.log(userType);
 
         var course = await this.getCouseInfo();
-        console.log(course.teacherId);
         // make description a list of paragraphs
         var description = course.description.split(/\r\n/);
 
@@ -55,14 +59,13 @@ class CourseInfo extends Component {
             rating: course.rating,
             sportId: course.sportId,
             teacherId: course.teacherId,
-            registered: false,
-            userType: userType
+            userid: userid,
         })
         await this.updateRegisterState();
     }
     async updateRegisterState() {
         // TODO
-        var studentId = 24;
+        var studentId = this.state.userid;
         var count = (await axios.get(courseURL + 'fetch/' + this.state.courseId + '/' + studentId)).data;
         var registered = count >= 1
         this.setState({
@@ -72,11 +75,50 @@ class CourseInfo extends Component {
 
     async register(event) {
         // TODO
-        var studentId = 24;
+        var studentId = this.state.userid;
         if (!this.state.registered) {
             await axios.post(courseURL + 'enroll/' + this.state.courseId + '/' + studentId);
             await this.updateRegisterState();
         }
+    }
+
+    edit(event) {
+        this.setState({
+            editing: !this.state.editing
+        })
+    }
+    async save(event) {
+        // concatenation desc and save it to the backend 
+        const desc = this.state.description.join('\r\n');
+        const name = this.state.name;
+        await axios.put(updateURL+"desc/"+this.state.courseId, null, {
+            params: {
+                desc: desc
+            }
+        })
+        await axios.put(updateURL+"title/"+this.state.courseId, null, {
+            params: {
+                title: name
+            }
+        })
+        this.setState({
+            editing: !this.state.editing
+        })
+
+    }
+
+    changeDesc(event, i) {
+        var description = this.state.description;
+        description[i] = event.value;
+        this.setState({
+            description: description
+        })
+    }
+
+    changeTitle(event) {
+        this.setState({
+            name: event.value
+        })
     }
 
     render() {
@@ -88,7 +130,8 @@ class CourseInfo extends Component {
                 </Page>
             )
         }
-        // if (parseInt(userid) > )
+
+        // student view / teacher view 
         return (
             <Page>
                 <GatherSportNav />
@@ -99,10 +142,26 @@ class CourseInfo extends Component {
                                 <Icon name="people" size="3xl" />
                             </div>
                             
-                            <H4 color="gray">{this.state.name}</H4>
-                            {this.state.description.map(desc => (
+                            <H4 color="gray">
+                                {this.state.editing?'':this.state.name}
+
+                                <EditText defaultValue={this.state.name} 
+                                style={{display: this.state.editing===false?"none":"block"}}
+                                onSave={(e) => this.changeTitle(e)}
+                                />
+                            </H4>
+
+
+                            {this.state.description.map((desc,index) => (
                                 <LeadText color="blueGray" key={desc}>
-                                {desc}
+
+                                {this.state.editing===false?desc:''}
+
+                                <EditTextarea defaultValue={desc} 
+                                style={{display: this.state.editing===false?"none":"block"}}
+                                onSave={(e) => this.changeDesc(e, index)}
+                                />
+
                                 </LeadText>
                             ))}
                         
@@ -114,7 +173,35 @@ class CourseInfo extends Component {
                                 <CardBody>
                                 
                                     <Rating name="read-only" value={this.state.rating} readOnly precision={0.1}/> {this.state.rating}
-                                    {this.state.registered?<Button
+                                    {this.state.teacherId === this.state.userid?
+                                    this.state.editing?
+                                    <Button
+                                    className="register"
+                                    color="green"
+                                    buttonType="link"
+                                    size="lg"
+                                    rounded={false}
+                                    block={false}
+                                    iconOnly={false}
+                                    ripple="dark"
+                                    onClick={this.save}
+                                >
+                                    Save<Icon name="save" />
+                                </Button>:
+                                    <Button
+                                    className="register"
+                                    color="green"
+                                    buttonType="link"
+                                    size="lg"
+                                    rounded={false}
+                                    block={false}
+                                    iconOnly={false}
+                                    ripple="dark"
+                                    onClick={this.edit}
+                                >
+                                    Edit<Icon name="edit" />
+                                </Button>:
+                                    this.state.registered?<Button
                                         className="register"
                                         color="grey"
                                         buttonType="link"
@@ -138,6 +225,7 @@ class CourseInfo extends Component {
                                     >
                                         Register<Icon name="favorite" />
                                     </Button>}
+                                    
                                     
                                 </CardBody>
                             </Card>

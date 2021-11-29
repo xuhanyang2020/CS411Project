@@ -1,5 +1,6 @@
 package com.example.sportgather.service;
 
+import com.example.sportgather.domain.Mates;
 import com.example.sportgather.domain.Sport;
 import com.example.sportgather.domain.User;
 import com.example.sportgather.repository.HobbyRepository;
@@ -219,5 +220,9 @@ public class MatchService {
 
         public void sendFriendRequest(String request, String receiver) {
             matesRepository.friendRequest(request, receiver);
+        }
+
+        public List<Mates> fetchReqSent(String id) {
+            return matesRepository.fetchAllReqSent(id);
         }
 }

@@ -8,6 +8,7 @@ import H6 from "@material-tailwind/react/Heading6";
 import Dropdown from "@material-tailwind/react/Dropdown"
 import DropdownItem from "@material-tailwind/react/DropdownItem"
 import Input from "@material-tailwind/react/Input";
+import Quote from "@material-tailwind/react/Quote"
 import Button from "@material-tailwind/react/Button"
 import LeadText from "@material-tailwind/react/LeadText";
 import GatherSportNav from 'components/GatherSportNav';
@@ -24,12 +25,15 @@ const infoURL = 'http://localhost:8080/profile';
 class Match extends Component {
     constructor(props) {
         super(props);
+        // TODO
         this.state = {
             mates: [],
             age: '', 
             gender: '', 
             major: '',
             username: '',
+            userid: '24',
+            friends: {}
         }
 
         this.onAgeChange = this.onAgeChange.bind(this);
@@ -46,8 +50,8 @@ class Match extends Component {
     }
 
     async getMates(search) {
-        // TODO: change id to props later
-        const id = '24';
+        // TODO
+        const id = this.state.userid;
         const mate_ids = await axios.get(baseURL+'/mates', 
             {
             params: {
@@ -64,13 +68,14 @@ class Match extends Component {
             var result = await axios.get(infoURL+'/'+mate_id);
             mates_info.push(result.data[0]);
         }
-        // console.log(mates_info.length);
+        // console.log(mates_info);
         return mates_info;
     }
 
     async componentDidMount() {
         const mates = await this.getMates();
-        await this.getUser("24");
+        await this.getUser(this.state.userid); // TODO
+        await this.fetchReqSend();
         
         this.setState({
             mates: mates,
@@ -78,7 +83,7 @@ class Match extends Component {
     }
 
     async onAgeChange(val) {
-        console.log(`Change age param to ${val}`);
+        // console.log(`Change age param to ${val}`);
 
         this.setState({ age: val }, async () => {
             const mates = await this.getMates();
@@ -89,7 +94,7 @@ class Match extends Component {
     }
 
     async onGenderChange(val) {
-        console.log(`Change gender param to ${val}`);
+        // console.log(`Change gender param to ${val}`);
 
         this.setState({ gender: val }, async () => {
             const mates = await this.getMates();
@@ -132,14 +137,56 @@ class Match extends Component {
 
     async addFriend(receiverEmail) {
         // TODO
-
-        await axios.post(baseURL + '/addfriend/',
+        await axios.post(baseURL + '/addfriend/', null,
         {
             params: {
                 receiverEmail: receiverEmail,
-                requestid: '24'
+                requestid: this.state.userid
             }
         });
+    }
+
+    async fetchReqSend() {
+        const friendArr = (await axios.get(baseURL + "/reqSent/" + this.state.userid)).data;
+        const friendDict = {};
+        for (const f of friendArr) {
+            friendDict[f.receiverid] = f.state;
+        }
+        console.log(friendDict);
+
+        this.setState({
+            friends: friendDict
+        })
+    }
+
+    switchcase(id, email) {
+        if (id in this.state.friends) {
+            if (this.state.friends[id] === "Wait") {
+                return (<Quote color="lightBlue" >
+                        Request Sent
+                        </Quote>)
+            } else if (this.state.friends[id] === 'Rej') {
+                return (<Quote color="blueGray" >
+                 Rejected
+                </Quote>);
+            } 
+            return (<Quote color="green" >
+                Already Friends
+                </Quote>);
+        }
+        return (
+            <Button
+            className="add-friend"
+            color="lightBlue"
+            buttonType="link"
+            size="lg"
+            rounded={false}
+            block={false}
+            iconOnly={false}
+            ripple="dark"
+            onClick={() =>{this.addFriend(email)}}
+            >Add Friend</Button>
+        )
     }
 
     render() {
@@ -234,17 +281,18 @@ class Match extends Component {
                                 </Paragraph>
                                 
                             </CardBody>
-                            <Button
-                                className="add-friend"
-                                color="lightBlue"
-                                buttonType="link"
-                                size="lg"
-                                rounded={false}
-                                block={false}
-                                iconOnly={false}
-                                ripple="dark"
-                                onClick={() =>{this.addFriend(mate.email)}}
-                                >add friend</Button>
+                            {this.switchcase(mate.userId, mate.email)}
+                            
+                            
+                            {/* // {mate.userId in this.state.friends?
+                            // this.state.friends[mate.userId].state === "Wait"?
+                            // "Request Sent"
+                            // :this.state.friends[mate.userId].state === "Rej"?
+                            // "Rejected":
+                            // "Already Friend"
+                            // :
+                            // } */}
+                            
                     </Card>
                     ))
 

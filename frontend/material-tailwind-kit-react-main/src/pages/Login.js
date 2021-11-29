@@ -41,11 +41,11 @@ class Login extends Component {
         this.setState({
             info: info
         });
-        // console.log(this.state.email);
+        console.log(info);
     }
 
     render() {
-        const ConditionalLink = ({ children, condition }) => (!condition)
+        const ConditionalLink = ({ children, condition }) => (condition)
             ? <Link to={{
                 pathname: "/profile",
                 state: {

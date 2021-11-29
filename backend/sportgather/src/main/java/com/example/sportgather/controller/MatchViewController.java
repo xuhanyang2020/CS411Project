@@ -1,5 +1,6 @@
 package com.example.sportgather.controller;
 
+import com.example.sportgather.domain.Mates;
 import com.example.sportgather.domain.Sport;
 import com.example.sportgather.domain.User;
 import com.example.sportgather.service.LoginService;
@@ -74,6 +75,7 @@ public class MatchViewController {
         return matchService.queryIntersectMates(customQuery.get("id"), age, gender, major, search);
     }
 
+    @CrossOrigin
     @PostMapping(path="/addfriend")
     public String addFriend(@RequestParam Map<String, String> customQuery) {
         System.out.println("send add friend request");
@@ -98,11 +100,13 @@ public class MatchViewController {
         String requestid = customQuery.get("requestid");
         String resid = customQuery.get("resid");
         String res = customQuery.get("res");
-        System.out.println("updateState is called");
-        System.out.println(customQuery.get("requestid"));
-        System.out.println(resid);
-        System.out.println(res);
         matchService.updateState(requestid, resid, res);
         return "success";
+    }
+
+    @GetMapping(path="/reqSent/{id}")
+    public List<Mates> reqSent(@PathVariable("id") String UserId) {
+        System.out.println("fetchMatesRequest is called");
+        return matchService.fetchReqSent(UserId);
     }
 }
