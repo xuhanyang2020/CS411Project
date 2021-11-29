@@ -51,7 +51,8 @@ class Match extends Component {
 
     async getMates(search) {
         // TODO
-        const id = this.state.userid;
+        const id = this.props.location.state.user;
+        console.log(this.props.location.state.user);
         const mate_ids = await axios.get(baseURL+'/mates', 
             {
             params: {

@@ -47,11 +47,11 @@ class CourseInfo extends Component {
 
     async componentDidMount() {
         // TODO
-        var userid = '1502';
+        var userid = '2222';
 
         var course = await this.getCouseInfo();
         // make description a list of paragraphs
-        var description = course.description.split(/\r\n/);
+        var description = course.description.split(/\n/);
 
         this.setState({
             name: course.name,
@@ -89,7 +89,7 @@ class CourseInfo extends Component {
     }
     async save(event) {
         // concatenation desc and save it to the backend 
-        const desc = this.state.description.join('\r\n');
+        const desc = this.state.description.join('\n');
         const name = this.state.name;
         await axios.put(updateURL+"desc/"+this.state.courseId, null, {
             params: {
@@ -104,7 +104,6 @@ class CourseInfo extends Component {
         this.setState({
             editing: !this.state.editing
         })
-
     }
 
     changeDesc(event, i) {

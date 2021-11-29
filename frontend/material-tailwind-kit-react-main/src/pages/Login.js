@@ -41,7 +41,6 @@ class Login extends Component {
         this.setState({
             info: info
         });
-        console.log(info);
     }
 
     render() {

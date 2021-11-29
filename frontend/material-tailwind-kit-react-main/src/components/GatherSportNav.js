@@ -31,23 +31,21 @@ async function getNotificationName(ids) {
     }
     return names;
 }
-export default function GatherSportNav({username, userid}) {
+
+
+export default function GatherSportNav(userid) {
     const updateURL = "http://localhost:8080/match/updateState"
     const [openNavbar, setOpenNavbar] = useState(false);
-    if (!username || username.length===0) {
-        username = ""; 
-    }
-
     if (!userid || userid.length===0) {
         userid = "24";
     }
+
+    
 
     const [notificationId, setNotificationId] = useState('');
     const [notificationName, setNotificationName] = useState('');
 
     useEffect(() => {
-    // You need to restrict it at some point
-    // This is just dummy code and should be replaced by actual
     if (!notificationId) {
         get();
     }
@@ -64,11 +62,6 @@ export default function GatherSportNav({username, userid}) {
   const updateState = async(name, state) => {
     // TODO: assume there is no notification with same name
     var i = notificationName.indexOf(name);
-    console.log({
-        resid: userid,
-        requestid: notificationId[i],
-        res: "Acpt"
-    });
     await axios.put(updateURL, null,
         {
         params: {
@@ -105,7 +98,11 @@ export default function GatherSportNav({username, userid}) {
                                 </NavLink>
                             </Link> */}
 
-                            <Link to='/match'>
+                            <Link to={{
+                            pathname: "/match",
+                            state: {
+                                user: userid
+                            }}}>
                                 <NavLink>
                                     <Icon name="accperson_add" size="2xl" />
                                     {/* &nbsp;People */}
@@ -189,7 +186,9 @@ export default function GatherSportNav({username, userid}) {
 
                             {/* if a user log in, show his/her firstname  */}
                             <Link to='/profile'>
-                                <NavLink className="username">{username}</NavLink>
+                                <NavLink className="user_profile">
+                                    <Icon name="account_circle" size="3xl"/>
+                                    </NavLink>
                             </Link>
 
                         </div>
