@@ -1,18 +1,15 @@
 import Card from '@material-tailwind/react/Card';
 import CardHeader from '@material-tailwind/react/CardHeader';
 import CardBody from '@material-tailwind/react/CardBody';
-import CardFooter from '@material-tailwind/react/CardFooter';
 import H5 from '@material-tailwind/react/Heading5';
 import InputIcon from '@material-tailwind/react/InputIcon';
-import Checkbox from '@material-tailwind/react/Checkbox';
 import Button from '@material-tailwind/react/Button';
-import SimpleFooter from 'components/SimpleFooter';
 import Page from 'components/login/Page';
 import Container from 'components/login/Container';
 import axios from "axios";
 import {Component} from "react";
 import {Link} from "react-router-dom";
-
+import Background from "../assets/img/swim.jpg";
 const infoUrl = 'http://localhost:8080/login';
 
 async function getUserId(eml, pwd) {
@@ -31,84 +28,83 @@ class Login extends Component {
             info: "",
             email: "",
             password: "",
+            click: 0
         }
     }
 
     async getId(email, pwd) {
         const info = await getUserId(email, pwd);
-
-        this.setState({
-            info: info
-        });
+        if (info !== "email or password is wrong") {
+            this.setState({
+                info: info,
+                click: 1
+            });
+        }
+        console.log(info)
+        console.log(this.state.info)
+        console.log(this.state.info!=="")
     }
 
     render() {
-        const ConditionalLink = ({ children, to, condition }) => (!condition && to)
+        const ConditionalLink = ({ children, condition}) => (condition)
             ? <Link to={'/profile'}>{children}</Link>
             : <>{children}</>;
         return (
             <Page>
-                <Container>
-                    <div className="mb-8 px-4" style={{fontSize: 20, textAlign: "center"}}>
-                            {this.state.info !== "email or password is wrong"?'':'Email or Password is wrong'}
-                    </div>
-                    <Card>
-                        <CardHeader color="lightBlue">
-                            <H5 color="white" style={{marginBottom: 0}}>
-                                Login
-                            </H5>
-                        </CardHeader>
-
-                        <CardBody>
-                            <div className="mb-12 px-4 bg-bb">
-                                <InputIcon
-                                    type="email"
-                                    color="lightBlue"
-                                    placeholder="Email Address"
-                                    iconName="email"
-                                    onChange={event => this.setState({email: event.target.value})}
-                                />
+                <div
+                    style={{
+                        width: '100%',
+                        height: '800px',
+                        background:`url(${Background})`,
+                        backgroundSize: 'cover'
+                    }}
+                >
+                    <Container>
+                        <div className="flex justify-center">
+                            <div className="text-center my-8">
+                                <Card>
+                                    <CardHeader color="lightBlue" size="lg">
+                                        <H5 color="white" style={{marginBottom: 0}}>Login</H5>
+                                    </CardHeader>
+                                    <H5 color="black">{(this.state.info !== "")?'Hello':'Enter Right Password'}</H5>
+                                    <CardBody>
+                                        <div className="text-left my-8">
+                                            <InputIcon
+                                            type="email"
+                                            color="lightBlue"
+                                            placeholder="Email Address"
+                                            iconName="email"
+                                            onChange={event => this.setState({email: event.target.value})}
+                                            />
+                                            <InputIcon
+                                                type="password"
+                                                color="lightBlue"
+                                                placeholder="Password"
+                                                iconName="lock"
+                                                onChange={event => this.setState({password: event.target.value})}
+                                            />
+                                        </div>
+                                        <div className="mb-2 flex items-center justify-center gap-2">
+                                            <ConditionalLink to="/profile" condition={this.state.info !== ""}><Button
+                                                color="lightBlue"
+                                                buttonType="link"
+                                                size="lg"
+                                                ripple="dark"
+                                                onClick={async () => {
+                                                    await this.getId(this.state.email, this.state.password);
+                                                }}
+                                            >
+                                                Get Started
+                                            </Button></ConditionalLink>
+                                        </div>
+                                    </CardBody>
+                                </Card>
                             </div>
-                            <div className="mb-8 px-4">
-                                <InputIcon
-                                    type="password"
-                                    color="lightBlue"
-                                    placeholder="Password"
-                                    iconName="lock"
-                                    onChange={event => this.setState({password: event.target.value})}
-                                />
-                            </div>
-                            <div className="mb-4 px-4">
-                                <Checkbox
-                                    color="lightBlue"
-                                    text="Remember Me"
-                                    id="remember"
-                                />
-                            </div>
-                        </CardBody>
-
-                        <CardFooter>
-                            <div className="flex justify-center bg-bb">
-                            <ConditionalLink to="/profile" condition={this.state.info !== "email or password is wrong"}><Button
-                                    color="lightBlue"
-                                    buttonType="link"
-                                    size="lg"
-                                    ripple="dark"
-                                    onClick={async () => {
-                                        await this.getId(this.state.email, this.state.password);
-                                    }}
-                                >
-                                    Get Started
-                                </Button></ConditionalLink>
-                            </div>
-                        </CardFooter>
-
-                    </Card>
-                </Container>
-                <SimpleFooter/>
+                        </div>
+                    </Container>
+                </div>
             </Page>
         );
     }
 }
-
 export default Login;

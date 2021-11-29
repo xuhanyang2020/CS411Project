@@ -10,7 +10,7 @@ import GatherSportNav from "../../components/GatherSportNav";
 import Icon from "@material-tailwind/react/Icon";
 import InputIcon from "@material-tailwind/react/InputIcon";
 import Button from "@material-tailwind/react/Button";
-const infoUrl = 'http://localhost:8090/message';
+const infoUrl = 'http://localhost:8080/message';
 
 class Message extends Component {
     constructor(props) {
@@ -30,11 +30,14 @@ class Message extends Component {
 
     async addMsg(title, content, id) {
         await axios.post(infoUrl + '/saveMsg/' + title + '/' + content + '/' + id);
+        const allMsg = await this.getAllMsg();
+        this.setState({
+            allMsg: allMsg.data
+        })
     }
 
     async componentDidMount() {
         const allMsg = await this.getAllMsg();
-        console.log(allMsg.data);
         this.setState({
             allMsg: allMsg.data
         })
@@ -46,10 +49,13 @@ class Message extends Component {
                 <GatherSportNav username="Ruth Sabin"/>
                 <div
                     style={{
+                        width: '100%',
+                        height: '2000%',
                         background:`url(${Background})`,
+                        backgroundSize: 'cover'
                     }}
                 >
-                    <div className="flex flex-wrap justify-center">
+                    <div className="flex justify-center">
                         <div className="text-center my-8">
                             <H3 color="blue">Post Messages Here</H3>
                             <InputIcon
@@ -71,7 +77,7 @@ class Message extends Component {
                             Send
                         </Button>
                     </div>
-                    <div className="flex flex-wrap justify-center">
+                    <div className="flex justify-center">
                         <div className="text-center my-8">
                             {(!this.state.allMsg || this.state.allMsg.length === 0)?(<LeadText color="lightBlue">There is currently no messages. Please add some messages.</LeadText>):(
                                 this.state.allMsg.map(msg => (
