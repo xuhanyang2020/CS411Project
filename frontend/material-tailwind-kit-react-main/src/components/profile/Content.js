@@ -41,12 +41,14 @@ class Content extends Component {
             email: "",
             type: "",
             typ: "",
-            id: "24",
+            id: this.props.userid,
         }
     }
 
     async getCnInfo(id) {
+        console.log(id)
         const info = await getContInfo(id);
+        console.log(info)
         this.setState({
             firstName: info[0].firstName,
             lastName: info[0].lastName,
@@ -128,7 +130,7 @@ class Content extends Component {
     }
 
      async componentDidMount() {
-        await this.getCnInfo(this.state.id);
+        await this.getCnInfo(this.props.userid);
      }
 
     render() {
