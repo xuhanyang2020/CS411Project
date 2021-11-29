@@ -1,8 +1,11 @@
 import Button from '@material-tailwind/react/Button';
 import Image from '@material-tailwind/react/Image';
 import H3 from '@material-tailwind/react/Heading3';
+import H1 from "@material-tailwind/react/Heading1";
+import Page from 'components/login/Page';
 import Icon from '@material-tailwind/react/Icon';
-import ProfilePicture from 'assets/img/UIUC.jpg';
+import ProfilePicture from 'assets/img/profile.jpg';
+import Background from 'assets/img/UIUC.jpg';
 import {Component} from "react";
 import axios from "axios";
 import InputIcon from "@material-tailwind/react/InputIcon";
@@ -15,15 +18,8 @@ async function getContInfo(id) {
     return prof_info.data;
 }
 
-async function updContInfo(lstNm, gd, ag, ph, loc, typ, id) {
-    const lastName = lstNm;
-    const gender = gd;
-    const age = ag;
-    const phone = ph;
-    const location = loc;
-    const type = typ;
-    const userId = id;
-    const prof_info = await axios.put(infoUrl +'/updateInfo/' + lastName + '/' + gender + '/' + age + '/' + phone + '/' + location + '/' + type + '/' + userId);
+async function updContInfo(paths, param, id) {
+    const prof_info = await axios.put(infoUrl + paths + param + '/' + id);
     return prof_info.data;
 }
 
@@ -45,13 +41,14 @@ class Content extends Component {
             email: "",
             type: "",
             typ: "",
-            id: "24",
-        };
-        
+            id: this.props.userid,
+        }
     }
 
     async getCnInfo(id) {
+        console.log(id)
         const info = await getContInfo(id);
+        console.log(info)
         this.setState({
             firstName: info[0].firstName,
             lastName: info[0].lastName,
@@ -64,163 +61,222 @@ class Content extends Component {
         });
     }
 
-    async updCnInfo(lstNm, gd, ag, ph, loc, typ, id) {
-        await updContInfo(lstNm, gd, ag, ph, loc, typ, id);
-        this.setState({
-            lstNm: lstNm,
-            gd: gd,
-            ag: ag,
-            ph: ph,
-            loc: loc,
-            typ: typ
-        });
+    async updCnInfo(paths, param, id) {
+        await updContInfo(paths, param, id);
+        if (paths === '/updateName/') {
+            this.setState({
+                lstNm: param
+            });
+        }
+        else if (paths === '/updateGender/') {
+            this.setState({
+                gd: param
+            });
+        }
+        else if (paths === '/updateAge/') {
+            this.setState({
+                ag: param
+            });
+        }
+        else if (paths === '/updatePhone/') {
+            this.setState({
+                ph: param
+            });
+        }
+        else if (paths === '/updateLocation/') {
+            this.setState({
+                loc: param
+            });
+        }
+        else if (paths === '/updateUserType/') {
+            this.setState({
+                typ: param
+            });
+        }
     }
 
-    async updInfo(lstNm, gd, ag, ph, loc, typ, id) {
-        await this.updCnInfo(lstNm, gd, ag, ph, loc, typ, id);
-        this.setState({
-            lastName: lstNm,
-            gender: gd,
-            age: ag,
-            phone: ph,
-            location: loc,
-            type: typ
-        });
+    async updInfo(paths, param, id) {
+        await this.updCnInfo(paths, param, id);
+        if (paths === '/updateName/') {
+            this.setState({
+                lastName: param
+            });
+        }
+        else if (paths === '/updateGender/') {
+            this.setState({
+                gender: param
+            });
+        }
+        else if (paths === '/updateAge/') {
+            this.setState({
+                age: param
+            });
+        }
+        else if (paths === '/updatePhone/') {
+            this.setState({
+                phone: param
+            });
+        }
+        else if (paths === '/updateLocation/') {
+            this.setState({
+                location: param
+            });
+        }
+        else if (paths === '/updateUserType/') {
+            this.setState({
+                type: param
+            });
+        }
     }
 
      async componentDidMount() {
-        await this.getCnInfo(this.state.id);
+        await this.getCnInfo(this.props.userid);
      }
 
     render() {
         console.log(this.props);
         return (
-            <section className="relative py-16 bg-gray-100">
-                <div className="container max-w-7xl px-4 mx-auto">
-                    <div
-                        className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-2xl -mt-64">
-                        <div className="px-6">
-                            <div className="flex flex-wrap justify-center">
-                                <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
-                                    <div className="relative">
-                                        <div className="w-60 -mt-60">
-                                            <Image
-                                                src={ProfilePicture}
-                                                alt="Profile picture"
-                                                raised
-                                                rounded
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    className="w-full lg:w-4/12 px-4 lg:order-3 lg:self-center flex justify-center mt-10 lg:justify-end lg:mt-0">
-                                    <Button
-                                        color="lightBlue"
-                                        ripple="light"
-                                        onClick=
-                                            {async () => {
-                                            await this.updInfo(this.state.lstNm, this.state.gd, this.state.ag, this.state.ph, this.state.loc, this.state.typ, this.state.id);
+            <Page>
+                <div
+                    style={{
+                        width: '100%',
+                        height: '2000%',
+                        background:`url(${Background})`,
+                        backgroundSize: 'cover'
+                    }}
+                >
+                    <div className="flex flex-wrap justify-center">
+                        <div className="text-center my-8">
+                            <Image
+                                src={ProfilePicture}
+                                alt="Profile picture"
+                                rounded
+                            />
+                            <H1 color="blue">Your Profile Info</H1>
+                            <H3 color="blue">{this.state.firstName}</H3>
+                            <H3 color="blue">{this.state.lastName}</H3>
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
+                                    color="lightBlue"
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updateName/",this.state.lstNm, this.state.id);
                                         }}>
-                                        Update Info
-                                    </Button>
-                                </div>
-
-                                <div className="w-full lg:w-4/12 px-4 lg:order-1">
-                                </div>
+                                    Update Last Name
+                                </Button>
                             </div>
-
-                            <div className="text-center my-8">
-                                <H3 color="blue">{this.state.firstName}</H3>
-                                <H3 color="blue">{this.state.lastName}</H3>
-                                <div className="mt-0 mb-2 text-orange-500 font-medium flex items-center justify-center gap-2">
-                                    <InputIcon
-                                        iconName="face"
-                                        type="LastName"
-                                        color="black"
-                                        placeholder="LastName"
-                                        onChange={event => this.setState({lstNm: event.target.value})}
-                                    />
-                                </div>
-                                <div
-                                    className="mt-0 mb-2 text-orange-500 font-medium flex items-center justify-center gap-2">
-                                    <Icon name="location_city" size="xl"/>
-                                    {this.state.location}
-                                </div>
-                                <div className="mt-0 mb-2 text-orange-500 font-medium flex items-center justify-center gap-2">
-                                    <InputIcon
-                                        iconName="location_city"
-                                        type="location"
-                                        color="black"
-                                        placeholder="location"
-                                        onChange={event => this.setState({loc: event.target.value})}
-                                    />
-                                </div>
-                                <div className="mb-2 text-black-700 flex items-center justify-center gap-2">
-                                    <Icon name="security" size="xl"/>
-                                    UserId: {this.state.id}
-                                </div>
-                                <div className="mb-2 text-black-700 flex items-center justify-center gap-2">
-                                    <Icon name="email" size="xl"/>
-                                    {this.state.email}
-                                </div>
-                                <div className="mb-2 text-black-700 flex items-center justify-center gap-2">
-                                    <Icon name="phone" size="xl"/>
-                                    {this.state.phone}
-                                </div>
-                                <div className="mt-0 mb-2 text-orange-500 font-medium flex items-center justify-center gap-2">
-                                    <InputIcon
-                                        iconName="phone"
-                                        type="phone"
-                                        color="black"
-                                        placeholder="phone"
-                                        onChange={event => this.setState({ph: event.target.value})}
-                                    />
-                                </div>
-                                <div className="mb-2 text-black-700 flex items-center justify-center gap-2">
-                                    <Icon name="perm_identity" size="xl"/>
-                                    {this.state.gender==="F"?"Female":"Male"}
-                                </div>
-                                <div className="mt-0 mb-2 text-orange-500 font-medium flex items-center justify-center gap-2">
-                                    <InputIcon
-                                        iconName="perm_identity"
-                                        type="gender"
-                                        color="black"
-                                        placeholder="gender"
-                                        onChange={event => this.setState({gd: event.target.value})}
-                                    />
-                                </div>
-                                <div className="mb-2 text-black-700 flex items-center justify-center gap-2">
-                                    <Icon name="assignment_ind" size="xl"/>
-                                    {this.state.type==="S"?"Student":"Teacher"}
-                                </div>
-                                <div className="mt-0 mb-2 text-orange-500 font-medium flex items-center justify-center gap-2">
-                                    <InputIcon
-                                        iconName="assignment_ind"
-                                        type="user type"
-                                        color="black"
-                                        placeholder="user type"
-                                        onChange={event => this.setState({typ: event.target.value})}
-                                    />
-                                </div>
-                                <div className="mb-2 text-black-700 flex items-center justify-center gap-2">
-                                    <Icon name="cake" size="xl"/>
-                                    {this.state.age}
-                                </div>
-                                <div className="mt-0 mb-2 text-orange-500 font-medium flex items-center justify-center gap-2">
-                                    <InputIcon
-                                        iconName="cake"
-                                        type="age"
-                                        color="black"
-                                        placeholder="age"
-                                        onChange={event => this.setState({ag: event.target.value})}
-                                    />
-                                </div>
+                            <InputIcon
+                                iconName="face"
+                                placeholder="LastName"
+                                onChange={event => this.setState({lstNm: event.target.value})}/>
+                            <div className="mb-2 text-orange-800 font-medium flex items-center justify-center gap-2">
+                                <Icon name="location_city" size="3xl"/>
+                                {this.state.location}
                             </div>
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
+                                    color="orange"
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updateLocation/",this.state.loc, this.state.id);
+                                        }}>
+                                    Update Location
+                                </Button>
+                            </div>
+                            <InputIcon
+                                iconName="location_city"
+                                placeholder="location"
+                                onChange={event => this.setState({loc: event.target.value})}/>
+                            <div className="mb-2 text-indigo-800 font-medium flex items-center justify-center gap-2">
+                                <Icon name="security" size="3xl"/>
+                                UserId: {this.state.id}
+                            </div>
+                            <div className="mb-2 text-purple-800 font-medium flex items-center justify-center gap-2">
+                                <Icon name="email" size="3xl"/>
+                                {this.state.email}
+                            </div>
+                            <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
+                                <Icon name="phone" size="3xl"/>
+                                {this.state.phone}
+                            </div>
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
+                                    color="green"
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updatePhone/",this.state.ph, this.state.id);
+                                        }}>
+                                    Update Phone
+                                </Button>
+                            </div>
+                            <InputIcon
+                                iconName="phone"
+                                placeholder="phone"
+                                onChange={event => this.setState({ph: event.target.value})}/>
+                            <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
+                                <Icon name="perm_identity" size="3xl"/>
+                                {this.state.gender==="F"?"Female":"Male"}
+                            </div>
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
+                                    color="green"
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updateGender/",this.state.gd, this.state.id);
+                                        }}>
+                                    Update Gender
+                                </Button>
+                            </div>
+                            <InputIcon
+                                iconName="perm_identity"
+                                placeholder="gender"
+                                onChange={event => this.setState({gd: event.target.value})}/>
+                            <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
+                                <Icon name="assignment_ind" size="3xl"/>
+                                {this.state.type==="S"?"Student":"Teacher"}
+                            </div>
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
+                                    color="green"
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updateUserType/",this.state.typ, this.state.id);
+                                        }}>
+                                    Update User Type
+                                </Button>
+                            </div>
+                            <InputIcon
+                                iconName="assignment_ind"
+                                placeholder="user type"
+                                onChange={event => this.setState({typ: event.target.value})}/>
+                            <div className="mb-2 text-0.8xl font-medium flex items-center justify-center gap-2">
+                                <Icon name="cake" size="3xl"/>
+                                {this.state.age}
+                            </div>
+                            <div className="mb-2 flex items-center justify-center gap-2">
+                                <Button
+                                    color="green"
+                                    ripple="light"
+                                    onClick=
+                                        {async () => {
+                                            await this.updInfo("/updateAge/",this.state.ag, this.state.id);
+                                        }}>
+                                    Update Age
+                                </Button>
+                            </div>
+                            <InputIcon
+                                iconName="cake"
+                                placeholder="age"
+                                onChange={event => this.setState({ag: event.target.value})}/>
                         </div>
                     </div>
                 </div>
-            </section>
+            </Page>
         );
     }
 }

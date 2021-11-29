@@ -2,11 +2,10 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Landing from 'pages/Landing';
 import Profile from 'pages/Profile';
 import Login from 'pages/Login';
-import Register from 'pages/Register';
-import Match from 'pages/match/Match';
-import Overview from 'pages/overview/Overview';
-import Reservation from 'pages/Reservation/Reservation';
-import CourseInfo from 'pages/CourseInfo';
+import Match from 'pages/Match';
+import Message from 'pages/Message/Message';
+
+
 // Font Awesome Style Sheet
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -26,6 +25,7 @@ function App() {
             <Route exact path='/overview' component={Overview} />
             <Route exact path='/reservation' component={Reservation}/>
             <Route exact path='/course/:id' component={CourseInfo}/>
+            <Route exam path='/message' component={Message} />
             <Redirect from="*" to="/" />
         </Switch>
     );

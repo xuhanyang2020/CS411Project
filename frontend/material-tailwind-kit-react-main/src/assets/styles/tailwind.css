@@ -605,6 +605,9 @@ video {
 .mt-auto{
 	margin-top: auto;
 }
+.mb-7{
+	margin-bottom: 1.75rem;
+}
 .block{
 	display: block;
 }
@@ -848,6 +851,9 @@ video {
 .text-center{
 	text-align: center;
 }
+.text-left{
+	text-align: left;
+}
 .font-serif{
 	font-family: "Roboto Slab", serif;
 }
@@ -903,6 +909,14 @@ video {
 .text-gray-200{
 	--tw-text-opacity: 1;
 	color: rgba(229, 231, 235, var(--tw-text-opacity));
+}
+.text-indigo-800{
+	--tw-text-opacity: 1;
+	color: rgba(55, 48, 163, var(--tw-text-opacity));
+}
+.text-purple-800{
+	--tw-text-opacity: 1;
+	color: rgba(91, 33, 182, var(--tw-text-opacity));
 }
 .shadow-md{
 	--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);

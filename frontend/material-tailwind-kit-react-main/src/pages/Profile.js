@@ -1,14 +1,12 @@
-import GatherSportNav from 'components/GatherSportNav';
-import Header from 'components/profile/Header';
+import GatherSportNav from 'components/GatherSportNav.js';
 import Content from 'components/profile/Content';
 
-export default function Profile() {
+export default function Profile(info) {
     return (
         <>
-        <GatherSportNav username="Ruth Sabin"/>
+            <GatherSportNav userid={info.location.state.userid}/>
             <main>
-                <Header />
-               <Content />
+                <Content userid={info.location.state.userid}/>
             </main>
         </>
     );

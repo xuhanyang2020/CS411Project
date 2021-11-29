@@ -27,8 +27,33 @@ public class ProfileService {
         return users;
     }
 
-    public static String modifyInfo(String lastName, String gender, Integer age, String phone, String location, String type, String id) {
-        userRepository.updateInfo(lastName, gender, age, phone, location, type, id);
-        return "update info done";
+    public static String modifyName(String lastName, String id) {
+        userRepository.updateName(lastName, id);
+        return "update name done";
+    }
+
+    public static String modifyGender(String gender, String id) {
+        userRepository.updateGender(gender, id);
+        return "update gender done";
+    }
+
+    public static String modifyAge(Integer age, String id) {
+        userRepository.updateAge(age, id);
+        return "update age done";
+    }
+
+    public static String modifyPhone(String phone, String id) {
+        userRepository.updatePhone(phone, id);
+        return "update phone done";
+    }
+
+    public static String modifyLocation(String location, String id) {
+        userRepository.updateLocation(location, id);
+        return "update location done";
+    }
+
+    public static String modifyUserType(String type, String id) {
+        userRepository.updateUserType(type, id);
+        return "update user type done";
     }
 }
