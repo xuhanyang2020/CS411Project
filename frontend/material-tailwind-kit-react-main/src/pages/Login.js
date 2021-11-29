@@ -40,14 +40,17 @@ class Login extends Component {
                 click: 1
             });
         }
-        console.log(info)
         console.log(this.state.info)
-        console.log(this.state.info!=="")
     }
 
     render() {
         const ConditionalLink = ({ children, condition}) => (condition)
-            ? <Link to={'/profile'}>{children}</Link>
+            ? <Link to={{
+                pathname:'/profile',
+                state:{
+                    userid:this.state.info
+                }
+            }}>{children}</Link>
             : <>{children}</>;
         return (
             <Page>
@@ -66,7 +69,8 @@ class Login extends Component {
                                     <CardHeader color="lightBlue" size="lg">
                                         <H5 color="white" style={{marginBottom: 0}}>Login</H5>
                                     </CardHeader>
-                                    <H5 color="black">{(this.state.info !== "")?'Hello':'Enter Right Password'}</H5>
+                                    <H5 color="black">{(this.state.info === "")?'Enter Right Password':''}</H5>
+                                    <H5 color="black">{(this.state.info !== "")?'Welcome Back':''}</H5>
                                     <CardBody>
                                         <div className="text-left my-8">
                                             <InputIcon

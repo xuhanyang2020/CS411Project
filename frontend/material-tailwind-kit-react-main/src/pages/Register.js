@@ -27,13 +27,15 @@ class Register extends Component {
             firstName: "",
             email: "",
             password: "",
+            click: 0
         }
     }
 
     async getInfo(firstName, email, password) {
         const info = await getRegisInfo(firstName, email, password);
         this.setState({
-            info: info
+            info: info,
+            click: 1
         });
     }
 
@@ -55,7 +57,8 @@ class Register extends Component {
                                     <CardHeader color="lightBlue">
                                         <H5 color="white" style={{marginBottom: 0}}>Register</H5>
                                     </CardHeader>
-                                    <H5 color="black">{this.state.info !== "user with such email already exists"?'':'User With This Email Already Exists'}</H5>
+                                    <H5 color="black">{(this.state.info === "user with such email already exists"&& this.state.click===1)?'User With This Email Already Exists':''}</H5>
+                                    <H5 color="black">{(this.state.info !== "user with such email already exists"&& this.state.click===1)?'Registration Success':''}</H5>
                                     <CardBody>
                                         <div className="text-left my-8">
                                             <InputIcon
