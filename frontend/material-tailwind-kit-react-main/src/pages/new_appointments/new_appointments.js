@@ -52,13 +52,13 @@ import{ init } from 'emailjs-com';
 //import { appointments } from '../../../demo-data/appointments';
 const ReservationURL = 'http://localhost:8080/appointment/userid={id}';
 const InsertAppointmentURL = 'http://localhost:8080/appointment/insertappointment';
-function sendEmail(e) {
+function sendEmail(username, teacher_name, location) {
   init("user_TcaKIkCvpvX6KiytTdPXA");
   //e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
   var templateParams = {
-      to_name: 'James',
-      teacher_name: 'Check this out!',
-      location: '2'
+      to_name: username,
+      teacher_name: teacher_name,
+      location: location
   };
    
   emailjs.send('service_txgagqb', 'template_d24psnh', templateParams)
@@ -214,6 +214,7 @@ class AppointmentFormContainerBasic extends React.PureComponent {
       ...this.getAppointmentChanges(),
     };
     if (type === 'deleted') {
+     
       commitChanges({ [type]: appointment.id });
     } else if (type === 'changed') {
       commitChanges({ [type]: { [appointment.id]: appointment } });
@@ -298,7 +299,8 @@ class AppointmentFormContainerBasic extends React.PureComponent {
       });
       this.changeAppointment({
         field: ['SelectedTeacherId'], 
-        changes: event
+        changes: event,
+        
       });
     };
   
@@ -376,7 +378,7 @@ class AppointmentFormContainerBasic extends React.PureComponent {
                 visibleChange();
                 applyChanges();
                 this.commitAppointment('deleted');
-                sendEmail();
+               
               }}
             >
               {isNewAppointment ? 'Submit' : 'Submit'}
@@ -417,9 +419,28 @@ class new_appointments extends React.PureComponent {
     football: {
       background: 'url(https://drive.google.com/uc?id=1eXFmXD1oxTGIUGvsF-0zRotbpE9NgK5t)',
     },
-    thirdRoom: {
-      background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-0.jpg)',
+    badminton: {
+      background: 'url(https://drive.google.com/uc?id=1QPkO3aRmcU006fyBZLGDo5he3MEFWl_P)',
     },
+
+    figureskating: {
+      background: 'url(https://drive.google.com/uc?id=1Jne8Tl7gydVaCWPYzh_evKYCgQ9zHYJo)',
+    },
+  
+    swimming: {
+      background: 'url(https://drive.google.com/uc?id=1jVyHsF8L8KujYI4q6IgaF017PCU4YgZ7)',
+    },
+   
+    tennis: {
+      background: 'url(https://drive.google.com/uc?id=1DbwV6wQC3qe0n2rgGtA1JNcTr-2VuY0O)',
+    },
+    volleyball: {
+      background: 'url(https://drive.google.com/uc?id=1D23FrcH2qvJCGM0aNBC_aQbhQ-iWJHhU)',
+    },
+    sports: {
+      background: 'url(https://drive.google.com/uc?id=1RAdlQMjgnT32y06dBNCs44Pu13AZY_L8)',
+    },
+
     header: {
       height: '260px',
       backgroundSize: 'cover',
@@ -431,7 +452,12 @@ class new_appointments extends React.PureComponent {
   getSportName = (classes, sportName) => {
     if (sportName === 'Basketball') return classes.basketball;
     if (sportName === 'Football') return classes.football;
-    return classes.thirdRoom;
+    if (sportName === 'Badminton') return classes.badminton;
+    if (sportName === 'Figure Skating') return classes.figureskating;
+    if (sportName === 'Swimming and Aquatics') return classes.swimming;
+    if (sportName === 'Tennis') return classes.tennis;
+    if (sportName === 'Volleyball') return classes.volleyball;
+    return classes.sports;
   };
   Header = withStyles(this.style, { name: 'Header' })(({
     children, appointmentData, classes, ...restProps
@@ -467,6 +493,7 @@ class new_appointments extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      id : this.props.location.state.userid,
       data : [
         ]
     ,
@@ -504,7 +531,7 @@ class new_appointments extends React.PureComponent {
         isNewAppointment,
         previousAppointment,
       } = this.state;
-      
+     
       const currentAppointment = data
         .filter(appointment => editingAppointment && appointment.id === editingAppointment.id)[0]
         || addedAppointment;
@@ -566,12 +593,19 @@ class new_appointments extends React.PureComponent {
 
   async commitDeletedAppointment() {
    // Insert_Appointment(Student_id_Insert, Teacher_id_Insert, Link_Insert, ReservationId_Insert, Comment_Insert)
-   const { data, deletedAppointmentId } = this.state;
+   const { data, deletedAppointmentId, id } = this.state;
    console.log(data)
    const delete_data = data.filter(appointment => appointment.id == deletedAppointmentId);
    //alert(select);
-   console.log(deletedAppointmentId)
-   await Insert_Appointment("24", delete_data[0]['SelectedTeacherId'], "Link_Insert", deletedAppointmentId, "564546")
+  // console.log(deletedAppointmentId)
+  for (let i = 0; i < delete_data[0]['teacherRecommends'].length; i++) {
+    if (delete_data[0]['teacherRecommends'][i]['id'] ==delete_data[0]['SelectedTeacherId']){
+      console.log (delete_data[0]['teacherRecommends'][i]['text'])
+    }
+  }
+   
+   //sendEmail(appointment.username, appointment.teacher_name, appointment.location)
+   await Insert_Appointment(this.state.id, delete_data[0]['SelectedTeacherId'], "Link_Insert", deletedAppointmentId, delete_data[0]['notes'])
     this.setState((state) => {
       
       const { data, deletedAppointmentId } = state;
@@ -586,7 +620,7 @@ class new_appointments extends React.PureComponent {
     // extract params from url
    // let search = window.location.search;
    // let params = new URLSearchParams(search);
-    const id = '24';;
+    const id = this.state.id;
     // call two functions and render the page
     this.setState({
         data: await get_Res(id),
@@ -622,13 +656,15 @@ class new_appointments extends React.PureComponent {
       editingFormVisible,
       startDayHour,
       endDayHour,
+      
     } = this.state;
+    
     const { classes } = this.props;
 
     return (
       
       <Paper>
-       <GatherSportNav username="RUTH SABIN"/> 
+       <GatherSportNav userid={this.state.id}/> 
        <div className="Header">
         <H2 color="lightBlue">Make an Appointment</H2>
 

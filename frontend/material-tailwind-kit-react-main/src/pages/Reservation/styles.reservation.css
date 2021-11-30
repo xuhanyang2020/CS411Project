@@ -1,4 +1,4 @@
-.SportSelection {
+.TimeSelection {
     text-align: center;
     width:99%;
     position: absolute;
@@ -6,7 +6,7 @@
     left: 20px;
    
 }
-.CourtSelecton {
+.SportSelection {
     text-align: center;
     width:99%;
     position: absolute;
@@ -14,12 +14,20 @@
     left: 200px;
    
 }
+.CourtSelecton {
+    text-align: center;
+    width:99%;
+    position: absolute;
+    top: 150px;
+    left: 380px;
+   
+}
 .Header {
     text-align: center !important;
     height: 500px; 
     position: relative;
     top: 80px;
-    left: 600px;
+    left: px;
 }
 .reservationcard {
     display: inline-block;

@@ -7,6 +7,33 @@ public class Course {
     private float Rating;
     private String SportId;
     private String TeacherId;
+    private String Date;
+    private String time;
+    private int capacity;
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
 
     public String getCourseId() {
         return CourseId;

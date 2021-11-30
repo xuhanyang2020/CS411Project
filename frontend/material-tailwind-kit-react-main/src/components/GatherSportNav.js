@@ -130,7 +130,7 @@ export default function GatherSportNav({userid}) {
                             <Link to={{
                                 pathname:'/coursesearch',
                                 state: {
-                                    userid: userid
+                                    id: userid
                                 }}}>
                                 <NavLink>
                                         <Icon name="computer" size="2xl" />

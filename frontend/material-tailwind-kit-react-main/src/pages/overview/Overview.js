@@ -22,8 +22,7 @@ import CardStatusFooter from "@material-tailwind/react/CardStatusFooter";
 import Icon from "@material-tailwind/react/Icon";
 import StatusCard from 'components/landing/StatusCard';
 import HeaderBackground from 'components/HeaderBackground';
-import { EndOfLineState } from 'typescript';
-
+import { info } from 'autoprefixer';
 
 
 const overviewURL = 'http://localhost:8080/overview';
@@ -82,7 +81,7 @@ class Overview extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            id: "",
+            id: this.props.location.state.id,
             reservations: [],
             reservationStarList: [],
             appointments_accept: [],
@@ -111,18 +110,19 @@ class Overview extends Component {
 
     async componentDidMount(){
         // extract params from url
-        let search = window.location.search;
-        let params = new URLSearchParams(search);
-        let id = params.get('id');
+        // let search = window.location.search;
+        // let params = new URLSearchParams(search);
+        // let id = params.get('id');
         // call two functions and render the page
         this.setState({
-            reservations: await getOverview_Res(id),
-            enrollments: await getOverview_Enroll(id),
+            reservations: await getOverview_Res(this.state.id),
+            enrollments: await getOverview_Enroll(this.state.id),
             reservationStarList: await getReservationStar(),
-            appointments_accept: await getOverview_AcceptedAppoint(id),
-            appointments_incoming: await getOverview_IncomingAppoint(id),
-            id: id
+            appointments_accept: await getOverview_AcceptedAppoint(this.state.id),
+            appointments_incoming: await getOverview_IncomingAppoint(this.state.id),
+
         });
+        console.log("user" + this.state.id)
     }
 
     render() {
@@ -132,7 +132,7 @@ class Overview extends Component {
         }
         return (
             <Page>
-            <GatherSportNav username="RUTH SABIN"/>
+            <GatherSportNav userid={this.state.id}/>
             <HeaderBackground/>
             <div className="container max-w-7xl mx-auto px-4">
                 <div className="flex flex-wrap relative z-50">
@@ -140,14 +140,18 @@ class Overview extends Component {
                         In GatherSport application, you can make reservation of courts on campus for 
                         time that suits you best!
                         <div className="redirectButtom">
-                            <Link to='/reservation'>
+                            <Link to={{
+                                pathname:"/reservation",
+                                state:{
+                                    userid: this.state.id
+                                }
+                            }}>
                                 <Button color="pink" 
                                     buttonType="link"
                                     size="lg"
                                     rounded={false}
                                     block={true}
                                     iconOnly={false}
-                                    ref="/reservation" 
                                     ripple="dark">
                                     Make a Reservation
                                 </Button>
@@ -162,14 +166,18 @@ class Overview extends Component {
                         In order to better help sportfans get started with a sport, 
                         we provide you with diverse sports courses!
                         <div className="redirectButtom">
-                            <Link to={"/coursesearch?id="+this.state.id}>
+                            <Link to={{
+                                pathname:"/coursesearch",
+                                state:{
+                                    id: this.state.id
+                                }
+                            }}>
                                 <Button color="blue" 
                                     buttonType="link"
                                     size="lg"
                                     rounded={false}
                                     block={true}
                                     iconOnly={false}
-                                    ref={"/coursesearch?id="+this.state.id} 
                                     ripple="dark">
                                     Search for courses
                                 </Button>
@@ -184,14 +192,19 @@ class Overview extends Component {
                         In-person appointments could be made with professional coaches
                         for detailed instructions, helping you become a sport star!
                         <div className="redirectButtom">
-                            <Link to={"/course?id="+this.state.id}>
+                            <Link to={{
+                                pathname: "/appointment",
+                                state:{
+                                    userid: this.state.id
+                                }
+                            }}>
                                 <Button color="teal" 
                                     buttonType="link"
                                     size="lg"
                                     rounded={false}
                                     block={true}
                                     iconOnly={false}
-                                    ref={"/course?id="+this.state.id}
+                                    ref={"/appointment"}
                                     ripple="dark">
                                     Get professional tutorials
                                 </Button>

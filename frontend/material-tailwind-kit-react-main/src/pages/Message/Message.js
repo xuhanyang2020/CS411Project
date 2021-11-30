@@ -52,7 +52,7 @@ class Message extends Component {
                 <div className='bg'
                     style={{
                         width: '100%',
-                        height: '2000%',
+                        height: '2000px',
                         background:`url(${Background})`,
                         backgroundSize: 'cover'
                     }}

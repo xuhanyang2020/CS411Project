@@ -44,5 +44,13 @@
 
 .bg{
     text-align: center;
-    display: inline-block
+    display: inline-block;
+    position: absolute;
+    top: 84px;
+}
+.detailButton{
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    position: relative;
 }
