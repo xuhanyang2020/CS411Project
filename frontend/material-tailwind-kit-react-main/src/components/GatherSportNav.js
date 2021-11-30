@@ -77,7 +77,12 @@ export default function GatherSportNav({userid}) {
         <Navbar navbar>
             <NavbarContainer>
                 <NavbarWrapper>
-                <Link to='/overview?id=24'>
+                <Link to={{
+                    pathname: "/overview",
+                    state: {
+                        id : userid
+                    }
+                }}>
                         <NavbarBrand>gatherSports</NavbarBrand>
                     <NavbarToggler
                         onClick={() => setOpenNavbar(!openNavbar)}
@@ -111,7 +116,7 @@ export default function GatherSportNav({userid}) {
                             <Link to={{
                                 pathname:'/coursesearch',
                                 state: {
-                                    userid: userid
+                                    id: userid
                                 }}}>
                                 <NavLink>
                                         <Icon name="computer" size="2xl" />

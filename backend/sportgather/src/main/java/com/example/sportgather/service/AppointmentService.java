@@ -67,11 +67,15 @@ public class AppointmentService {
         appointment.setStudentId(StudentId);
         appointment.setTeacherId(TeacherId);
         appointment.setLink(Link);
-       appointmentRepository.insertNewAppointment(appointment);
+        appointmentRepository.insertNewAppointment(appointment);
     }
     public List<AppointmentReservation> findAllAppointmentReservationByUserId(String userId){
         List<Reservation> reservations = reservationRepository.findAvailableReservation(userId);
+        List<User> student = userRepository.findUserById(userId);
+        User student_select = student.get(0);
+        String studentName = student_select.getFirstName()+" "+student_select.getLastName();
         System.out.println("list size" + reservations.size());
+
         List<AppointmentReservation> appointmentReservations = new ArrayList<>();
         for (Reservation reservation : reservations){
             // set reservation Location
@@ -79,7 +83,7 @@ public class AppointmentService {
             appointmentReservation.setStartDate(reservation.getBeginTime());
             appointmentReservation.setId(reservation.getReservationId());
             appointmentReservation.setEndDate(reservation.getEndTime());
-
+            appointmentReservation.setStudentName(studentName);
 
             String courtId = reservation.getCourtId();
             appointmentReservation.setLocation(courtRepository.findLocationByPk(courtId));
@@ -103,3 +107,4 @@ public class AppointmentService {
 
 
 }
+

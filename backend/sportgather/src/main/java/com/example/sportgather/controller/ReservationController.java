@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,32 +43,52 @@ public class ReservationController {
     public  List<Reservation> getbyUserId(@PathVariable String id){
         return  reservationService.queryReservationByUserId(id);
     }
-  
+
     @GetMapping("/getsportstar")
     public List<SportStar> getSportStar(){
         return  reservationService.getSportStar("2");
     }
-   
+
     @GetMapping("/SportName={SportName}")
     public List<Court> findCourtNameBySportName(@PathVariable String SportName){
         return  reservationService.findCourtNameBySportName(SportName);
     }
     // problem
-    @GetMapping("/CourtId={courtId}")
-    public List<String> findAvailableTime(@PathVariable String CourtId){
-        return  reservationService.findAvailableTime(CourtId);
+    @GetMapping("/CourtId={courtId}/date={date}")
+    public List<String> findAvailableTime(@PathVariable String CourtId, String date){
+        List<String> list = new ArrayList<>();
+        try {
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            list =  reservationService.findAvailableTime(CourtId, date1);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
     }
+
     @GetMapping("/findSportNameThathasCourtbyAll")
     public List<String> findSportNameThathasCourtbyAll(){
         return  reservationService.findSportNameThathasCourtbyAll();
     }
-    @GetMapping("/findAvailableTimeBySport/{SportName}")
-    public List<CourtReservation> findAvailableTimeBySport(@PathVariable String SportName){
-        List<CourtReservation> list = reservationService.findAvailableTimeBySport(SportName);
-        for (CourtReservation courtReservation : list){
-            System.out.println(courtReservation.getCourtId());
+    @GetMapping("/findAvailableTimeBySport/{SportName}/{date}")
+    public List<CourtReservation> findAvailableTimeBySport(@PathVariable String SportName, @PathVariable String date){
+        List<CourtReservation> list = new ArrayList<>();
+        try {
+            Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            list = reservationService.findAvailableTimeBySport(SportName, date1);
+            for (CourtReservation courtReservation : list){
+                System.out.println(courtReservation.getCourtId());
+            }
+            return list;
         }
-        return list;
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  list;
+
+
+
     }
     @GetMapping("/insertreservation")
     public void InsertReservation(@RequestParam("CourtId")String CourtId,@RequestParam("BeginTime")String BeginTime,@RequestParam("UserId")String User_id) {
@@ -76,8 +97,8 @@ public class ReservationController {
         // String CourtId = customQuery.get("CourtId")!=null?customQuery.get("CourtId"):"";
         // String UserId = customQuery.get("UserId")!=null?customQuery.get("UserId"):"";
         // String BeginTime_string = customQuery.get("BeginTime")!=null?customQuery.get("BeginTime"):"";
-        
+
         reservationService.insertNewReservation(CourtId, User_id, BeginTime);
-     
+
     }
 }

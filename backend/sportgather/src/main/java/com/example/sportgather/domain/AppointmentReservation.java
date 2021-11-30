@@ -8,6 +8,24 @@ public class AppointmentReservation {
     private String SportName;
     private Date startDate;
 
+    public String getStudentName() {
+        return StudentName;
+    }
+
+    public void setStudentName(String studentName) {
+        StudentName = studentName;
+    }
+
+    private String StudentName;
+    public String getSelectedTeacherName() {
+        return SelectedTeacherName;
+    }
+
+    public void setSelectedTeacherName(String selectedTeacherName) {
+        SelectedTeacherName = selectedTeacherName;
+    }
+
+    private String SelectedTeacherName;
     public String getSelectedTeacherId() {
         return SelectedTeacherId;
     }

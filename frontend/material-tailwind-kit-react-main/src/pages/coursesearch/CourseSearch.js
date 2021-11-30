@@ -37,10 +37,11 @@ class CourseSearch extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            id: "",
+            id: this.props.location.state.id,
             courseList: [],
             sportList: []
         })
+        console.log(this.props.location.state.id)
     }
     // recommend courses by user's hobby
     async recommendCourseByHobby(userid){
@@ -85,19 +86,17 @@ class CourseSearch extends Component {
     }
     async componentDidMount(){
         // extract params from url
-        let search = window.location.search;
-        let params = new URLSearchParams(search);
-        let id = params.get('id');
-        console.log(id);
+        // let search = window.location.search;
+        // let params = new URLSearchParams(search);
+        // let id = params.get('id');
+        // console.log(id);
 
         // call two functions and render the page
         // this.state.id = id;
         this.setState({
-            id: id, 
             sportList: await (await getSports()).data,
             courseList: await (await findAllCourse()).data
         });
-        console.log(this.state.id);
     }
 
     render() {
@@ -108,7 +107,7 @@ class CourseSearch extends Component {
         return (
             <Page> 
                 
-                <GatherSportNav username="RUTH SABIN"/>
+                <GatherSportNav userid={this.state.id}/>
 
                 <TeamSection/>
                 

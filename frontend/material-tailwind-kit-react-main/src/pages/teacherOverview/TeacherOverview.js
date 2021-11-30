@@ -1,11 +1,13 @@
 import { Component } from 'react';
 import React from "react";
+import { Link } from 'react-router-dom';
 import Card from "@material-tailwind/react/Card";
 import CardImage from "@material-tailwind/react/CardImage";
 import CardBody from "@material-tailwind/react/CardBody";
 import H6 from "@material-tailwind/react/Heading6";
 import Paragraph from "@material-tailwind/react/Paragraph";
 import './styles.teacherOverview.css';
+import GatherSportNav from 'components/GatherSportNav';
 import axios from 'axios';
 import Page from 'components/login/Page';
 import Moment from 'moment'
@@ -58,7 +60,7 @@ class TeacherOverview extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            id: "",
+            id: "1752",
             appointments_accept: [],
             appointments_waiting: [],
             courses: []
@@ -103,16 +105,15 @@ class TeacherOverview extends Component {
 
     async componentDidMount(){
         // extract params from url
-        let search = window.location.search;
-        let params = new URLSearchParams(search);
-        let id = params.get('id');
-        console.log(id);
+        // let search = window.location.search;
+        // let params = new URLSearchParams(search);
+        // let id = params.get('id');
+        // console.log(id);
         // call two functions and render the page
         this.setState({
-            id: id,
-            appointments_waiting: await (await getAppointment_Waiting(id)).data,
-            appointments_accept: await (await getAppointment_Accept(id)).data,
-            courses: await (await getCourse(id)).data
+            appointments_waiting: await (await getAppointment_Waiting(this.state.id)).data,
+            appointments_accept: await (await getAppointment_Accept(this.state.id)).data,
+            courses: await (await getCourse(this.state.id)).data
         });
 
     }
@@ -123,6 +124,7 @@ class TeacherOverview extends Component {
         }
         return (
             <Page>
+                <GatherSportNav userid={this.state.id}/>
                 <div className = "bg"
                     style={{
                         width: '100%',
@@ -214,6 +216,25 @@ class TeacherOverview extends Component {
                             {course.date} &nbsp; {course.time}
                             </Paragraph>
                         </CardBody>
+                        <div className="detailButton">
+                            <Link to={{
+                                pathname: "/course/" + course.courseId,
+                                state:{
+                                    userid:this.state.id
+                                }
+                            }}>
+                                <Button color="lightGreen" 
+                                    buttonType="outline"
+                                    size="lg"
+                                    rounded={false}
+                                    block={false}
+                                    iconOnly={false}
+                                    ref={"/course/"+course.courseId} 
+                                    ripple="light">
+                                    view details
+                                </Button>
+                            </Link>
+                        </div>
                     </Card>
                     ))}
             </div>

@@ -49,10 +49,10 @@ class Message extends Component {
         return (
             <Page>
                 <GatherSportNav userid={this.props.location.state.userid}/>
-                <div
+                <div className="bg"
                     style={{
                         width: '100%',
-                        height: '2000%',
+                        height: '2000px',
                         background:`url(${Background})`,
                         backgroundSize: 'cover'
                     }}

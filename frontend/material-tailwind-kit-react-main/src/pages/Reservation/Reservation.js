@@ -7,6 +7,7 @@ import CardImage from "@material-tailwind/react/CardImage";
 import CardBody from '@material-tailwind/react/CardBody';
 import Dropdown from "@material-tailwind/react/Dropdown";
 import Page from 'components/login/Page';
+import moment from 'moment'
 import GatherSportNav from 'components/GatherSportNav';
 import DropdownLink from "@material-tailwind/react/DropdownLink";
 import axios from 'axios';
@@ -31,21 +32,24 @@ class Reservation extends Component {
         super(props);
        
         this.state = {
+            userId: this.props.location.state.userid,
+            availableTime:[],
+            TimeSelect:[],
             SportNames: [],
             showCourtMenu:'none',
             showTimeCard:'none',
+            showSportMenu:'none',
             CourtName:[],
             CourtReservation:[],
             CourtTime:[],
             SportSelect:[],
             CourtNameSelect:[],
-            CourtIdSelect:''
-            
+            CourtIdSelect:'',
         }
     }
-    async getCourtReservation(SportNameSelected) {
+    async getCourtReservation(SportNameSelected, DateSelected) {
         
-        var CourtReservation_get = await axios.get(CourtReservationURL+'/'+SportNameSelected);
+        var CourtReservation_get = await axios.get(CourtReservationURL+'/'+SportNameSelected+'/'+DateSelected);
         // const CourtReservation_name = [];
         const CourtReservation_info = [];
         const SportNameSelected_get =SportNameSelected;
@@ -96,7 +100,7 @@ class Reservation extends Component {
             this.setState({
                 CourtName: CourtReservation_name,
                 showCourtMenu:true,
-                showTimeCard:'None'
+                
                 // CourtReservation:CourtReservation_info
                 // CourtName: CourtN,
                 
@@ -146,7 +150,7 @@ class Reservation extends Component {
         const User_id = User_Id_Insert;
         const  Court_Id = Court_Id_Insert;
         const Begin_Time = Begin_Time_Insert;
-        
+        console.log("data", this.props)
         var pos = 0
         for (var i = 0; i < this.state.CourtTime.length; i++) {
             if (this.state.CourtTime[i] === Begin_Time_Insert){
@@ -179,7 +183,7 @@ class Reservation extends Component {
         console.log(SportName)
         this.setState({
             SportNames: SportName,
-            // CourtName: CourtN,
+            availableTime:[moment().format("YYYY-MM-DD"),moment().add(1, 'days').format("YYYY-MM-DD"),moment().add(2, 'days').format("YYYY-MM-DD"),moment().add(3, 'days').format("YYYY-MM-DD"),moment().add(4, 'days').format("YYYY-MM-DD"),moment().add(5, 'days').format("YYYY-MM-DD"),moment().add(6, 'days').format("YYYY-MM-DD")],
             
         });
     }
@@ -189,7 +193,7 @@ class Reservation extends Component {
             
             <Page> 
                 
-                <GatherSportNav username="RUTH SABIN"/>
+                <GatherSportNav  userid={this.state.userId}/>
 
 
 
@@ -197,7 +201,51 @@ class Reservation extends Component {
         <H2 color="lightBlue">Make a reservation</H2>
 
 </div>
-            <div className="SportSelection">
+<div className="TimeSelection">
+                
+                <Dropdown
+                      
+                            color="lightBlue"
+                            placement="bottom-start"
+                            buttonText="ChooseTime"
+                            buttonType="filled"
+                            size="regular"
+                            rounded={true}
+                            block={false}
+                            ripple="light">
+                    
+                {this.state.availableTime.map(oneTime=> (
+                     
+                        
+                          <DropdownLink
+                          href="#"
+                          color="blue"
+                          ripple="light"
+                          onClick={async()=> {
+                           // await this.getCourtReservation(SportName, this.state.TimeSelect)
+                            //await this.getCourtReservationCourt(this.state.CourtReservation)
+                            // alert(s)
+                            this.setState({
+                            
+                                TimeSelect:oneTime,
+                                showSportMenu:true,
+                                showTimeCard:'None'
+                            });
+                          }}
+            >
+                {oneTime}
+                      </DropdownLink>
+    
+                              
+                        ))} 
+                      
+               
+                            
+                         </Dropdown>
+                      
+                    </div>
+            <div className="SportSelection" style={{display:this.state.showSportMenu}}>
+                
             <Dropdown
                   
                         color="lightBlue"
@@ -205,7 +253,7 @@ class Reservation extends Component {
                         buttonText="ChooseSport"
                         buttonType="filled"
                         size="regular"
-                        rounded={false}
+                        rounded={true}
                         block={false}
                         ripple="light">
                 
@@ -217,7 +265,7 @@ class Reservation extends Component {
                       color="blue"
                       ripple="light"
                       onClick={async()=> {
-                        await this.getCourtReservation(SportName)
+                        await this.getCourtReservation(SportName,  this.state.TimeSelect)
                         await this.getCourtReservationCourt(this.state.CourtReservation)
                         // alert(s)
                    
@@ -241,7 +289,7 @@ class Reservation extends Component {
                  buttonText="ChooseCourt"
                  buttonType="filled"
                  size="regular"
-                 rounded={false}
+                 rounded={true}
                  block={false}
                  ripple="light"
              >
@@ -296,7 +344,7 @@ class Reservation extends Component {
                 onClick={async()=> {
                         // alert(this.state.CourtSelect);
                         // alert(time);
-                        await this.Insert_Reservation(this.state.CourtIdSelect, '24', time);
+                        await this.Insert_Reservation(this.state.CourtIdSelect, this.state.userId, time);
                         //await this.getCourtReservationTime(this.state.CourtReservation,CourtNamecontent)
 
                    
