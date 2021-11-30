@@ -60,7 +60,7 @@ class TeacherOverview extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            id: "1752",
+            id: this.props.location.state.id,
             appointments_accept: [],
             appointments_waiting: [],
             courses: []

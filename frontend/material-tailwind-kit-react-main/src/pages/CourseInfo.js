@@ -22,6 +22,7 @@ const updateURL = 'http://localhost:8080/course/update/';
 class CourseInfo extends Component {
     constructor(props) {
         super(props);
+        
         this.state = {
             name: '', 
             description: '',
@@ -30,9 +31,10 @@ class CourseInfo extends Component {
             teacherId:'',
             courseId: this.props.match.params.id,
             registered: false,
-            userid: '',
+            userid: this.props.location.state.userid,
             editing: false
         }
+        
         this.register = this.register.bind(this);
         this.updateRegisterState = this.updateRegisterState.bind(this);
         this.changeDesc = this.changeDesc.bind(this);
@@ -47,7 +49,7 @@ class CourseInfo extends Component {
 
     async componentDidMount() {
         // TODO
-        var userid = '2222';
+        var userid = this.state.userid;
 
         var course = await this.getCouseInfo();
         // make description a list of paragraphs
@@ -124,7 +126,7 @@ class CourseInfo extends Component {
         if (this.state.description.length === 0) {
             return (
                 <Page> 
-                    <GatherSportNav />
+                    <GatherSportNav userid={this.state.userid}/>
                     Loading...
                 </Page>
             )
@@ -133,7 +135,7 @@ class CourseInfo extends Component {
         // student view / teacher view 
         return (
             <Page>
-                <GatherSportNav />
+                <GatherSportNav userid={this.state.userid}/>
     
                     <div className="flex flex-wrap items-center mt-10 mb-10">
                         <div className="w-full md:w-5/12 px-4 mx-auto">

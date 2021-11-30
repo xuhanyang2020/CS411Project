@@ -33,20 +33,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import LocationOn from '@material-ui/icons/LocationOn';
 import Notes from '@material-ui/icons/Notes';
 import Close from '@material-ui/icons/Close';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import Create from '@material-ui/icons/Create';
-import Select from '@material-ui/core/Select';
 import PersonIcon from '@material-ui/icons/Person';
-import { NativeSelect } from '@material-ui/core';
-import { MenuItem } from '@material-ui/core';
-import { Label } from '@material-ui/icons';
 import emailjs from 'emailjs-com';
 import{ init } from 'emailjs-com';
 //import { appointments } from '../../../demo-data/appointments';
@@ -73,7 +67,7 @@ async function Insert_Appointment(Student_id_Insert, Teacher_id_Insert, Link_Ins
   const Teacher_id = Teacher_id_Insert;
   const  Link = Link_Insert;
   const ReservationId = ReservationId_Insert;
-  const Comment = Comment_Insert;
+  const Comment = Comment_Insert?Comment_Insert:'';
   
   await axios.get(InsertAppointmentURL,
     {

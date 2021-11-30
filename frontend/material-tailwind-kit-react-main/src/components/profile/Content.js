@@ -137,12 +137,14 @@ class Content extends Component {
         // console.log(this.props);
         return (
             <Page>
-                <div
+                <div className
                     style={{
                         width: '100%',
                         height: '2000%',
                         background:`url(${Background})`,
-                        backgroundSize: 'cover'
+                        backgroundSize: 'cover',
+                        position: "relative",
+                        top: "-13px"
                     }}
                 >
                     <div className="flex flex-wrap justify-center">

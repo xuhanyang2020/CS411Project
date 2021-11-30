@@ -49,12 +49,14 @@ class Message extends Component {
         return (
             <Page>
                 <GatherSportNav userid={this.props.location.state.userid}/>
-                <div className='bg'
+                <div 
                     style={{
                         width: '100%',
                         height: '2000px',
                         background:`url(${Background})`,
-                        backgroundSize: 'cover'
+                        backgroundSize: 'cover',
+                        position: "relative",
+                        top: "-13px"
                     }}
                 >
                     <div className="flex justify-center">

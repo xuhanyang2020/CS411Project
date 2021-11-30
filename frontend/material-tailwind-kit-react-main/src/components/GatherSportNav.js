@@ -86,6 +86,7 @@ export default function GatherSportNav({userid}) {
     await get();
     }
     // console.log(isTeacher)
+    console.log(userid);
     return (
         
         <Navbar navbar>
@@ -94,7 +95,7 @@ export default function GatherSportNav({userid}) {
                 <Link to={{
                             pathname:isTeacher?'/teacheroverview':'/overview',
                             state: {
-                                userid: userid
+                                id: userid
                             }}}>
                         <NavbarBrand>gatherSports</NavbarBrand>
                     <NavbarToggler

@@ -198,7 +198,14 @@ class CourseSearch extends Component {
                         </div>
                     <div className="courseRating"><LeadText color="lightBlue">{course.rating}</LeadText></div>
                     <div className="courseLink">
-                    <Link to={"course/" + course.courseId}>
+                    <Link to={
+                        {
+                            pathname:"course/" + course.courseId,
+                            state: {
+                                userid: this.state.id
+                            }
+                        }
+                        }>
                     <Button
                         color="red"
                         buttonType="link"
