@@ -174,7 +174,7 @@ class CourseInfo extends Component {
                                 <CardBody>
                                 
                                     <Rating name="read-only" value={this.state.rating} readOnly precision={0.1}/> {this.state.rating}
-                                    {this.state.teacherId === this.state.userid?
+                                    {parseInt(this.state.teacherId) === parseInt(this.state.userid)?
                                     this.state.editing?
                                     <Button
                                     className="register"

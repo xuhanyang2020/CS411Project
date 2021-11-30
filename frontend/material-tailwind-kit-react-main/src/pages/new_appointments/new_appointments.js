@@ -47,6 +47,7 @@ import{ init } from 'emailjs-com';
 const ReservationURL = 'http://localhost:8080/appointment/userid={id}';
 const InsertAppointmentURL = 'http://localhost:8080/appointment/insertappointment';
 function sendEmail(username, teacher_name, location) {
+  alert('gogo')
   init("user_TcaKIkCvpvX6KiytTdPXA");
   //e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
   var templateParams = {
@@ -595,10 +596,11 @@ class new_appointments extends React.PureComponent {
   for (let i = 0; i < delete_data[0]['teacherRecommends'].length; i++) {
     if (delete_data[0]['teacherRecommends'][i]['id'] ==delete_data[0]['SelectedTeacherId']){
       console.log (delete_data[0]['teacherRecommends'][i]['text'])
+      sendEmail(this.state.id, delete_data[0]['teacherRecommends'][i]['text'], delete_data[0]['location'])
     }
   }
    
-   //sendEmail(appointment.username, appointment.teacher_name, appointment.location)
+   
    await Insert_Appointment(this.state.id, delete_data[0]['SelectedTeacherId'], "Link_Insert", deletedAppointmentId, delete_data[0]['notes'])
     this.setState((state) => {
       

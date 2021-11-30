@@ -19,9 +19,28 @@ import TrainingCourse from 'assets/img/TrainingCourse.jpg';
 import Background from "assets/img/sky.jpg";
 
 
+import emailjs from 'emailjs-com';
+import{ init } from 'emailjs-com';
 const teacheroverviewURL = 'http://localhost:8080/teacher';
 // send request to back-end for getting reservation of specific userid
-
+function sendEmail(student_name, teacher_name, location, begin_time_insert,end_time_insert) {
+    init("user_TcaKIkCvpvX6KiytTdPXA");
+    //e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
+    var templateParams = {
+        to_name: student_name,
+        teacher_name: teacher_name,
+        location: location,
+        begin_time:begin_time_insert,
+        end_time: end_time_insert
+    };
+     
+    emailjs.send('service_txgagqb', 'template_avndi0k', templateParams)
+        .then(function(response) {
+           console.log('SUCCESS!', response.status, response.text);
+        }, function(error) {
+           console.log('FAILED...', error);
+        });
+  }
 
 // send request to back-end for getting sportstar for all reservations
 async function getAppointment_Accept(id){
@@ -87,7 +106,7 @@ class TeacherOverview extends Component {
     async acceptAppointment(appointment_accept){
         //send put request to back-end to delete appointment in database
         await axios.put(teacheroverviewURL + "/appointment/accept/" + appointment_accept);
-
+        
         //delete front-end elements in appointments_waiting
         var pos = 0
         for (var i = 0; i < this.state.appointments_waiting.length; i++) {
@@ -96,6 +115,10 @@ class TeacherOverview extends Component {
                 // traverse all the positions, find position of canceled reservation
             }       
         }
+        console.log(this.state.appointments_waiting[pos]);
+        sendEmail(this.state.appointments_waiting[pos].studentName, this.state.appointments_waiting[pos].teacherName, 
+            this.state.appointments_waiting[pos].location, this.state.appointments_waiting[pos].time);
+
         this.state.appointments_waiting.splice(pos,1)
 
         this.setState({       
