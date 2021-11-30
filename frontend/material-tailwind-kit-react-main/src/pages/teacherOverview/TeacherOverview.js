@@ -118,7 +118,7 @@ class TeacherOverview extends Component {
     }
 
     render() {
-        if (!this.state.appointments_accept || this.state.appointments_accept.length === 0) {
+        if (!this.state.appointments_accept) {
             return <div>Loading</div>
         }
         return (

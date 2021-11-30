@@ -42,7 +42,7 @@ public class TeacherOverviewService {
 
             // populate the appointment info
             AppointmentInfo info = new AppointmentInfo();
-            info.setStudentName(student.getFirstName() + " " + student.getFirstName());
+            info.setStudentName(student.getFirstName() + " " + student.getLastName());
             info.setAppointmentId(app.getAppointmentId());
             info.setTime(reservation.getBeginTime());
             info.setLocation(courtLocation);

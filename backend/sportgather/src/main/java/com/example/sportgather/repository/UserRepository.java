@@ -49,4 +49,25 @@ public interface UserRepository {
 
     @Select("SELECT u.UserId, u.FirstName, u.LastName, COUNT(*) AS MatchNum FROM Hobby h JOIN User  u on h.StudentId = u.UserId WHERE h.StudentId <> #{UserId} AND h.SportId IN (SELECT SportId FROM Hobby WHERE StudentId = #{UserId}) GROUP BY u.UserId,  u.FirstName, u.LastName ORDER BY COUNT(h.SportId) DESC")
     List<User> findAllMatesByHobby(@Param("UserId") String id);
+
+
+    @Update("UPDATE User SET LastName = #{LastName} WHERE UserId = #{UserId}")
+    void updateName(@Param("LastName") String lastName, @Param("UserId") String id);
+
+    @Update("UPDATE User SET Gender = #{Gender} WHERE UserId = #{UserId}")
+    void updateGender(@Param("Gender") String gender, @Param("UserId") String id);
+
+    @Update("UPDATE User SET Age = #{Age} WHERE UserId = #{UserId}")
+    void updateAge(@Param("Age") Integer age, @Param("UserId") String id);
+
+    @Update("UPDATE User SET Phone = #{Phone} WHERE UserId = #{UserId}")
+    void updatePhone(@Param("Phone") String phone, @Param("UserId") String id);
+
+    @Update("UPDATE User SET Location = #{Location} WHERE UserId = #{UserId}")
+    void updateLocation(@Param("Location") String location, @Param("UserId") String id);
+
+    @Update("UPDATE User SET Type = #{Type} WHERE UserId = #{UserId}")
+    void updateUserType(@Param("Type") String type, @Param("UserId") String id);
 }
+
+

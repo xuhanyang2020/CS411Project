@@ -18,3 +18,4 @@ public interface SportRepository {
     @Select("SELECT * FROM Sport")
     List<Sport> findAllSport();
 }
+

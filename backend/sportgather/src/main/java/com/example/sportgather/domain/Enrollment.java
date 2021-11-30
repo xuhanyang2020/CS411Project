@@ -1,13 +1,18 @@
 package com.example.sportgather.domain;
 
 public class Enrollment {
-
     private String StudentId;
-
     private String CourseId;
+    public void setPK(String s, String c) {
+        StudentId = s;
+        CourseId = c;
+    }
 
-    public Enrollment(String studentId, String courseId) {
-        StudentId = studentId;
-        CourseId = courseId;
+    public String getStudentId() {
+        return StudentId;
+    }
+
+    public String getCourseId() {
+        return CourseId;
     }
 }

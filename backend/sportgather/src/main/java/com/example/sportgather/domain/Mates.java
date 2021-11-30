@@ -1,34 +1,27 @@
 package com.example.sportgather.domain;
 
 public class Mates {
+    private String requestid;
+    private String receiverid;
+    private String state;
 
-    private String RequestId;
-
-    private String ReceiverId;
-
-    private String State;
-
-    public String getRequestId() {
-        return RequestId;
+    public String getRequestid() {
+        return requestid;
     }
-
-    public void setRequestId(String requestId) {
-        RequestId = requestId;
-    }
-
-    public String getReceiverId() {
-        return ReceiverId;
-    }
-
-    public void setReceiverId(String receiverId) {
-        ReceiverId = receiverId;
-    }
-
     public String getState() {
-        return State;
+        return state;
     }
 
-    public void setState(String state) {
-        State = state;
+    public String getReceiverid() {
+        return receiverid;
     }
+
+    public void setRequestid(String id) {
+        requestid = id;
+    }
+
+    public void setReceiverid(String id) {
+        receiverid = id;
+    }
+    public void setState(String s) { state = s;}
 }

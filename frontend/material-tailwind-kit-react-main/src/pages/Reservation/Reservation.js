@@ -6,11 +6,6 @@ import Card from '@material-tailwind/react/Card';
 import CardImage from "@material-tailwind/react/CardImage";
 import CardBody from '@material-tailwind/react/CardBody';
 import Dropdown from "@material-tailwind/react/Dropdown";
-import Modal from "@material-tailwind/react/Modal";
-import ModalHeader from "@material-tailwind/react/ModalHeader";
-import ModalBody from "@material-tailwind/react/ModalBody";
-import ModalFooter from "@material-tailwind/react/ModalFooter";
-import DropdownItem from "@material-tailwind/react/DropdownItem";
 import Page from 'components/login/Page';
 import GatherSportNav from 'components/GatherSportNav';
 import DropdownLink from "@material-tailwind/react/DropdownLink";
@@ -18,7 +13,6 @@ import axios from 'axios';
 import { Component } from 'react';
 import Button from "@material-tailwind/react/Button";
 import './styles.reservation.css';
-import Checkbox from "@material-tailwind/react/Checkbox"
 import H2 from "@material-tailwind/react/Heading2";
 const SportNameURL = 'http://localhost:8080/reservation/findSportNameThathasCourtbyAll';
 const CourtReservationURL = 'http://localhost:8080/reservation/findAvailableTimeBySport';
@@ -121,7 +115,7 @@ class Reservation extends Component {
         var CourtReservation_id = [];
         // const CourtReservation_info = [];
         for (const CourtReservation_Item of CourtReservation_info) {
-            if (CourtReservation_Item.courtName==Court_Select){
+            if (CourtReservation_Item.courtName===Court_Select){
                 CourtReservation_time = CourtReservation_Item.availableTime;
                 
                 CourtReservation_id = CourtReservation_Item.courtId;

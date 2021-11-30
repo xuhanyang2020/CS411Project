@@ -1,6 +1,5 @@
 package com.example.sportgather.domain;
 
-import javax.persistence.criteria.CriteriaBuilder;
 
 public class ReservationStar {
     private String name;
