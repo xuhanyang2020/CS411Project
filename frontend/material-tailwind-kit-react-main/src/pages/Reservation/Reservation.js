@@ -191,13 +191,10 @@ class Reservation extends Component {
                 
                 <GatherSportNav username="RUTH SABIN"/>
 
-
-
                 <div className="Header">
-        <H2 color="lightBlue">Make a reservation</H2>
-
-</div>
-            <div className="SportSelection">
+                    <H2 color="lightBlue">Make a reservation</H2>
+                </div>
+                <div className="SportSelection">
             <Dropdown
                   
                         color="lightBlue"
@@ -311,7 +308,7 @@ class Reservation extends Component {
             
                     ))} 
 
-                </div>
+                </div> 
                
                 </Page>
                 
@@ -342,6 +339,7 @@ class Reservation extends Component {
         //     </DropdownLink>
 
         // </Dropdown>
+
 
         );
     }

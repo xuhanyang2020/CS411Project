@@ -14,7 +14,7 @@ public interface UserRepository {
     @Select("SELECT * FROM User WHERE UserId = #{UserId}")
     List<User> findUserById(@Param("UserId") String id);
 
-    @Insert("INSERT INTO User VALUES ((SELECT CAST(COUNT(*) AS CHAR(50)) FROM User AS u), #{FirstName}, NULL, NULL, NULL, #{Email}, NULL, NULL, NULL, #{Password})")
+    @Insert("INSERT INTO User VALUES ((SELECT CAST(COUNT(*) AS CHAR(50)) FROM User AS u), #{FirstName}, NULL, NULL, NULL, #{Email}, NULL, NULL, 'S', #{Password})")
     void saveUser(@Param("FirstName") String firstName, @Param("Email") String email, @Param("Password") String password);
 
     @Select("SELECT UserId FROM User WHERE Email = #{Email}")

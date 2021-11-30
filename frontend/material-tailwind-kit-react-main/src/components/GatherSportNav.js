@@ -32,6 +32,12 @@ async function getNotificationName(ids) {
     return names;
 }
 
+async function getIsTeacher(id) {
+    var baseURL = 'http://localhost:8080/profile/';
+    const info = (await axios.get(baseURL+id)).data[0];
+    return info.type==='T';
+}
+
 
 export default function GatherSportNav({userid}) {
     const updateURL = "http://localhost:8080/match/updateState"
@@ -43,8 +49,12 @@ export default function GatherSportNav({userid}) {
 
     const [notificationId, setNotificationId] = useState('');
     const [notificationName, setNotificationName] = useState('');
+    const [isTeacher, setIsTeacher] = useState(false);
 
     useEffect(() => {
+    if (!isTeacher) {
+        setTeacher();
+    }
     if (!notificationId) {
         get();
     }
@@ -56,6 +66,10 @@ export default function GatherSportNav({userid}) {
     const names = await getNotificationName(ids);
     setNotificationName(names);
   };
+
+  const setTeacher = async() => {
+      setIsTeacher(await getIsTeacher(userid));
+  }
 
 
   const updateState = async(name, state) => {
@@ -71,13 +85,17 @@ export default function GatherSportNav({userid}) {
     });
     await get();
     }
-
+    // console.log(isTeacher)
     return (
         
         <Navbar navbar>
             <NavbarContainer>
                 <NavbarWrapper>
-                <Link to='/overview?id=24'>
+                <Link to={{
+                            pathname:isTeacher?'/teacheroverview':'/overview',
+                            state: {
+                                userid: userid
+                            }}}>
                         <NavbarBrand>gatherSports</NavbarBrand>
                     <NavbarToggler
                         onClick={() => setOpenNavbar(!openNavbar)}
@@ -101,7 +119,8 @@ export default function GatherSportNav({userid}) {
                             pathname: "/match",
                             state: {
                                 user: userid
-                            }}}>
+                            }}}
+                            style={{display:isTeacher?"none":"inline"}}>
                                 <NavLink>
                                     <Icon name="accperson_add" size="2xl" />
                                     {/* &nbsp;People */}
@@ -123,14 +142,15 @@ export default function GatherSportNav({userid}) {
                                 pathname:'/message',
                                 state: {
                                     userid: userid
-                                }}}>
+                                }}}
+                                style={{display:isTeacher?"none":"inline"}}>
                                 <NavLink>
                                     <Icon name="feed" size="2xl" />
                                     {/* &nbsp;Message  */}
                                 </NavLink>
                             </Link>
 
-                            <div className="text-white">
+                            <div className="text-white" style={{display:isTeacher?"none":"inline"}}>
                                 <Dropdown
                                     color="transparent"
                                     size="regular"
