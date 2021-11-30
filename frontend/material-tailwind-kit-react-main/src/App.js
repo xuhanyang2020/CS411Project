@@ -8,6 +8,9 @@ import Overview from 'pages/overview/Overview';
 import CourseInfo from 'pages/CourseInfo';
 import Reservation from 'pages/Reservation/Reservation';
 import Message from 'pages/Message/Message';
+import CourseSearch from 'pages/coursesearch/CourseSearch';
+import TeacherOverview from 'pages/teacherOverview/TeacherOverview';
+import new_appointments from 'pages/new_appointments/new_appointments';
 
 
 // Font Awesome Style Sheet
@@ -30,6 +33,9 @@ function App() {
             <Route exact path='/reservation' component={Reservation}/>
             <Route exact path='/course/:id' component={CourseInfo}/>
             <Route exam path='/message' component={Message} />
+            <Route exact path='/appointment' component={new_appointments}/>
+            <Route exact path='/coursesearch' component={CourseSearch}/>
+            <Route exact path='/teacheroverview' component={TeacherOverview} />
             <Redirect from="*" to="/" />
         </Switch>
     );

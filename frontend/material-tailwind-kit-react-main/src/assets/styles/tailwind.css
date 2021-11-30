@@ -494,6 +494,9 @@ video {
 		max-width: 1536px;
 	}
 }
+.visible{
+	visibility: visible;
+}
 .relative{
 	position: relative;
 }
@@ -548,6 +551,9 @@ video {
 .ml-4{
 	margin-left: 1rem;
 }
+.mr-auto{
+	margin-right: auto;
+}
 .mt-10{
 	margin-top: 2.5rem;
 }
@@ -568,9 +574,6 @@ video {
 }
 .mb-12{
 	margin-bottom: 3rem;
-}
-.mr-auto{
-	margin-right: auto;
 }
 .mb-5{
 	margin-bottom: 1.25rem;
@@ -605,20 +608,23 @@ video {
 .grid{
 	display: grid;
 }
+.hidden{
+	display: none;
+}
 .h-10{
 	height: 2.5rem;
-}
-.h-16{
-	height: 4rem;
-}
-.h-12{
-	height: 3rem;
 }
 .h-screen{
 	height: 100vh;
 }
 .h-full{
 	height: 100%;
+}
+.h-16{
+	height: 4rem;
+}
+.h-12{
+	height: 3rem;
 }
 .h-\[500px\]{
 	height: 500px;
@@ -793,14 +799,17 @@ video {
 .pb-2{
 	padding-bottom: 0.5rem;
 }
+.pt-24{
+	padding-top: 6rem;
+}
+.pb-32{
+	padding-bottom: 8rem;
+}
 .pb-20{
 	padding-bottom: 5rem;
 }
 .pt-16{
 	padding-top: 4rem;
-}
-.pb-32{
-	padding-bottom: 8rem;
 }
 .pt-20{
 	padding-top: 5rem;

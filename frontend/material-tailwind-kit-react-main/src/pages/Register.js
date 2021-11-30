@@ -65,7 +65,7 @@ class Register extends Component {
                                             <InputIcon
                                                 type="text"
                                                 color="lightBlue"
-                                                placeholder="FirstName"
+                                                placeholder="Name"
                                                 iconName="account_circle"
                                                 onChange={event => this.setState({firstName: event.target.value})}
                                             />

@@ -44,4 +44,7 @@ public interface ReservationRepository {
 
     @Delete("DELETE FROM Reservation WHERE ReservationId = #{ReservationId}")
     void deleteReservationByPk(@Param("ReservationId") String id);
+
+    @Select("SELECT * FROM Reservation r WHERE r.UserId = #{UserId} and r.ReservationId NOT In (SELECT a.ReservationId FROM Appointment a WHERE a.StudentId = #{UserId}) ")
+    List<Reservation> findAvailableReservation(@Param("UserId") String UserId);
 }
