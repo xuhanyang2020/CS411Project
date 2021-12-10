@@ -10,8 +10,8 @@ import axios from "axios";
 import {Component} from "react";
 import {Link} from "react-router-dom";
 import Background from "../assets/img/swim.jpg";
-const infoUrl = 'http://localhost:8080/login';
-
+// const infoUrl = 'http://localhost:8080/login';
+const infoUrl = 'https://mimetic-union-334605.uc.r.appspot.com/login';
 async function getUserId(eml, pwd) {
     // TODO: change email, password to props later
     const email = eml;

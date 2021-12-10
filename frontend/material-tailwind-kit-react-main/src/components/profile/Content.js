@@ -10,8 +10,8 @@ import {Component} from "react";
 import axios from "axios";
 import InputIcon from "@material-tailwind/react/InputIcon";
 
-const infoUrl = 'http://localhost:8080/profile';
-
+// const infoUrl = 'http://localhost:8080/profile';
+const infoUrl = 'https://mimetic-union-334605.uc.r.appspot.com/profile';
 async function getContInfo(id) {
     const userId = id;
     const prof_info = await axios.get(infoUrl +'/' + userId);

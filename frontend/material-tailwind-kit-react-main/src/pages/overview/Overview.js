@@ -25,7 +25,8 @@ import HeaderBackground from 'components/HeaderBackground';
 import { info } from 'autoprefixer';
 
 
-const overviewURL = 'http://localhost:8080/overview';
+// const overviewURL = 'http://localhost:8080/overview';
+const overviewURL = 'https://mimetic-union-334605.uc.r.appspot.com/overview';
 // send request to back-end for getting reservation of specific userid
 async function getOverview_Res(userid){
     const reservations_back = await axios.get(overviewURL + "/reservation",

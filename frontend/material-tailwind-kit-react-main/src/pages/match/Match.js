@@ -18,10 +18,11 @@ import Page from 'components/login/Page';
 import axios from 'axios';
 import './styles.match.css';
 
-const baseURL = 'http://localhost:8080/match';
-const infoURL = 'http://localhost:8080/profile';
+// const baseURL = 'http://localhost:8080/match';
+// const infoURL = 'http://localhost:8080/profile';
 
-
+const baseURL = 'https://mimetic-union-334605.uc.r.appspot.com/match';
+const infoURL = 'https://mimetic-union-334605.uc.r.appspot.com/profile';
 class Match extends Component {
     constructor(props) {
         super(props);

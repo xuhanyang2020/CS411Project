@@ -15,9 +15,12 @@ import { Component } from 'react';
 import Button from "@material-tailwind/react/Button";
 import './styles.reservation.css';
 import H2 from "@material-tailwind/react/Heading2";
-const SportNameURL = 'http://localhost:8080/reservation/findSportNameThathasCourtbyAll';
-const CourtReservationURL = 'http://localhost:8080/reservation/findAvailableTimeBySport';
-const InsertReservationURL = 'http://localhost:8080/reservation/insertreservation';
+// const SportNameURL = 'http://localhost:8080/reservation/findSportNameThathasCourtbyAll';
+// const CourtReservationURL = 'http://localhost:8080/reservation/findAvailableTimeBySport';
+// const InsertReservationURL = 'http://localhost:8080/reservation/insertreservation';
+const SportNameURL = 'https://mimetic-union-334605.uc.r.appspot.com/reservation/findSportNameThathasCourtbyAll';
+const CourtReservationURL = 'https://mimetic-union-334605.uc.r.appspot.com/reservation/findAvailableTimeBySport';
+const InsertReservationURL = 'https://mimetic-union-334605.uc.r.appspot.com/reservation/insertreservation';
 async function getSportName() {
     const SportNames = await axios.get(SportNameURL);
     const SportName_info = [];

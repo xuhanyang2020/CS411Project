@@ -10,8 +10,8 @@ import GatherSportNav from "../../components/GatherSportNav";
 import Icon from "@material-tailwind/react/Icon";
 import InputIcon from "@material-tailwind/react/InputIcon";
 import Button from "@material-tailwind/react/Button";
-const infoUrl = 'http://localhost:8080/message';
-
+// const infoUrl = 'http://localhost:8080/message';
+const infoUrl = "https://mimetic-union-334605.uc.r.appspot.com/message"
 class Message extends Component {
     constructor(props) {
         super(props);

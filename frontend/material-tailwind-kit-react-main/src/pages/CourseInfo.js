@@ -15,9 +15,10 @@ import Rating from '@mui/material/Rating';
 import axios from 'axios';
 
 
-const courseURL = 'http://localhost:8080/course/';
-const updateURL = 'http://localhost:8080/course/update/';
-
+// const courseURL = 'http://localhost:8080/course/';
+// const updateURL = 'http://localhost:8080/course/update/';
+const courseURL = 'https://mimetic-union-334605.uc.r.appspot.com/course/';
+const updateURL = 'https://mimetic-union-334605.uc.r.appspot.com/update/';
 
 class CourseInfo extends Component {
     constructor(props) {

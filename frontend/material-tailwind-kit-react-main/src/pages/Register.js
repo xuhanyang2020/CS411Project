@@ -10,8 +10,8 @@ import Container from 'components/login/Container';
 import axios from "axios";
 import {Component} from "react";
 import {Link} from "react-router-dom";
-const infoUrl = 'http://localhost:8080/register/saveUser';
-
+// const infoUrl = 'http://localhost:8080/register/saveUser';
+const infoUrl = 'https://mimetic-union-334605.uc.r.appspot.com/register/saveUser';
 async function getRegisInfo(fstName, eml, pwd) {
     const firstName = fstName;
     const email = eml;

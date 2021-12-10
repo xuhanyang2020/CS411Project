@@ -14,9 +14,11 @@ import LeadText from '@material-tailwind/react/LeadText';
 import DropdownLink from "@material-tailwind/react/DropdownLink"
 
 
+const courseURL = 'https://mimetic-union-334605.uc.r.appspot.com/coursesearch';
+const sportURL = "https://mimetic-union-334605.uc.r.appspot.com/sport"
 
-const courseURL = 'http://localhost:8080/coursesearch';
-const sportURL = "http://localhost:8080/sport"
+// const courseURL = 'http://localhost:8080/coursesearch';
+// const sportURL = "http://localhost:8080/sport"
 
 async function getSports(){
     console.log("get sport list");

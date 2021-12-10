@@ -44,8 +44,10 @@ import PersonIcon from '@material-ui/icons/Person';
 import emailjs from 'emailjs-com';
 import{ init } from 'emailjs-com';
 //import { appointments } from '../../../demo-data/appointments';
-const ReservationURL = 'http://localhost:8080/appointment/userid={id}';
-const InsertAppointmentURL = 'http://localhost:8080/appointment/insertappointment';
+const ReservationURL = 'https://mimetic-union-334605.uc.r.appspot.com/appointment/userid={id}';
+const InsertAppointmentURL = 'https://mimetic-union-334605.uc.r.appspot.com/appointment/insertappointment';
+// const ReservationURL = 'http://localhost:8080/appointment/userid={id}';
+// const InsertAppointmentURL = 'http://localhost:8080/appointment/insertappointment';
 function sendEmail(username, teacher_name, location) {
   init("user_TcaKIkCvpvX6KiytTdPXA");
   //e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
