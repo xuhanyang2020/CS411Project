@@ -31,7 +31,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/reservation")
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ReservationController {
     private final ReservationService reservationService;
 

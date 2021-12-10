@@ -47,7 +47,6 @@ import{ init } from 'emailjs-com';
 const ReservationURL = 'http://localhost:8080/appointment/userid={id}';
 const InsertAppointmentURL = 'http://localhost:8080/appointment/insertappointment';
 function sendEmail(username, teacher_name, location) {
-  alert('gogo')
   init("user_TcaKIkCvpvX6KiytTdPXA");
   //e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
   var templateParams = {

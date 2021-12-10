@@ -16,6 +16,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(path = "match")
+@CrossOrigin(origins = "http://localhost:3000")
 public class MatchViewController {
 
     private final MatchService matchService;

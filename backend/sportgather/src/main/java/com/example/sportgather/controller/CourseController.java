@@ -13,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(path = "course")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CourseController {
     private final CourseService courseService;
     private final EnrollmentService enrollmentService;

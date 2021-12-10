@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "message")
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class MessageController {
 
     private final MessageService msgService;

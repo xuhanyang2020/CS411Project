@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping(path = "login")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LoginController {
     private final LoginService loginService;
 

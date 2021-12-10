@@ -8,6 +8,7 @@ import com.example.sportgather.service.LoginService;
 
 @RestController
 @RequestMapping(path = "register")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RegisterController {
     private final RegisterService registerService;
 
