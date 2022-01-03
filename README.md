@@ -1,14 +1,10 @@
 # CS411Project
 
 
+Exercising always helps people live a healthy life and relax themselves from pressure of work or study. However, people have less motivations to exercise when they can not find sports mates. Moreover, they can easily hurt themselves in some activities without professional training experience. Therefore, we want to develop a sports experience system that connects sports mates with similar sports interests based on their profile information, as well as offers professional sports courses for sports fans.
 
-**分支命名规范**
+This system supports sports mates to check availability of facilities and reserve available space for exercise. It also has a "Message" section where users can initiate activities and others can check out and join those they are interested in. Besides it, the system provides a list of sports courses which users can register to gain professional training experience. The course are available on the platform for self-paced learning. The platform also allows users to make appointments with coach to get in-person practices. After the course is finished, users can provide feedbacks about their learning experience.
 
-以名字命名自己分支：如：杨弘 Hong 瀚洋 Hanyang, 梓楠 Zinan, 韵纯: Yunchun
+# The video link is below
 
-
-
-**Commit 信息规范**
-
-名字-日子-月份缩写-该日版本数字 如：Hong-7-Oct-Version-1 代表杨弘10月7日提交的第一个版本
-
+https://www.youtube.com/watch?v=Lqf19zSeQoA
